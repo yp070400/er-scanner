@@ -1,0 +1,18 @@
+<!DOCTYPE html>
+<html>
+<head>
+    <meta charset="UTF-8">
+    <script src="https://cdn.jsdelivr.net/npm/mermaid/dist/mermaid.min.js"></script>
+</head>
+<body>
+<h2>Database ER Diagram</h2>
+<div class="mermaid">
+erDiagram
+    ORDERS ||--o{ PAYMENTS : order_id
+    CUSTOMERS ||--o{ ORDERS : customer_id
+</div>
+<script>
+    mermaid.initialize({ startOnLoad: true });
+</script>
+</body>
+</html>

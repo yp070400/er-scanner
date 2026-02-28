@@ -1,0 +1,30 @@
+{
+  "relationships" : [ {
+    "fromTable" : "payments",
+    "column" : "order_id",
+    "toTable" : "orders",
+    "confidence" : 1.0
+  }, {
+    "fromTable" : "orders",
+    "column" : "customer_id",
+    "toTable" : "customers",
+    "confidence" : 1.0
+  } ],
+  "tables" : [ {
+    "name" : "payments",
+    "columns" : [ "payment_id", "order_id", "paid_amount" ],
+    "primaryKeys" : [ "payment_id" ]
+  }, {
+    "name" : "orders",
+    "columns" : [ "order_id", "customer_id", "amount" ],
+    "primaryKeys" : [ "order_id" ]
+  }, {
+    "name" : "customers",
+    "columns" : [ "customer_id", "name" ],
+    "primaryKeys" : [ "customer_id" ]
+  }, {
+    "name" : "orphan_table",
+    "columns" : [ "random_id", "description" ],
+    "primaryKeys" : [ "random_id" ]
+  } ]
+}
