@@ -1,0 +1,32 @@
+{
+  "tables" : [ {
+    "name" : "customers",
+    "columns" : [ "customer_id", "name" ],
+    "primaryKeys" : [ "customer_id" ]
+  }, {
+    "name" : "orders",
+    "columns" : [ "order_id", "customer_id", "amount" ],
+    "primaryKeys" : [ "order_id" ]
+  }, {
+    "name" : "orphan_table",
+    "columns" : [ "random_id", "description" ],
+    "primaryKeys" : [ "random_id" ]
+  }, {
+    "name" : "payments",
+    "columns" : [ "payment_id", "order_id", "paid_amount" ],
+    "primaryKeys" : [ "payment_id" ]
+  } ],
+  "relationships" : [ {
+    "source" : "orders",
+    "target" : "customers",
+    "column" : "customer_id",
+    "type" : "inferred",
+    "confidence" : 0.6
+  }, {
+    "source" : "payments",
+    "target" : "orders",
+    "column" : "order_id",
+    "type" : "inferred",
+    "confidence" : 0.6
+  } ]
+}

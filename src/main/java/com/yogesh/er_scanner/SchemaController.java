@@ -1,25 +1,39 @@
-package com.yogesh.er_scanner;
+package com.yogesh.er_scanner.controller;
 
+import com.yogesh.er_scanner.service.SchemaScanner;
+import com.yogesh.er_scanner.service.SchemaService;
 import org.springframework.web.bind.annotation.*;
+
+import java.util.Map;
 
 @RestController
 @RequestMapping("/schema")
 public class SchemaController {
 
-    private final SchemaService schemaService;
+    private final SchemaScanner scanner;
+    private final SchemaService service;
 
-    public SchemaController(SchemaService schemaService) {
-        this.schemaService = schemaService;
-    }
-
-    @GetMapping
-    public Object getSchema() throws Exception {
-        return schemaService.getSchema();
+    public SchemaController(SchemaScanner scanner, SchemaService service) {
+        this.scanner = scanner;
+        this.service = service;
     }
 
     @PostMapping("/scan")
-    public String regenerate() throws Exception {
-        schemaService.regenerateSchema();
-        return "Schema regenerated successfully.";
+    public String scan() throws Exception {
+
+        service.setSchema(scanner.scan());
+        service.writeAiJson();
+
+        return "Schema scanned and files generated successfully.";
+    }
+
+    @GetMapping("/visual")
+    public Map<String, Object> visual() {
+        return service.generateVisualJson();
+    }
+
+    @GetMapping(value = "/er-mermaid", produces = "text/plain")
+    public String mermaid() {
+        return service.generateMermaid();
     }
 }

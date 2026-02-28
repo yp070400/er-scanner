@@ -2,275 +2,118 @@
 <html>
 <head>
     <meta charset="UTF-8">
-    <title>ER Explorer Pro</title>
+    <title>ER Scanner</title>
 
-    <script src="https://unpkg.com/cytoscape@3.26.0/dist/cytoscape.min.js"></script>
+    <script src="https://cdn.jsdelivr.net/npm/mermaid@10/dist/mermaid.min.js"></script>
 
     <style>
         body {
           margin:0;
-          display:flex;
-          height:100vh;
-          font-family:Arial, sans-serif;
+          font-family:Segoe UI, Arial, sans-serif;
+          background:#f4f6f9;
         }
 
-        #sidebar {
-          width:350px;
-          background:#f4f4f4;
-          padding:15px;
-          border-right:1px solid #ccc;
-          overflow-y:auto;
+        header {
+          padding:15px 25px;
+          background:#1f2937;
+          color:white;
+          font-size:20px;
+          font-weight:600;
         }
 
-        #cy {
-          flex:1;
-          height:100vh;
-        }
-
-        select,input,button {
-          width:100%;
-          margin-bottom:10px;
-          padding:6px;
-        }
-
-        .metric-box {
+        #controls {
+          padding:15px 25px;
           background:white;
-          padding:10px;
-          margin-bottom:15px;
-          border:1px solid #ddd;
+          border-bottom:1px solid #ddd;
+        }
+
+        button {
+          padding:8px 14px;
+          border:none;
+          background:#2563eb;
+          color:white;
+          border-radius:4px;
+          cursor:pointer;
+          margin-right:10px;
+        }
+
+        button:hover {
+          background:#1e40af;
+        }
+
+        #diagramContainer {
+          padding:30px;
+          overflow:auto;
+        }
+
+        .mermaid {
+          background:white;
+          padding:20px;
+          border-radius:8px;
+          box-shadow:0 2px 8px rgba(0,0,0,0.08);
         }
     </style>
 </head>
 <body>
 
-<div id="sidebar">
+<header>
+    ER Scanner – Database Visualization
+</header>
 
-    <h2>ER Explorer Pro</h2>
-
-    <div class="metric-box" id="metrics">Loading metrics...</div>
-
-    <input type="text" id="search" placeholder="Search table..." />
-
-    <h4>Highlight Join Path</h4>
-    <select id="tableA"></select>
-    <select id="tableB"></select>
-    <button onclick="highlightPath()">Highlight Join Path</button>
-
-    <button onclick="collapseAll()">Collapse All</button>
-    <button onclick="expandAll()">Expand All</button>
-
-    <div id="details">Select a table</div>
-
+<div id="controls">
+    <button onclick="scanAndRender()">Scan Database</button>
+    <button onclick="downloadMermaid()">Download ER Text</button>
 </div>
 
-<div id="cy"></div>
+<div id="diagramContainer">
+    <div class="mermaid" id="diagram">
+        Click "Scan Database" to generate ER diagram.
+    </div>
+</div>
 
 <script>
 
-    let cy;
-
-    fetch('/schema')
-    .then(res => res.json())
-    .then(data => {
-
-      // ===== METRICS =====
-      if (data.metrics) {
-        document.getElementById("metrics").innerHTML =
-          "<b>Tables:</b> " + data.metrics.tableCount +
-          "<br><b>Relationships:</b> " + data.metrics.relationshipCount;
+    mermaid.initialize({
+      startOnLoad:false,
+      theme:"default",
+      securityLevel:"loose",
+      er: {
+        useMaxWidth:true
       }
-
-      // ===== DEPTH CALCULATION =====
-      const graph = {};
-      data.nodes.forEach(n => graph[n.data.id] = []);
-      data.edges.forEach(e => {
-        graph[e.data.source].push(e.data.target);
-      });
-
-      const depthMap = {};
-      const queue = [];
-
-      // roots = nodes with no incoming edges
-      const hasIncoming = {};
-      data.edges.forEach(e => hasIncoming[e.data.target] = true);
-
-      data.nodes.forEach(n => {
-        if (!hasIncoming[n.data.id]) {
-          depthMap[n.data.id] = 0;
-          queue.push(n.data.id);
-        }
-      });
-
-      while (queue.length > 0) {
-        const current = queue.shift();
-        const d = depthMap[current];
-
-        graph[current].forEach(child => {
-          if (depthMap[child] === undefined) {
-            depthMap[child] = d + 1;
-            queue.push(child);
-          }
-        });
-      }
-
-      // ===== BUILD LABELS =====
-      data.nodes.forEach(n => {
-
-        const cols = n.data.columns || [];
-        const pks = n.data.primaryKeys || [];
-        const fks = n.data.foreignKeys || {};
-
-        let label = n.data.label + "\n────────────\n";
-
-        cols.forEach(col => {
-          if (pks.includes(col)) {
-            label += "🔑 " + col + "\n";
-          } else if (fks[col]) {
-            label += "🔗 " + col + "\n";
-          } else {
-            label += col + "\n";
-          }
-        });
-
-        n.data.fullLabel = label;
-
-        const baseHeight = 40;
-        const perRow = 14;
-        n.data.dynamicHeight = baseHeight + (cols.length * perRow);
-
-        n.data.depth = depthMap[n.data.id] || 0;
-      });
-
-      const elements = [...data.nodes, ...data.edges];
-
-      cy = cytoscape({
-        container: document.getElementById('cy'),
-        elements: elements,
-
-        style: [
-
-          {
-            selector: 'node',
-            style: {
-              'label': 'data(fullLabel)',
-              'text-wrap': 'wrap',
-              'text-max-width': 240,
-              'font-size': 11,
-              'background-color': '#ffffff',
-              'border-color': '#333',
-              'border-width': 2,
-              'shape': 'roundrectangle',
-              'width': 260,
-              'height': 'data(dynamicHeight)',
-              'text-valign': 'top',
-              'text-halign': 'center'
-            }
-          },
-
-          {
-            selector: 'node[collapsed = "true"]',
-            style: {
-              'label': 'data(label)',
-              'height': 40
-            }
-          },
-
-          {
-            selector: 'edge',
-            style: {
-              'curve-style': 'bezier',
-              'target-arrow-shape': 'triangle',
-              'width': 2,
-              'label': 'data(column)',
-              'font-size': 9,
-              'line-color': '#888',
-              'target-arrow-color': '#888'
-            }
-          },
-
-          {
-            selector: '.path-highlight',
-            style: {
-              'line-color': 'orange',
-              'target-arrow-color': 'orange',
-              'width': 4
-            }
-          }
-        ],
-
-        layout: {
-          name: 'breadthfirst',
-          directed: true,
-          circle: false,
-          grid: false,
-          spacingFactor: 2.0,
-          padding: 100,
-          animate: false,
-          roots: Object.keys(depthMap)
-            .filter(k => depthMap[k] === 0)
-            .map(id => '#' + id)
-        }
-      });
-
-      // ===== Populate Dropdowns =====
-      data.nodes.forEach(n => {
-        document.getElementById("tableA")
-          .add(new Option(n.data.label, n.data.id));
-        document.getElementById("tableB")
-          .add(new Option(n.data.label, n.data.id));
-      });
-
-      // ===== SEARCH =====
-      document.getElementById("search")
-        .addEventListener("input", function () {
-          const val = this.value.toLowerCase();
-          cy.nodes().forEach(n => {
-            const match = n.data('label').toLowerCase().includes(val);
-            n.style('display', match ? 'element' : 'none');
-          });
-          cy.edges().forEach(e => {
-            const visible = e.source().visible() && e.target().visible();
-            e.style('display', visible ? 'element' : 'none');
-          });
-        });
-
     });
 
+    async function scanAndRender() {
 
-    // ===== JOIN PATH =====
-    function highlightPath() {
-      const s = document.getElementById("tableA").value;
-      const t = document.getElementById("tableB").value;
+      document.getElementById("diagram").innerHTML = "Scanning database...";
 
-      cy.elements().removeClass('path-highlight');
+      await fetch('/schema/scan', { method:'POST' });
 
-      const bfs = cy.elements().bfs({
-        roots: '#' + s,
-        goal: '#' + t,
-        directed: true
-      });
+      const res = await fetch('/schema/er-mermaid');
+      const text = await res.text();
 
-      if (bfs.found) {
-        bfs.path.addClass('path-highlight');
-      } else {
-        alert("No join path found");
-      }
+      const element = document.getElementById("diagram");
+      element.innerHTML = text;
+
+      mermaid.init(undefined, element);
     }
 
+    async function downloadMermaid() {
 
-    // ===== COLLAPSE / EXPAND =====
-    function collapseAll() {
-      cy.nodes().forEach(n => {
-        n.data('collapsed', 'true');
-      });
-    }
+      const res = await fetch('/schema/er-mermaid');
+      const text = await res.text();
 
-    function expandAll() {
-      cy.nodes().forEach(n => {
-        n.removeData('collapsed');
-      });
+      const blob = new Blob([text], { type: "text/plain" });
+      const url = window.URL.createObjectURL(blob);
+
+      const a = document.createElement("a");
+      a.href = url;
+      a.download = "er-diagram.mmd";
+      a.click();
+
+      window.URL.revokeObjectURL(url);
     }
 
 </script>
+
 </body>
 </html>
