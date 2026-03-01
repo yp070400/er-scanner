@@ -1,4671 +1,2650 @@
 {
   "tables" : [ {
-    "name" : "customers",
-    "columns" : [ {
-      "name" : "customer_id",
-      "type" : "INT",
-      "primaryKey" : true
-    }, {
-      "name" : "name",
-      "type" : "VARCHAR",
-      "primaryKey" : false
-    } ]
-  }, {
-    "name" : "orders",
-    "columns" : [ {
-      "name" : "order_id",
-      "type" : "INT",
-      "primaryKey" : true
-    }, {
-      "name" : "customer_id",
-      "type" : "INT",
-      "primaryKey" : false
-    }, {
-      "name" : "amount",
-      "type" : "DECIMAL",
-      "primaryKey" : false
-    }, {
-      "name" : "order_id",
-      "type" : "BIGINT",
-      "primaryKey" : true
-    }, {
-      "name" : "user_id",
-      "type" : "BIGINT",
-      "primaryKey" : false
-    }, {
-      "name" : "tenant_id",
-      "type" : "BIGINT",
-      "primaryKey" : false
-    }, {
-      "name" : "order_date",
-      "type" : "DATE",
-      "primaryKey" : false
-    }, {
-      "name" : "status",
-      "type" : "VARCHAR",
-      "primaryKey" : false
-    } ]
-  }, {
-    "name" : "orphan_table",
-    "columns" : [ {
-      "name" : "random_id",
-      "type" : "INT",
-      "primaryKey" : true
-    }, {
-      "name" : "description",
-      "type" : "VARCHAR",
-      "primaryKey" : false
-    } ]
-  }, {
-    "name" : "payments",
-    "columns" : [ {
-      "name" : "payment_id",
-      "type" : "INT",
-      "primaryKey" : true
-    }, {
-      "name" : "order_id",
-      "type" : "INT",
-      "primaryKey" : false
-    }, {
-      "name" : "paid_amount",
-      "type" : "DECIMAL",
-      "primaryKey" : false
-    }, {
-      "name" : "payment_id",
-      "type" : "BIGINT",
-      "primaryKey" : true
-    }, {
-      "name" : "order_id",
-      "type" : "BIGINT",
-      "primaryKey" : false
-    }, {
-      "name" : "user_id",
-      "type" : "BIGINT",
-      "primaryKey" : false
-    }, {
-      "name" : "amount",
-      "type" : "DECIMAL",
-      "primaryKey" : false
-    }, {
-      "name" : "payment_status",
-      "type" : "VARCHAR",
-      "primaryKey" : false
-    } ]
-  }, {
     "name" : "audit_logs",
     "columns" : [ {
       "name" : "audit_id",
       "type" : "BIGINT",
-      "primaryKey" : true
+      "primaryKey" : true,
+      "foreignKey" : false
     }, {
       "name" : "user_id",
       "type" : "BIGINT",
-      "primaryKey" : false
+      "primaryKey" : false,
+      "foreignKey" : true
     }, {
       "name" : "entity_name",
       "type" : "VARCHAR",
-      "primaryKey" : false
+      "primaryKey" : false,
+      "foreignKey" : false
     }, {
       "name" : "entity_id",
       "type" : "BIGINT",
-      "primaryKey" : false
+      "primaryKey" : false,
+      "foreignKey" : false
     }, {
       "name" : "action_type",
       "type" : "VARCHAR",
-      "primaryKey" : false
+      "primaryKey" : false,
+      "foreignKey" : false
     }, {
       "name" : "created_at",
       "type" : "TIMESTAMP",
-      "primaryKey" : false
-    } ]
-  }, {
-    "name" : "aux_table_1",
-    "columns" : [ {
-      "name" : "id",
-      "type" : "BIGINT",
-      "primaryKey" : true
-    }, {
-      "name" : "tenant_id",
-      "type" : "BIGINT",
-      "primaryKey" : false
-    }, {
-      "name" : "user_id",
-      "type" : "BIGINT",
-      "primaryKey" : false
-    }, {
-      "name" : "order_id",
-      "type" : "BIGINT",
-      "primaryKey" : false
-    }, {
-      "name" : "random_code",
-      "type" : "VARCHAR",
-      "primaryKey" : false
-    }, {
-      "name" : "created_at",
-      "type" : "TIMESTAMP",
-      "primaryKey" : false
-    } ]
-  }, {
-    "name" : "aux_table_10",
-    "columns" : [ {
-      "name" : "id",
-      "type" : "BIGINT",
-      "primaryKey" : true
-    }, {
-      "name" : "tenant_id",
-      "type" : "BIGINT",
-      "primaryKey" : false
-    }, {
-      "name" : "user_id",
-      "type" : "BIGINT",
-      "primaryKey" : false
-    }, {
-      "name" : "order_id",
-      "type" : "BIGINT",
-      "primaryKey" : false
-    }, {
-      "name" : "random_code",
-      "type" : "VARCHAR",
-      "primaryKey" : false
-    }, {
-      "name" : "created_at",
-      "type" : "TIMESTAMP",
-      "primaryKey" : false
-    } ]
-  }, {
-    "name" : "aux_table_11",
-    "columns" : [ {
-      "name" : "id",
-      "type" : "BIGINT",
-      "primaryKey" : true
-    }, {
-      "name" : "tenant_id",
-      "type" : "BIGINT",
-      "primaryKey" : false
-    }, {
-      "name" : "user_id",
-      "type" : "BIGINT",
-      "primaryKey" : false
-    }, {
-      "name" : "order_id",
-      "type" : "BIGINT",
-      "primaryKey" : false
-    }, {
-      "name" : "random_code",
-      "type" : "VARCHAR",
-      "primaryKey" : false
-    }, {
-      "name" : "created_at",
-      "type" : "TIMESTAMP",
-      "primaryKey" : false
-    } ]
-  }, {
-    "name" : "aux_table_12",
-    "columns" : [ {
-      "name" : "id",
-      "type" : "BIGINT",
-      "primaryKey" : true
-    }, {
-      "name" : "tenant_id",
-      "type" : "BIGINT",
-      "primaryKey" : false
-    }, {
-      "name" : "user_id",
-      "type" : "BIGINT",
-      "primaryKey" : false
-    }, {
-      "name" : "order_id",
-      "type" : "BIGINT",
-      "primaryKey" : false
-    }, {
-      "name" : "random_code",
-      "type" : "VARCHAR",
-      "primaryKey" : false
-    }, {
-      "name" : "created_at",
-      "type" : "TIMESTAMP",
-      "primaryKey" : false
-    } ]
-  }, {
-    "name" : "aux_table_13",
-    "columns" : [ {
-      "name" : "id",
-      "type" : "BIGINT",
-      "primaryKey" : true
-    }, {
-      "name" : "tenant_id",
-      "type" : "BIGINT",
-      "primaryKey" : false
-    }, {
-      "name" : "user_id",
-      "type" : "BIGINT",
-      "primaryKey" : false
-    }, {
-      "name" : "order_id",
-      "type" : "BIGINT",
-      "primaryKey" : false
-    }, {
-      "name" : "random_code",
-      "type" : "VARCHAR",
-      "primaryKey" : false
-    }, {
-      "name" : "created_at",
-      "type" : "TIMESTAMP",
-      "primaryKey" : false
-    } ]
-  }, {
-    "name" : "aux_table_14",
-    "columns" : [ {
-      "name" : "id",
-      "type" : "BIGINT",
-      "primaryKey" : true
-    }, {
-      "name" : "tenant_id",
-      "type" : "BIGINT",
-      "primaryKey" : false
-    }, {
-      "name" : "user_id",
-      "type" : "BIGINT",
-      "primaryKey" : false
-    }, {
-      "name" : "order_id",
-      "type" : "BIGINT",
-      "primaryKey" : false
-    }, {
-      "name" : "random_code",
-      "type" : "VARCHAR",
-      "primaryKey" : false
-    }, {
-      "name" : "created_at",
-      "type" : "TIMESTAMP",
-      "primaryKey" : false
-    } ]
-  }, {
-    "name" : "aux_table_15",
-    "columns" : [ {
-      "name" : "id",
-      "type" : "BIGINT",
-      "primaryKey" : true
-    }, {
-      "name" : "tenant_id",
-      "type" : "BIGINT",
-      "primaryKey" : false
-    }, {
-      "name" : "user_id",
-      "type" : "BIGINT",
-      "primaryKey" : false
-    }, {
-      "name" : "order_id",
-      "type" : "BIGINT",
-      "primaryKey" : false
-    }, {
-      "name" : "random_code",
-      "type" : "VARCHAR",
-      "primaryKey" : false
-    }, {
-      "name" : "created_at",
-      "type" : "TIMESTAMP",
-      "primaryKey" : false
-    } ]
-  }, {
-    "name" : "aux_table_16",
-    "columns" : [ {
-      "name" : "id",
-      "type" : "BIGINT",
-      "primaryKey" : true
-    }, {
-      "name" : "tenant_id",
-      "type" : "BIGINT",
-      "primaryKey" : false
-    }, {
-      "name" : "user_id",
-      "type" : "BIGINT",
-      "primaryKey" : false
-    }, {
-      "name" : "order_id",
-      "type" : "BIGINT",
-      "primaryKey" : false
-    }, {
-      "name" : "random_code",
-      "type" : "VARCHAR",
-      "primaryKey" : false
-    }, {
-      "name" : "created_at",
-      "type" : "TIMESTAMP",
-      "primaryKey" : false
-    } ]
-  }, {
-    "name" : "aux_table_17",
-    "columns" : [ {
-      "name" : "id",
-      "type" : "BIGINT",
-      "primaryKey" : true
-    }, {
-      "name" : "tenant_id",
-      "type" : "BIGINT",
-      "primaryKey" : false
-    }, {
-      "name" : "user_id",
-      "type" : "BIGINT",
-      "primaryKey" : false
-    }, {
-      "name" : "order_id",
-      "type" : "BIGINT",
-      "primaryKey" : false
-    }, {
-      "name" : "random_code",
-      "type" : "VARCHAR",
-      "primaryKey" : false
-    }, {
-      "name" : "created_at",
-      "type" : "TIMESTAMP",
-      "primaryKey" : false
-    } ]
-  }, {
-    "name" : "aux_table_18",
-    "columns" : [ {
-      "name" : "id",
-      "type" : "BIGINT",
-      "primaryKey" : true
-    }, {
-      "name" : "tenant_id",
-      "type" : "BIGINT",
-      "primaryKey" : false
-    }, {
-      "name" : "user_id",
-      "type" : "BIGINT",
-      "primaryKey" : false
-    }, {
-      "name" : "order_id",
-      "type" : "BIGINT",
-      "primaryKey" : false
-    }, {
-      "name" : "random_code",
-      "type" : "VARCHAR",
-      "primaryKey" : false
-    }, {
-      "name" : "created_at",
-      "type" : "TIMESTAMP",
-      "primaryKey" : false
-    } ]
-  }, {
-    "name" : "aux_table_19",
-    "columns" : [ {
-      "name" : "id",
-      "type" : "BIGINT",
-      "primaryKey" : true
-    }, {
-      "name" : "tenant_id",
-      "type" : "BIGINT",
-      "primaryKey" : false
-    }, {
-      "name" : "user_id",
-      "type" : "BIGINT",
-      "primaryKey" : false
-    }, {
-      "name" : "order_id",
-      "type" : "BIGINT",
-      "primaryKey" : false
-    }, {
-      "name" : "random_code",
-      "type" : "VARCHAR",
-      "primaryKey" : false
-    }, {
-      "name" : "created_at",
-      "type" : "TIMESTAMP",
-      "primaryKey" : false
+      "primaryKey" : false,
+      "foreignKey" : false
     } ]
   }, {
     "name" : "aux_table_2",
     "columns" : [ {
       "name" : "id",
       "type" : "BIGINT",
-      "primaryKey" : true
+      "primaryKey" : true,
+      "foreignKey" : false
     }, {
       "name" : "tenant_id",
       "type" : "BIGINT",
-      "primaryKey" : false
+      "primaryKey" : false,
+      "foreignKey" : false
     }, {
       "name" : "user_id",
       "type" : "BIGINT",
-      "primaryKey" : false
+      "primaryKey" : false,
+      "foreignKey" : false
     }, {
       "name" : "order_id",
       "type" : "BIGINT",
-      "primaryKey" : false
+      "primaryKey" : false,
+      "foreignKey" : false
     }, {
       "name" : "random_code",
       "type" : "VARCHAR",
-      "primaryKey" : false
+      "primaryKey" : false,
+      "foreignKey" : false
     }, {
       "name" : "created_at",
       "type" : "TIMESTAMP",
-      "primaryKey" : false
+      "primaryKey" : false,
+      "foreignKey" : false
     } ]
   }, {
     "name" : "aux_table_20",
     "columns" : [ {
       "name" : "id",
       "type" : "BIGINT",
-      "primaryKey" : true
+      "primaryKey" : true,
+      "foreignKey" : false
     }, {
       "name" : "tenant_id",
       "type" : "BIGINT",
-      "primaryKey" : false
+      "primaryKey" : false,
+      "foreignKey" : false
     }, {
       "name" : "user_id",
       "type" : "BIGINT",
-      "primaryKey" : false
+      "primaryKey" : false,
+      "foreignKey" : false
     }, {
       "name" : "order_id",
       "type" : "BIGINT",
-      "primaryKey" : false
+      "primaryKey" : false,
+      "foreignKey" : false
     }, {
       "name" : "random_code",
       "type" : "VARCHAR",
-      "primaryKey" : false
+      "primaryKey" : false,
+      "foreignKey" : false
     }, {
       "name" : "created_at",
       "type" : "TIMESTAMP",
-      "primaryKey" : false
+      "primaryKey" : false,
+      "foreignKey" : false
     } ]
   }, {
     "name" : "aux_table_21",
     "columns" : [ {
       "name" : "id",
       "type" : "BIGINT",
-      "primaryKey" : true
+      "primaryKey" : true,
+      "foreignKey" : false
     }, {
       "name" : "tenant_id",
       "type" : "BIGINT",
-      "primaryKey" : false
+      "primaryKey" : false,
+      "foreignKey" : false
     }, {
       "name" : "user_id",
       "type" : "BIGINT",
-      "primaryKey" : false
+      "primaryKey" : false,
+      "foreignKey" : false
     }, {
       "name" : "order_id",
       "type" : "BIGINT",
-      "primaryKey" : false
+      "primaryKey" : false,
+      "foreignKey" : false
     }, {
       "name" : "random_code",
       "type" : "VARCHAR",
-      "primaryKey" : false
+      "primaryKey" : false,
+      "foreignKey" : false
     }, {
       "name" : "created_at",
       "type" : "TIMESTAMP",
-      "primaryKey" : false
+      "primaryKey" : false,
+      "foreignKey" : false
     } ]
   }, {
     "name" : "aux_table_22",
     "columns" : [ {
       "name" : "id",
       "type" : "BIGINT",
-      "primaryKey" : true
+      "primaryKey" : true,
+      "foreignKey" : false
     }, {
       "name" : "tenant_id",
       "type" : "BIGINT",
-      "primaryKey" : false
+      "primaryKey" : false,
+      "foreignKey" : false
     }, {
       "name" : "user_id",
       "type" : "BIGINT",
-      "primaryKey" : false
+      "primaryKey" : false,
+      "foreignKey" : false
     }, {
       "name" : "order_id",
       "type" : "BIGINT",
-      "primaryKey" : false
+      "primaryKey" : false,
+      "foreignKey" : false
     }, {
       "name" : "random_code",
       "type" : "VARCHAR",
-      "primaryKey" : false
+      "primaryKey" : false,
+      "foreignKey" : false
     }, {
       "name" : "created_at",
       "type" : "TIMESTAMP",
-      "primaryKey" : false
+      "primaryKey" : false,
+      "foreignKey" : false
     } ]
   }, {
     "name" : "aux_table_23",
     "columns" : [ {
       "name" : "id",
       "type" : "BIGINT",
-      "primaryKey" : true
+      "primaryKey" : true,
+      "foreignKey" : false
     }, {
       "name" : "tenant_id",
       "type" : "BIGINT",
-      "primaryKey" : false
+      "primaryKey" : false,
+      "foreignKey" : false
     }, {
       "name" : "user_id",
       "type" : "BIGINT",
-      "primaryKey" : false
+      "primaryKey" : false,
+      "foreignKey" : false
     }, {
       "name" : "order_id",
       "type" : "BIGINT",
-      "primaryKey" : false
+      "primaryKey" : false,
+      "foreignKey" : false
     }, {
       "name" : "random_code",
       "type" : "VARCHAR",
-      "primaryKey" : false
+      "primaryKey" : false,
+      "foreignKey" : false
     }, {
       "name" : "created_at",
       "type" : "TIMESTAMP",
-      "primaryKey" : false
+      "primaryKey" : false,
+      "foreignKey" : false
     } ]
   }, {
     "name" : "aux_table_24",
     "columns" : [ {
       "name" : "id",
       "type" : "BIGINT",
-      "primaryKey" : true
+      "primaryKey" : true,
+      "foreignKey" : false
     }, {
       "name" : "tenant_id",
       "type" : "BIGINT",
-      "primaryKey" : false
+      "primaryKey" : false,
+      "foreignKey" : false
     }, {
       "name" : "user_id",
       "type" : "BIGINT",
-      "primaryKey" : false
+      "primaryKey" : false,
+      "foreignKey" : false
     }, {
       "name" : "order_id",
       "type" : "BIGINT",
-      "primaryKey" : false
+      "primaryKey" : false,
+      "foreignKey" : false
     }, {
       "name" : "random_code",
       "type" : "VARCHAR",
-      "primaryKey" : false
+      "primaryKey" : false,
+      "foreignKey" : false
     }, {
       "name" : "created_at",
       "type" : "TIMESTAMP",
-      "primaryKey" : false
+      "primaryKey" : false,
+      "foreignKey" : false
     } ]
   }, {
     "name" : "aux_table_25",
     "columns" : [ {
       "name" : "id",
       "type" : "BIGINT",
-      "primaryKey" : true
+      "primaryKey" : true,
+      "foreignKey" : false
     }, {
       "name" : "tenant_id",
       "type" : "BIGINT",
-      "primaryKey" : false
+      "primaryKey" : false,
+      "foreignKey" : false
     }, {
       "name" : "user_id",
       "type" : "BIGINT",
-      "primaryKey" : false
+      "primaryKey" : false,
+      "foreignKey" : false
     }, {
       "name" : "order_id",
       "type" : "BIGINT",
-      "primaryKey" : false
+      "primaryKey" : false,
+      "foreignKey" : false
     }, {
       "name" : "random_code",
       "type" : "VARCHAR",
-      "primaryKey" : false
+      "primaryKey" : false,
+      "foreignKey" : false
     }, {
       "name" : "created_at",
       "type" : "TIMESTAMP",
-      "primaryKey" : false
+      "primaryKey" : false,
+      "foreignKey" : false
     } ]
   }, {
     "name" : "aux_table_26",
     "columns" : [ {
       "name" : "id",
       "type" : "BIGINT",
-      "primaryKey" : true
+      "primaryKey" : true,
+      "foreignKey" : false
     }, {
       "name" : "tenant_id",
       "type" : "BIGINT",
-      "primaryKey" : false
+      "primaryKey" : false,
+      "foreignKey" : false
     }, {
       "name" : "user_id",
       "type" : "BIGINT",
-      "primaryKey" : false
+      "primaryKey" : false,
+      "foreignKey" : false
     }, {
       "name" : "order_id",
       "type" : "BIGINT",
-      "primaryKey" : false
+      "primaryKey" : false,
+      "foreignKey" : false
     }, {
       "name" : "random_code",
       "type" : "VARCHAR",
-      "primaryKey" : false
+      "primaryKey" : false,
+      "foreignKey" : false
     }, {
       "name" : "created_at",
       "type" : "TIMESTAMP",
-      "primaryKey" : false
+      "primaryKey" : false,
+      "foreignKey" : false
     } ]
   }, {
     "name" : "aux_table_27",
     "columns" : [ {
       "name" : "id",
       "type" : "BIGINT",
-      "primaryKey" : true
+      "primaryKey" : true,
+      "foreignKey" : false
     }, {
       "name" : "tenant_id",
       "type" : "BIGINT",
-      "primaryKey" : false
+      "primaryKey" : false,
+      "foreignKey" : false
     }, {
       "name" : "user_id",
       "type" : "BIGINT",
-      "primaryKey" : false
+      "primaryKey" : false,
+      "foreignKey" : false
     }, {
       "name" : "order_id",
       "type" : "BIGINT",
-      "primaryKey" : false
+      "primaryKey" : false,
+      "foreignKey" : false
     }, {
       "name" : "random_code",
       "type" : "VARCHAR",
-      "primaryKey" : false
+      "primaryKey" : false,
+      "foreignKey" : false
     }, {
       "name" : "created_at",
       "type" : "TIMESTAMP",
-      "primaryKey" : false
+      "primaryKey" : false,
+      "foreignKey" : false
     } ]
   }, {
     "name" : "aux_table_28",
     "columns" : [ {
       "name" : "id",
       "type" : "BIGINT",
-      "primaryKey" : true
+      "primaryKey" : true,
+      "foreignKey" : false
     }, {
       "name" : "tenant_id",
       "type" : "BIGINT",
-      "primaryKey" : false
+      "primaryKey" : false,
+      "foreignKey" : false
     }, {
       "name" : "user_id",
       "type" : "BIGINT",
-      "primaryKey" : false
+      "primaryKey" : false,
+      "foreignKey" : false
     }, {
       "name" : "order_id",
       "type" : "BIGINT",
-      "primaryKey" : false
+      "primaryKey" : false,
+      "foreignKey" : false
     }, {
       "name" : "random_code",
       "type" : "VARCHAR",
-      "primaryKey" : false
+      "primaryKey" : false,
+      "foreignKey" : false
     }, {
       "name" : "created_at",
       "type" : "TIMESTAMP",
-      "primaryKey" : false
+      "primaryKey" : false,
+      "foreignKey" : false
     } ]
   }, {
     "name" : "aux_table_29",
     "columns" : [ {
       "name" : "id",
       "type" : "BIGINT",
-      "primaryKey" : true
+      "primaryKey" : true,
+      "foreignKey" : false
     }, {
       "name" : "tenant_id",
       "type" : "BIGINT",
-      "primaryKey" : false
+      "primaryKey" : false,
+      "foreignKey" : false
     }, {
       "name" : "user_id",
       "type" : "BIGINT",
-      "primaryKey" : false
+      "primaryKey" : false,
+      "foreignKey" : false
     }, {
       "name" : "order_id",
       "type" : "BIGINT",
-      "primaryKey" : false
+      "primaryKey" : false,
+      "foreignKey" : false
     }, {
       "name" : "random_code",
       "type" : "VARCHAR",
-      "primaryKey" : false
+      "primaryKey" : false,
+      "foreignKey" : false
     }, {
       "name" : "created_at",
       "type" : "TIMESTAMP",
-      "primaryKey" : false
+      "primaryKey" : false,
+      "foreignKey" : false
     } ]
   }, {
     "name" : "aux_table_3",
     "columns" : [ {
       "name" : "id",
       "type" : "BIGINT",
-      "primaryKey" : true
+      "primaryKey" : true,
+      "foreignKey" : false
     }, {
       "name" : "tenant_id",
       "type" : "BIGINT",
-      "primaryKey" : false
+      "primaryKey" : false,
+      "foreignKey" : false
     }, {
       "name" : "user_id",
       "type" : "BIGINT",
-      "primaryKey" : false
+      "primaryKey" : false,
+      "foreignKey" : false
     }, {
       "name" : "order_id",
       "type" : "BIGINT",
-      "primaryKey" : false
+      "primaryKey" : false,
+      "foreignKey" : false
     }, {
       "name" : "random_code",
       "type" : "VARCHAR",
-      "primaryKey" : false
+      "primaryKey" : false,
+      "foreignKey" : false
     }, {
       "name" : "created_at",
       "type" : "TIMESTAMP",
-      "primaryKey" : false
+      "primaryKey" : false,
+      "foreignKey" : false
     } ]
   }, {
     "name" : "aux_table_30",
     "columns" : [ {
       "name" : "id",
       "type" : "BIGINT",
-      "primaryKey" : true
+      "primaryKey" : true,
+      "foreignKey" : false
     }, {
       "name" : "tenant_id",
       "type" : "BIGINT",
-      "primaryKey" : false
+      "primaryKey" : false,
+      "foreignKey" : false
     }, {
       "name" : "user_id",
       "type" : "BIGINT",
-      "primaryKey" : false
+      "primaryKey" : false,
+      "foreignKey" : false
     }, {
       "name" : "order_id",
       "type" : "BIGINT",
-      "primaryKey" : false
+      "primaryKey" : false,
+      "foreignKey" : false
     }, {
       "name" : "random_code",
       "type" : "VARCHAR",
-      "primaryKey" : false
+      "primaryKey" : false,
+      "foreignKey" : false
     }, {
       "name" : "created_at",
       "type" : "TIMESTAMP",
-      "primaryKey" : false
+      "primaryKey" : false,
+      "foreignKey" : false
     } ]
   }, {
     "name" : "aux_table_31",
     "columns" : [ {
       "name" : "id",
       "type" : "BIGINT",
-      "primaryKey" : true
+      "primaryKey" : true,
+      "foreignKey" : false
     }, {
       "name" : "tenant_id",
       "type" : "BIGINT",
-      "primaryKey" : false
+      "primaryKey" : false,
+      "foreignKey" : false
     }, {
       "name" : "user_id",
       "type" : "BIGINT",
-      "primaryKey" : false
+      "primaryKey" : false,
+      "foreignKey" : false
     }, {
       "name" : "order_id",
       "type" : "BIGINT",
-      "primaryKey" : false
+      "primaryKey" : false,
+      "foreignKey" : false
     }, {
       "name" : "random_code",
       "type" : "VARCHAR",
-      "primaryKey" : false
+      "primaryKey" : false,
+      "foreignKey" : false
     }, {
       "name" : "created_at",
       "type" : "TIMESTAMP",
-      "primaryKey" : false
+      "primaryKey" : false,
+      "foreignKey" : false
     } ]
   }, {
     "name" : "aux_table_32",
     "columns" : [ {
       "name" : "id",
       "type" : "BIGINT",
-      "primaryKey" : true
+      "primaryKey" : true,
+      "foreignKey" : false
     }, {
       "name" : "tenant_id",
       "type" : "BIGINT",
-      "primaryKey" : false
+      "primaryKey" : false,
+      "foreignKey" : false
     }, {
       "name" : "user_id",
       "type" : "BIGINT",
-      "primaryKey" : false
+      "primaryKey" : false,
+      "foreignKey" : false
     }, {
       "name" : "order_id",
       "type" : "BIGINT",
-      "primaryKey" : false
+      "primaryKey" : false,
+      "foreignKey" : false
     }, {
       "name" : "random_code",
       "type" : "VARCHAR",
-      "primaryKey" : false
+      "primaryKey" : false,
+      "foreignKey" : false
     }, {
       "name" : "created_at",
       "type" : "TIMESTAMP",
-      "primaryKey" : false
+      "primaryKey" : false,
+      "foreignKey" : false
     } ]
   }, {
     "name" : "aux_table_33",
     "columns" : [ {
       "name" : "id",
       "type" : "BIGINT",
-      "primaryKey" : true
+      "primaryKey" : true,
+      "foreignKey" : false
     }, {
       "name" : "tenant_id",
       "type" : "BIGINT",
-      "primaryKey" : false
+      "primaryKey" : false,
+      "foreignKey" : false
     }, {
       "name" : "user_id",
       "type" : "BIGINT",
-      "primaryKey" : false
+      "primaryKey" : false,
+      "foreignKey" : false
     }, {
       "name" : "order_id",
       "type" : "BIGINT",
-      "primaryKey" : false
+      "primaryKey" : false,
+      "foreignKey" : false
     }, {
       "name" : "random_code",
       "type" : "VARCHAR",
-      "primaryKey" : false
+      "primaryKey" : false,
+      "foreignKey" : false
     }, {
       "name" : "created_at",
       "type" : "TIMESTAMP",
-      "primaryKey" : false
+      "primaryKey" : false,
+      "foreignKey" : false
     } ]
   }, {
     "name" : "aux_table_34",
     "columns" : [ {
       "name" : "id",
       "type" : "BIGINT",
-      "primaryKey" : true
+      "primaryKey" : true,
+      "foreignKey" : false
     }, {
       "name" : "tenant_id",
       "type" : "BIGINT",
-      "primaryKey" : false
+      "primaryKey" : false,
+      "foreignKey" : false
     }, {
       "name" : "user_id",
       "type" : "BIGINT",
-      "primaryKey" : false
+      "primaryKey" : false,
+      "foreignKey" : false
     }, {
       "name" : "order_id",
       "type" : "BIGINT",
-      "primaryKey" : false
+      "primaryKey" : false,
+      "foreignKey" : false
     }, {
       "name" : "random_code",
       "type" : "VARCHAR",
-      "primaryKey" : false
+      "primaryKey" : false,
+      "foreignKey" : false
     }, {
       "name" : "created_at",
       "type" : "TIMESTAMP",
-      "primaryKey" : false
+      "primaryKey" : false,
+      "foreignKey" : false
     } ]
   }, {
     "name" : "aux_table_35",
     "columns" : [ {
       "name" : "id",
       "type" : "BIGINT",
-      "primaryKey" : true
+      "primaryKey" : true,
+      "foreignKey" : false
     }, {
       "name" : "tenant_id",
       "type" : "BIGINT",
-      "primaryKey" : false
+      "primaryKey" : false,
+      "foreignKey" : false
     }, {
       "name" : "user_id",
       "type" : "BIGINT",
-      "primaryKey" : false
+      "primaryKey" : false,
+      "foreignKey" : false
     }, {
       "name" : "order_id",
       "type" : "BIGINT",
-      "primaryKey" : false
+      "primaryKey" : false,
+      "foreignKey" : false
     }, {
       "name" : "random_code",
       "type" : "VARCHAR",
-      "primaryKey" : false
+      "primaryKey" : false,
+      "foreignKey" : false
     }, {
       "name" : "created_at",
       "type" : "TIMESTAMP",
-      "primaryKey" : false
+      "primaryKey" : false,
+      "foreignKey" : false
     } ]
   }, {
     "name" : "aux_table_36",
     "columns" : [ {
       "name" : "id",
       "type" : "BIGINT",
-      "primaryKey" : true
+      "primaryKey" : true,
+      "foreignKey" : false
     }, {
       "name" : "tenant_id",
       "type" : "BIGINT",
-      "primaryKey" : false
+      "primaryKey" : false,
+      "foreignKey" : false
     }, {
       "name" : "user_id",
       "type" : "BIGINT",
-      "primaryKey" : false
+      "primaryKey" : false,
+      "foreignKey" : false
     }, {
       "name" : "order_id",
       "type" : "BIGINT",
-      "primaryKey" : false
+      "primaryKey" : false,
+      "foreignKey" : false
     }, {
       "name" : "random_code",
       "type" : "VARCHAR",
-      "primaryKey" : false
+      "primaryKey" : false,
+      "foreignKey" : false
     }, {
       "name" : "created_at",
       "type" : "TIMESTAMP",
-      "primaryKey" : false
+      "primaryKey" : false,
+      "foreignKey" : false
     } ]
   }, {
     "name" : "aux_table_37",
     "columns" : [ {
       "name" : "id",
       "type" : "BIGINT",
-      "primaryKey" : true
+      "primaryKey" : true,
+      "foreignKey" : false
     }, {
       "name" : "tenant_id",
       "type" : "BIGINT",
-      "primaryKey" : false
+      "primaryKey" : false,
+      "foreignKey" : false
     }, {
       "name" : "user_id",
       "type" : "BIGINT",
-      "primaryKey" : false
+      "primaryKey" : false,
+      "foreignKey" : false
     }, {
       "name" : "order_id",
       "type" : "BIGINT",
-      "primaryKey" : false
+      "primaryKey" : false,
+      "foreignKey" : false
     }, {
       "name" : "random_code",
       "type" : "VARCHAR",
-      "primaryKey" : false
+      "primaryKey" : false,
+      "foreignKey" : false
     }, {
       "name" : "created_at",
       "type" : "TIMESTAMP",
-      "primaryKey" : false
+      "primaryKey" : false,
+      "foreignKey" : false
     } ]
   }, {
     "name" : "aux_table_38",
     "columns" : [ {
       "name" : "id",
       "type" : "BIGINT",
-      "primaryKey" : true
+      "primaryKey" : true,
+      "foreignKey" : false
     }, {
       "name" : "tenant_id",
       "type" : "BIGINT",
-      "primaryKey" : false
+      "primaryKey" : false,
+      "foreignKey" : false
     }, {
       "name" : "user_id",
       "type" : "BIGINT",
-      "primaryKey" : false
+      "primaryKey" : false,
+      "foreignKey" : false
     }, {
       "name" : "order_id",
       "type" : "BIGINT",
-      "primaryKey" : false
+      "primaryKey" : false,
+      "foreignKey" : false
     }, {
       "name" : "random_code",
       "type" : "VARCHAR",
-      "primaryKey" : false
+      "primaryKey" : false,
+      "foreignKey" : false
     }, {
       "name" : "created_at",
       "type" : "TIMESTAMP",
-      "primaryKey" : false
+      "primaryKey" : false,
+      "foreignKey" : false
     } ]
   }, {
     "name" : "aux_table_39",
     "columns" : [ {
       "name" : "id",
       "type" : "BIGINT",
-      "primaryKey" : true
+      "primaryKey" : true,
+      "foreignKey" : false
     }, {
       "name" : "tenant_id",
       "type" : "BIGINT",
-      "primaryKey" : false
+      "primaryKey" : false,
+      "foreignKey" : false
     }, {
       "name" : "user_id",
       "type" : "BIGINT",
-      "primaryKey" : false
+      "primaryKey" : false,
+      "foreignKey" : false
     }, {
       "name" : "order_id",
       "type" : "BIGINT",
-      "primaryKey" : false
+      "primaryKey" : false,
+      "foreignKey" : false
     }, {
       "name" : "random_code",
       "type" : "VARCHAR",
-      "primaryKey" : false
+      "primaryKey" : false,
+      "foreignKey" : false
     }, {
       "name" : "created_at",
       "type" : "TIMESTAMP",
-      "primaryKey" : false
+      "primaryKey" : false,
+      "foreignKey" : false
     } ]
   }, {
     "name" : "aux_table_4",
     "columns" : [ {
       "name" : "id",
       "type" : "BIGINT",
-      "primaryKey" : true
+      "primaryKey" : true,
+      "foreignKey" : false
     }, {
       "name" : "tenant_id",
       "type" : "BIGINT",
-      "primaryKey" : false
+      "primaryKey" : false,
+      "foreignKey" : false
     }, {
       "name" : "user_id",
       "type" : "BIGINT",
-      "primaryKey" : false
+      "primaryKey" : false,
+      "foreignKey" : false
     }, {
       "name" : "order_id",
       "type" : "BIGINT",
-      "primaryKey" : false
+      "primaryKey" : false,
+      "foreignKey" : false
     }, {
       "name" : "random_code",
       "type" : "VARCHAR",
-      "primaryKey" : false
+      "primaryKey" : false,
+      "foreignKey" : false
     }, {
       "name" : "created_at",
       "type" : "TIMESTAMP",
-      "primaryKey" : false
+      "primaryKey" : false,
+      "foreignKey" : false
     } ]
   }, {
     "name" : "aux_table_40",
     "columns" : [ {
       "name" : "id",
       "type" : "BIGINT",
-      "primaryKey" : true
+      "primaryKey" : true,
+      "foreignKey" : false
     }, {
       "name" : "tenant_id",
       "type" : "BIGINT",
-      "primaryKey" : false
+      "primaryKey" : false,
+      "foreignKey" : false
     }, {
       "name" : "user_id",
       "type" : "BIGINT",
-      "primaryKey" : false
+      "primaryKey" : false,
+      "foreignKey" : false
     }, {
       "name" : "order_id",
       "type" : "BIGINT",
-      "primaryKey" : false
+      "primaryKey" : false,
+      "foreignKey" : false
     }, {
       "name" : "random_code",
       "type" : "VARCHAR",
-      "primaryKey" : false
+      "primaryKey" : false,
+      "foreignKey" : false
     }, {
       "name" : "created_at",
       "type" : "TIMESTAMP",
-      "primaryKey" : false
+      "primaryKey" : false,
+      "foreignKey" : false
     } ]
   }, {
     "name" : "aux_table_41",
     "columns" : [ {
       "name" : "id",
       "type" : "BIGINT",
-      "primaryKey" : true
+      "primaryKey" : true,
+      "foreignKey" : false
     }, {
       "name" : "tenant_id",
       "type" : "BIGINT",
-      "primaryKey" : false
+      "primaryKey" : false,
+      "foreignKey" : false
     }, {
       "name" : "user_id",
       "type" : "BIGINT",
-      "primaryKey" : false
+      "primaryKey" : false,
+      "foreignKey" : false
     }, {
       "name" : "order_id",
       "type" : "BIGINT",
-      "primaryKey" : false
+      "primaryKey" : false,
+      "foreignKey" : false
     }, {
       "name" : "random_code",
       "type" : "VARCHAR",
-      "primaryKey" : false
+      "primaryKey" : false,
+      "foreignKey" : false
     }, {
       "name" : "created_at",
       "type" : "TIMESTAMP",
-      "primaryKey" : false
+      "primaryKey" : false,
+      "foreignKey" : false
     } ]
   }, {
     "name" : "aux_table_42",
     "columns" : [ {
       "name" : "id",
       "type" : "BIGINT",
-      "primaryKey" : true
+      "primaryKey" : true,
+      "foreignKey" : false
     }, {
       "name" : "tenant_id",
       "type" : "BIGINT",
-      "primaryKey" : false
+      "primaryKey" : false,
+      "foreignKey" : false
     }, {
       "name" : "user_id",
       "type" : "BIGINT",
-      "primaryKey" : false
+      "primaryKey" : false,
+      "foreignKey" : false
     }, {
       "name" : "order_id",
       "type" : "BIGINT",
-      "primaryKey" : false
+      "primaryKey" : false,
+      "foreignKey" : false
     }, {
       "name" : "random_code",
       "type" : "VARCHAR",
-      "primaryKey" : false
+      "primaryKey" : false,
+      "foreignKey" : false
     }, {
       "name" : "created_at",
       "type" : "TIMESTAMP",
-      "primaryKey" : false
+      "primaryKey" : false,
+      "foreignKey" : false
     } ]
   }, {
     "name" : "aux_table_43",
     "columns" : [ {
       "name" : "id",
       "type" : "BIGINT",
-      "primaryKey" : true
+      "primaryKey" : true,
+      "foreignKey" : false
     }, {
       "name" : "tenant_id",
       "type" : "BIGINT",
-      "primaryKey" : false
+      "primaryKey" : false,
+      "foreignKey" : false
     }, {
       "name" : "user_id",
       "type" : "BIGINT",
-      "primaryKey" : false
+      "primaryKey" : false,
+      "foreignKey" : false
     }, {
       "name" : "order_id",
       "type" : "BIGINT",
-      "primaryKey" : false
+      "primaryKey" : false,
+      "foreignKey" : false
     }, {
       "name" : "random_code",
       "type" : "VARCHAR",
-      "primaryKey" : false
+      "primaryKey" : false,
+      "foreignKey" : false
     }, {
       "name" : "created_at",
       "type" : "TIMESTAMP",
-      "primaryKey" : false
+      "primaryKey" : false,
+      "foreignKey" : false
     } ]
   }, {
     "name" : "aux_table_44",
     "columns" : [ {
       "name" : "id",
       "type" : "BIGINT",
-      "primaryKey" : true
+      "primaryKey" : true,
+      "foreignKey" : false
     }, {
       "name" : "tenant_id",
       "type" : "BIGINT",
-      "primaryKey" : false
+      "primaryKey" : false,
+      "foreignKey" : false
     }, {
       "name" : "user_id",
       "type" : "BIGINT",
-      "primaryKey" : false
+      "primaryKey" : false,
+      "foreignKey" : false
     }, {
       "name" : "order_id",
       "type" : "BIGINT",
-      "primaryKey" : false
+      "primaryKey" : false,
+      "foreignKey" : false
     }, {
       "name" : "random_code",
       "type" : "VARCHAR",
-      "primaryKey" : false
+      "primaryKey" : false,
+      "foreignKey" : false
     }, {
       "name" : "created_at",
       "type" : "TIMESTAMP",
-      "primaryKey" : false
+      "primaryKey" : false,
+      "foreignKey" : false
     } ]
   }, {
     "name" : "aux_table_45",
     "columns" : [ {
       "name" : "id",
       "type" : "BIGINT",
-      "primaryKey" : true
+      "primaryKey" : true,
+      "foreignKey" : false
     }, {
       "name" : "tenant_id",
       "type" : "BIGINT",
-      "primaryKey" : false
+      "primaryKey" : false,
+      "foreignKey" : false
     }, {
       "name" : "user_id",
       "type" : "BIGINT",
-      "primaryKey" : false
+      "primaryKey" : false,
+      "foreignKey" : false
     }, {
       "name" : "order_id",
       "type" : "BIGINT",
-      "primaryKey" : false
+      "primaryKey" : false,
+      "foreignKey" : false
     }, {
       "name" : "random_code",
       "type" : "VARCHAR",
-      "primaryKey" : false
+      "primaryKey" : false,
+      "foreignKey" : false
     }, {
       "name" : "created_at",
       "type" : "TIMESTAMP",
-      "primaryKey" : false
+      "primaryKey" : false,
+      "foreignKey" : false
     } ]
   }, {
     "name" : "aux_table_46",
     "columns" : [ {
       "name" : "id",
       "type" : "BIGINT",
-      "primaryKey" : true
+      "primaryKey" : true,
+      "foreignKey" : false
     }, {
       "name" : "tenant_id",
       "type" : "BIGINT",
-      "primaryKey" : false
+      "primaryKey" : false,
+      "foreignKey" : false
     }, {
       "name" : "user_id",
       "type" : "BIGINT",
-      "primaryKey" : false
+      "primaryKey" : false,
+      "foreignKey" : false
     }, {
       "name" : "order_id",
       "type" : "BIGINT",
-      "primaryKey" : false
+      "primaryKey" : false,
+      "foreignKey" : false
     }, {
       "name" : "random_code",
       "type" : "VARCHAR",
-      "primaryKey" : false
+      "primaryKey" : false,
+      "foreignKey" : false
     }, {
       "name" : "created_at",
       "type" : "TIMESTAMP",
-      "primaryKey" : false
+      "primaryKey" : false,
+      "foreignKey" : false
     } ]
   }, {
     "name" : "aux_table_47",
     "columns" : [ {
       "name" : "id",
       "type" : "BIGINT",
-      "primaryKey" : true
+      "primaryKey" : true,
+      "foreignKey" : false
     }, {
       "name" : "tenant_id",
       "type" : "BIGINT",
-      "primaryKey" : false
+      "primaryKey" : false,
+      "foreignKey" : false
     }, {
       "name" : "user_id",
       "type" : "BIGINT",
-      "primaryKey" : false
+      "primaryKey" : false,
+      "foreignKey" : false
     }, {
       "name" : "order_id",
       "type" : "BIGINT",
-      "primaryKey" : false
+      "primaryKey" : false,
+      "foreignKey" : false
     }, {
       "name" : "random_code",
       "type" : "VARCHAR",
-      "primaryKey" : false
+      "primaryKey" : false,
+      "foreignKey" : false
     }, {
       "name" : "created_at",
       "type" : "TIMESTAMP",
-      "primaryKey" : false
+      "primaryKey" : false,
+      "foreignKey" : false
     } ]
   }, {
     "name" : "aux_table_48",
     "columns" : [ {
       "name" : "id",
       "type" : "BIGINT",
-      "primaryKey" : true
+      "primaryKey" : true,
+      "foreignKey" : false
     }, {
       "name" : "tenant_id",
       "type" : "BIGINT",
-      "primaryKey" : false
+      "primaryKey" : false,
+      "foreignKey" : false
     }, {
       "name" : "user_id",
       "type" : "BIGINT",
-      "primaryKey" : false
+      "primaryKey" : false,
+      "foreignKey" : false
     }, {
       "name" : "order_id",
       "type" : "BIGINT",
-      "primaryKey" : false
+      "primaryKey" : false,
+      "foreignKey" : false
     }, {
       "name" : "random_code",
       "type" : "VARCHAR",
-      "primaryKey" : false
+      "primaryKey" : false,
+      "foreignKey" : false
     }, {
       "name" : "created_at",
       "type" : "TIMESTAMP",
-      "primaryKey" : false
+      "primaryKey" : false,
+      "foreignKey" : false
     } ]
   }, {
     "name" : "aux_table_49",
     "columns" : [ {
       "name" : "id",
       "type" : "BIGINT",
-      "primaryKey" : true
+      "primaryKey" : true,
+      "foreignKey" : false
     }, {
       "name" : "tenant_id",
       "type" : "BIGINT",
-      "primaryKey" : false
+      "primaryKey" : false,
+      "foreignKey" : false
     }, {
       "name" : "user_id",
       "type" : "BIGINT",
-      "primaryKey" : false
+      "primaryKey" : false,
+      "foreignKey" : false
     }, {
       "name" : "order_id",
       "type" : "BIGINT",
-      "primaryKey" : false
+      "primaryKey" : false,
+      "foreignKey" : false
     }, {
       "name" : "random_code",
       "type" : "VARCHAR",
-      "primaryKey" : false
+      "primaryKey" : false,
+      "foreignKey" : false
     }, {
       "name" : "created_at",
       "type" : "TIMESTAMP",
-      "primaryKey" : false
+      "primaryKey" : false,
+      "foreignKey" : false
     } ]
   }, {
     "name" : "aux_table_5",
     "columns" : [ {
       "name" : "id",
       "type" : "BIGINT",
-      "primaryKey" : true
+      "primaryKey" : true,
+      "foreignKey" : false
     }, {
       "name" : "tenant_id",
       "type" : "BIGINT",
-      "primaryKey" : false
+      "primaryKey" : false,
+      "foreignKey" : false
     }, {
       "name" : "user_id",
       "type" : "BIGINT",
-      "primaryKey" : false
+      "primaryKey" : false,
+      "foreignKey" : false
     }, {
       "name" : "order_id",
       "type" : "BIGINT",
-      "primaryKey" : false
+      "primaryKey" : false,
+      "foreignKey" : false
     }, {
       "name" : "random_code",
       "type" : "VARCHAR",
-      "primaryKey" : false
+      "primaryKey" : false,
+      "foreignKey" : false
     }, {
       "name" : "created_at",
       "type" : "TIMESTAMP",
-      "primaryKey" : false
+      "primaryKey" : false,
+      "foreignKey" : false
     } ]
   }, {
     "name" : "aux_table_50",
     "columns" : [ {
       "name" : "id",
       "type" : "BIGINT",
-      "primaryKey" : true
+      "primaryKey" : true,
+      "foreignKey" : false
     }, {
       "name" : "tenant_id",
       "type" : "BIGINT",
-      "primaryKey" : false
+      "primaryKey" : false,
+      "foreignKey" : false
     }, {
       "name" : "user_id",
       "type" : "BIGINT",
-      "primaryKey" : false
+      "primaryKey" : false,
+      "foreignKey" : false
     }, {
       "name" : "order_id",
       "type" : "BIGINT",
-      "primaryKey" : false
+      "primaryKey" : false,
+      "foreignKey" : false
     }, {
       "name" : "random_code",
       "type" : "VARCHAR",
-      "primaryKey" : false
+      "primaryKey" : false,
+      "foreignKey" : false
     }, {
       "name" : "created_at",
       "type" : "TIMESTAMP",
-      "primaryKey" : false
+      "primaryKey" : false,
+      "foreignKey" : false
     } ]
   }, {
     "name" : "aux_table_6",
     "columns" : [ {
       "name" : "id",
       "type" : "BIGINT",
-      "primaryKey" : true
+      "primaryKey" : true,
+      "foreignKey" : false
     }, {
       "name" : "tenant_id",
       "type" : "BIGINT",
-      "primaryKey" : false
+      "primaryKey" : false,
+      "foreignKey" : false
     }, {
       "name" : "user_id",
       "type" : "BIGINT",
-      "primaryKey" : false
+      "primaryKey" : false,
+      "foreignKey" : false
     }, {
       "name" : "order_id",
       "type" : "BIGINT",
-      "primaryKey" : false
+      "primaryKey" : false,
+      "foreignKey" : false
     }, {
       "name" : "random_code",
       "type" : "VARCHAR",
-      "primaryKey" : false
+      "primaryKey" : false,
+      "foreignKey" : false
     }, {
       "name" : "created_at",
       "type" : "TIMESTAMP",
-      "primaryKey" : false
+      "primaryKey" : false,
+      "foreignKey" : false
     } ]
   }, {
     "name" : "aux_table_7",
     "columns" : [ {
       "name" : "id",
       "type" : "BIGINT",
-      "primaryKey" : true
+      "primaryKey" : true,
+      "foreignKey" : false
     }, {
       "name" : "tenant_id",
       "type" : "BIGINT",
-      "primaryKey" : false
+      "primaryKey" : false,
+      "foreignKey" : false
     }, {
       "name" : "user_id",
       "type" : "BIGINT",
-      "primaryKey" : false
+      "primaryKey" : false,
+      "foreignKey" : false
     }, {
       "name" : "order_id",
       "type" : "BIGINT",
-      "primaryKey" : false
+      "primaryKey" : false,
+      "foreignKey" : false
     }, {
       "name" : "random_code",
       "type" : "VARCHAR",
-      "primaryKey" : false
+      "primaryKey" : false,
+      "foreignKey" : false
     }, {
       "name" : "created_at",
       "type" : "TIMESTAMP",
-      "primaryKey" : false
+      "primaryKey" : false,
+      "foreignKey" : false
     } ]
   }, {
     "name" : "aux_table_8",
     "columns" : [ {
       "name" : "id",
       "type" : "BIGINT",
-      "primaryKey" : true
+      "primaryKey" : true,
+      "foreignKey" : false
     }, {
       "name" : "tenant_id",
       "type" : "BIGINT",
-      "primaryKey" : false
+      "primaryKey" : false,
+      "foreignKey" : false
     }, {
       "name" : "user_id",
       "type" : "BIGINT",
-      "primaryKey" : false
+      "primaryKey" : false,
+      "foreignKey" : false
     }, {
       "name" : "order_id",
       "type" : "BIGINT",
-      "primaryKey" : false
+      "primaryKey" : false,
+      "foreignKey" : false
     }, {
       "name" : "random_code",
       "type" : "VARCHAR",
-      "primaryKey" : false
+      "primaryKey" : false,
+      "foreignKey" : false
     }, {
       "name" : "created_at",
       "type" : "TIMESTAMP",
-      "primaryKey" : false
+      "primaryKey" : false,
+      "foreignKey" : false
     } ]
   }, {
     "name" : "aux_table_9",
     "columns" : [ {
       "name" : "id",
       "type" : "BIGINT",
-      "primaryKey" : true
+      "primaryKey" : true,
+      "foreignKey" : false
     }, {
       "name" : "tenant_id",
       "type" : "BIGINT",
-      "primaryKey" : false
+      "primaryKey" : false,
+      "foreignKey" : false
     }, {
       "name" : "user_id",
       "type" : "BIGINT",
-      "primaryKey" : false
+      "primaryKey" : false,
+      "foreignKey" : false
     }, {
       "name" : "order_id",
       "type" : "BIGINT",
-      "primaryKey" : false
+      "primaryKey" : false,
+      "foreignKey" : false
     }, {
       "name" : "random_code",
       "type" : "VARCHAR",
-      "primaryKey" : false
+      "primaryKey" : false,
+      "foreignKey" : false
     }, {
       "name" : "created_at",
       "type" : "TIMESTAMP",
-      "primaryKey" : false
+      "primaryKey" : false,
+      "foreignKey" : false
     } ]
   }, {
     "name" : "categories",
     "columns" : [ {
       "name" : "category_id",
       "type" : "BIGINT",
-      "primaryKey" : true
+      "primaryKey" : true,
+      "foreignKey" : false
     }, {
       "name" : "category_name",
       "type" : "VARCHAR",
-      "primaryKey" : false
+      "primaryKey" : false,
+      "foreignKey" : false
     } ]
   }, {
     "name" : "inventory",
     "columns" : [ {
       "name" : "inventory_id",
       "type" : "BIGINT",
-      "primaryKey" : true
+      "primaryKey" : true,
+      "foreignKey" : false
     }, {
       "name" : "product_id",
       "type" : "BIGINT",
-      "primaryKey" : false
+      "primaryKey" : false,
+      "foreignKey" : true
     }, {
       "name" : "quantity",
       "type" : "INT",
-      "primaryKey" : false
+      "primaryKey" : false,
+      "foreignKey" : false
     }, {
       "name" : "warehouse_code",
       "type" : "VARCHAR",
-      "primaryKey" : false
+      "primaryKey" : false,
+      "foreignKey" : false
     } ]
   }, {
     "name" : "invoices",
     "columns" : [ {
       "name" : "invoice_id",
       "type" : "BIGINT",
-      "primaryKey" : true
+      "primaryKey" : true,
+      "foreignKey" : false
     }, {
       "name" : "order_id",
       "type" : "BIGINT",
-      "primaryKey" : false
+      "primaryKey" : false,
+      "foreignKey" : true
     }, {
       "name" : "total_amount",
       "type" : "DECIMAL",
-      "primaryKey" : false
+      "primaryKey" : false,
+      "foreignKey" : false
     }, {
       "name" : "generated_at",
       "type" : "TIMESTAMP",
-      "primaryKey" : false
+      "primaryKey" : false,
+      "foreignKey" : false
     } ]
   }, {
     "name" : "notifications",
     "columns" : [ {
       "name" : "notification_id",
       "type" : "BIGINT",
-      "primaryKey" : true
+      "primaryKey" : true,
+      "foreignKey" : false
     }, {
       "name" : "user_id",
       "type" : "BIGINT",
-      "primaryKey" : false
+      "primaryKey" : false,
+      "foreignKey" : true
     }, {
       "name" : "message",
       "type" : "TEXT",
-      "primaryKey" : false
+      "primaryKey" : false,
+      "foreignKey" : false
     }, {
       "name" : "sent_at",
       "type" : "TIMESTAMP",
-      "primaryKey" : false
+      "primaryKey" : false,
+      "foreignKey" : false
     } ]
   }, {
     "name" : "order_items",
     "columns" : [ {
       "name" : "order_item_id",
       "type" : "BIGINT",
-      "primaryKey" : true
+      "primaryKey" : true,
+      "foreignKey" : false
     }, {
       "name" : "order_id",
       "type" : "BIGINT",
-      "primaryKey" : false
+      "primaryKey" : false,
+      "foreignKey" : true
     }, {
       "name" : "product_id",
       "type" : "BIGINT",
-      "primaryKey" : false
+      "primaryKey" : false,
+      "foreignKey" : true
     }, {
       "name" : "quantity",
       "type" : "INT",
-      "primaryKey" : false
+      "primaryKey" : false,
+      "foreignKey" : false
     }, {
       "name" : "price",
       "type" : "DECIMAL",
-      "primaryKey" : false
+      "primaryKey" : false,
+      "foreignKey" : false
     } ]
   }, {
     "name" : "orders",
     "columns" : [ {
       "name" : "order_id",
       "type" : "INT",
-      "primaryKey" : true
+      "primaryKey" : true,
+      "foreignKey" : false
     }, {
       "name" : "customer_id",
       "type" : "INT",
-      "primaryKey" : false
+      "primaryKey" : false,
+      "foreignKey" : false
     }, {
       "name" : "amount",
       "type" : "DECIMAL",
-      "primaryKey" : false
+      "primaryKey" : false,
+      "foreignKey" : false
     }, {
       "name" : "order_id",
       "type" : "BIGINT",
-      "primaryKey" : true
+      "primaryKey" : true,
+      "foreignKey" : false
     }, {
       "name" : "user_id",
       "type" : "BIGINT",
-      "primaryKey" : false
+      "primaryKey" : false,
+      "foreignKey" : true
     }, {
       "name" : "tenant_id",
       "type" : "BIGINT",
-      "primaryKey" : false
+      "primaryKey" : false,
+      "foreignKey" : true
     }, {
       "name" : "order_date",
       "type" : "DATE",
-      "primaryKey" : false
+      "primaryKey" : false,
+      "foreignKey" : false
     }, {
       "name" : "status",
       "type" : "VARCHAR",
-      "primaryKey" : false
+      "primaryKey" : false,
+      "foreignKey" : false
     } ]
   }, {
     "name" : "payments",
     "columns" : [ {
       "name" : "payment_id",
       "type" : "INT",
-      "primaryKey" : true
+      "primaryKey" : true,
+      "foreignKey" : false
     }, {
       "name" : "order_id",
       "type" : "INT",
-      "primaryKey" : false
+      "primaryKey" : false,
+      "foreignKey" : true
     }, {
       "name" : "paid_amount",
       "type" : "DECIMAL",
-      "primaryKey" : false
+      "primaryKey" : false,
+      "foreignKey" : false
     }, {
       "name" : "payment_id",
       "type" : "BIGINT",
-      "primaryKey" : true
+      "primaryKey" : true,
+      "foreignKey" : false
     }, {
       "name" : "order_id",
       "type" : "BIGINT",
-      "primaryKey" : false
+      "primaryKey" : false,
+      "foreignKey" : true
     }, {
       "name" : "user_id",
       "type" : "BIGINT",
-      "primaryKey" : false
+      "primaryKey" : false,
+      "foreignKey" : true
     }, {
       "name" : "amount",
       "type" : "DECIMAL",
-      "primaryKey" : false
+      "primaryKey" : false,
+      "foreignKey" : false
     }, {
       "name" : "payment_status",
       "type" : "VARCHAR",
-      "primaryKey" : false
+      "primaryKey" : false,
+      "foreignKey" : false
     } ]
   }, {
     "name" : "products",
     "columns" : [ {
       "name" : "product_id",
       "type" : "BIGINT",
-      "primaryKey" : true
+      "primaryKey" : true,
+      "foreignKey" : false
     }, {
       "name" : "category_id",
       "type" : "BIGINT",
-      "primaryKey" : false
+      "primaryKey" : false,
+      "foreignKey" : true
     }, {
       "name" : "product_name",
       "type" : "VARCHAR",
-      "primaryKey" : false
+      "primaryKey" : false,
+      "foreignKey" : false
     }, {
       "name" : "price",
       "type" : "DECIMAL",
-      "primaryKey" : false
+      "primaryKey" : false,
+      "foreignKey" : false
     } ]
   }, {
     "name" : "roles",
     "columns" : [ {
       "name" : "role_id",
       "type" : "BIGINT",
-      "primaryKey" : true
+      "primaryKey" : true,
+      "foreignKey" : false
     }, {
       "name" : "role_name",
       "type" : "VARCHAR",
-      "primaryKey" : false
+      "primaryKey" : false,
+      "foreignKey" : false
     } ]
   }, {
     "name" : "shipments",
     "columns" : [ {
       "name" : "shipment_id",
       "type" : "BIGINT",
-      "primaryKey" : true
+      "primaryKey" : true,
+      "foreignKey" : false
     }, {
       "name" : "order_id",
       "type" : "BIGINT",
-      "primaryKey" : false
+      "primaryKey" : false,
+      "foreignKey" : true
     }, {
       "name" : "tracking_number",
       "type" : "VARCHAR",
-      "primaryKey" : false
+      "primaryKey" : false,
+      "foreignKey" : false
     }, {
       "name" : "shipped_date",
       "type" : "DATE",
-      "primaryKey" : false
+      "primaryKey" : false,
+      "foreignKey" : false
     } ]
   }, {
     "name" : "tenants",
     "columns" : [ {
       "name" : "tenant_id",
       "type" : "BIGINT",
-      "primaryKey" : true
+      "primaryKey" : true,
+      "foreignKey" : false
     }, {
       "name" : "tenant_name",
       "type" : "VARCHAR",
-      "primaryKey" : false
+      "primaryKey" : false,
+      "foreignKey" : false
     }, {
       "name" : "created_at",
       "type" : "TIMESTAMP",
-      "primaryKey" : false
+      "primaryKey" : false,
+      "foreignKey" : false
     } ]
   }, {
     "name" : "user_roles",
     "columns" : [ {
       "name" : "user_id",
       "type" : "BIGINT",
-      "primaryKey" : true
+      "primaryKey" : true,
+      "foreignKey" : true
     }, {
       "name" : "role_id",
       "type" : "BIGINT",
-      "primaryKey" : true
+      "primaryKey" : true,
+      "foreignKey" : true
     } ]
   }, {
     "name" : "users",
     "columns" : [ {
       "name" : "user_id",
       "type" : "BIGINT",
-      "primaryKey" : true
+      "primaryKey" : true,
+      "foreignKey" : false
     }, {
       "name" : "tenant_id",
       "type" : "BIGINT",
-      "primaryKey" : false
+      "primaryKey" : false,
+      "foreignKey" : true
     }, {
       "name" : "email",
       "type" : "VARCHAR",
-      "primaryKey" : false
+      "primaryKey" : false,
+      "foreignKey" : false
     }, {
       "name" : "username",
       "type" : "VARCHAR",
-      "primaryKey" : false
+      "primaryKey" : false,
+      "foreignKey" : false
     }, {
       "name" : "created_at",
       "type" : "TIMESTAMP",
-      "primaryKey" : false
+      "primaryKey" : false,
+      "foreignKey" : false
     }, {
       "name" : "USER",
       "type" : "CHAR",
-      "primaryKey" : false
+      "primaryKey" : false,
+      "foreignKey" : false
     }, {
       "name" : "CURRENT_CONNECTIONS",
       "type" : "BIGINT",
-      "primaryKey" : false
+      "primaryKey" : false,
+      "foreignKey" : false
     }, {
       "name" : "TOTAL_CONNECTIONS",
       "type" : "BIGINT",
-      "primaryKey" : false
+      "primaryKey" : false,
+      "foreignKey" : false
     }, {
       "name" : "MAX_SESSION_CONTROLLED_MEMORY",
       "type" : "BIGINT UNSIGNED",
-      "primaryKey" : false
+      "primaryKey" : false,
+      "foreignKey" : false
     }, {
       "name" : "MAX_SESSION_TOTAL_MEMORY",
       "type" : "BIGINT UNSIGNED",
-      "primaryKey" : false
+      "primaryKey" : false,
+      "foreignKey" : false
     } ]
   } ],
   "relationships" : [ {
-    "sourceTable" : "orders",
-    "targetTable" : "tenants",
-    "sourceColumn" : "tenant_id",
-    "targetColumn" : "tenant_id",
-    "type" : "strict",
-    "confidence" : 1.0
-  }, {
-    "sourceTable" : "orders",
-    "targetTable" : "users",
-    "sourceColumn" : "user_id",
-    "targetColumn" : "user_id",
-    "type" : "strict",
-    "confidence" : 1.0
-  }, {
-    "sourceTable" : "payments",
-    "targetTable" : "orders",
-    "sourceColumn" : "order_id",
-    "targetColumn" : "order_id",
-    "type" : "strict",
-    "confidence" : 1.0
-  }, {
-    "sourceTable" : "payments",
-    "targetTable" : "users",
-    "sourceColumn" : "user_id",
-    "targetColumn" : "user_id",
-    "type" : "strict",
-    "confidence" : 1.0
-  }, {
     "sourceTable" : "audit_logs",
-    "targetTable" : "users",
     "sourceColumn" : "user_id",
+    "targetTable" : "users",
     "targetColumn" : "user_id",
-    "type" : "strict",
+    "relationshipType" : "STRICT",
     "confidence" : 1.0
   }, {
     "sourceTable" : "inventory",
-    "targetTable" : "products",
     "sourceColumn" : "product_id",
+    "targetTable" : "products",
     "targetColumn" : "product_id",
-    "type" : "strict",
+    "relationshipType" : "STRICT",
     "confidence" : 1.0
   }, {
     "sourceTable" : "invoices",
-    "targetTable" : "orders",
     "sourceColumn" : "order_id",
+    "targetTable" : "orders",
     "targetColumn" : "order_id",
-    "type" : "strict",
+    "relationshipType" : "STRICT",
     "confidence" : 1.0
   }, {
     "sourceTable" : "notifications",
-    "targetTable" : "users",
     "sourceColumn" : "user_id",
+    "targetTable" : "users",
     "targetColumn" : "user_id",
-    "type" : "strict",
+    "relationshipType" : "STRICT",
     "confidence" : 1.0
   }, {
     "sourceTable" : "order_items",
-    "targetTable" : "orders",
     "sourceColumn" : "order_id",
+    "targetTable" : "orders",
     "targetColumn" : "order_id",
-    "type" : "strict",
+    "relationshipType" : "STRICT",
     "confidence" : 1.0
   }, {
     "sourceTable" : "order_items",
-    "targetTable" : "products",
     "sourceColumn" : "product_id",
+    "targetTable" : "products",
     "targetColumn" : "product_id",
-    "type" : "strict",
+    "relationshipType" : "STRICT",
     "confidence" : 1.0
   }, {
     "sourceTable" : "orders",
-    "targetTable" : "tenants",
     "sourceColumn" : "tenant_id",
+    "targetTable" : "tenants",
     "targetColumn" : "tenant_id",
-    "type" : "strict",
+    "relationshipType" : "STRICT",
     "confidence" : 1.0
   }, {
     "sourceTable" : "orders",
-    "targetTable" : "users",
     "sourceColumn" : "user_id",
+    "targetTable" : "users",
     "targetColumn" : "user_id",
-    "type" : "strict",
+    "relationshipType" : "STRICT",
     "confidence" : 1.0
   }, {
     "sourceTable" : "payments",
-    "targetTable" : "orders",
     "sourceColumn" : "order_id",
+    "targetTable" : "orders",
     "targetColumn" : "order_id",
-    "type" : "strict",
+    "relationshipType" : "STRICT",
     "confidence" : 1.0
   }, {
     "sourceTable" : "payments",
-    "targetTable" : "users",
     "sourceColumn" : "user_id",
+    "targetTable" : "users",
     "targetColumn" : "user_id",
-    "type" : "strict",
+    "relationshipType" : "STRICT",
     "confidence" : 1.0
   }, {
     "sourceTable" : "products",
-    "targetTable" : "categories",
     "sourceColumn" : "category_id",
+    "targetTable" : "categories",
     "targetColumn" : "category_id",
-    "type" : "strict",
+    "relationshipType" : "STRICT",
     "confidence" : 1.0
   }, {
     "sourceTable" : "shipments",
-    "targetTable" : "orders",
     "sourceColumn" : "order_id",
+    "targetTable" : "orders",
     "targetColumn" : "order_id",
-    "type" : "strict",
+    "relationshipType" : "STRICT",
     "confidence" : 1.0
   }, {
     "sourceTable" : "user_roles",
-    "targetTable" : "roles",
     "sourceColumn" : "role_id",
+    "targetTable" : "roles",
     "targetColumn" : "role_id",
-    "type" : "strict",
+    "relationshipType" : "STRICT",
     "confidence" : 1.0
   }, {
     "sourceTable" : "user_roles",
-    "targetTable" : "users",
     "sourceColumn" : "user_id",
+    "targetTable" : "users",
     "targetColumn" : "user_id",
-    "type" : "strict",
+    "relationshipType" : "STRICT",
     "confidence" : 1.0
   }, {
     "sourceTable" : "users",
-    "targetTable" : "tenants",
     "sourceColumn" : "tenant_id",
+    "targetTable" : "tenants",
     "targetColumn" : "tenant_id",
-    "type" : "strict",
+    "relationshipType" : "STRICT",
+    "confidence" : 1.0
+  }, {
+    "sourceTable" : "order_items",
+    "sourceColumn" : "order_item_id",
+    "targetTable" : "users",
+    "targetColumn" : "tenant_id",
+    "relationshipType" : "DATA_SAMPLE",
+    "confidence" : 1.0
+  }, {
+    "sourceTable" : "order_items",
+    "sourceColumn" : "order_item_id",
+    "targetTable" : "users",
+    "targetColumn" : "user_id",
+    "relationshipType" : "DATA_SAMPLE",
+    "confidence" : 1.0
+  }, {
+    "sourceTable" : "order_items",
+    "sourceColumn" : "quantity",
+    "targetTable" : "users",
+    "targetColumn" : "tenant_id",
+    "relationshipType" : "DATA_SAMPLE",
+    "confidence" : 1.0
+  }, {
+    "sourceTable" : "order_items",
+    "sourceColumn" : "quantity",
+    "targetTable" : "users",
+    "targetColumn" : "user_id",
+    "relationshipType" : "DATA_SAMPLE",
+    "confidence" : 1.0
+  }, {
+    "sourceTable" : "order_items",
+    "sourceColumn" : "product_id",
+    "targetTable" : "users",
+    "targetColumn" : "tenant_id",
+    "relationshipType" : "DATA_SAMPLE",
+    "confidence" : 1.0
+  }, {
+    "sourceTable" : "order_items",
+    "sourceColumn" : "product_id",
+    "targetTable" : "users",
+    "targetColumn" : "user_id",
+    "relationshipType" : "DATA_SAMPLE",
+    "confidence" : 1.0
+  }, {
+    "sourceTable" : "order_items",
+    "sourceColumn" : "order_id",
+    "targetTable" : "users",
+    "targetColumn" : "tenant_id",
+    "relationshipType" : "DATA_SAMPLE",
+    "confidence" : 1.0
+  }, {
+    "sourceTable" : "order_items",
+    "sourceColumn" : "order_id",
+    "targetTable" : "users",
+    "targetColumn" : "user_id",
+    "relationshipType" : "DATA_SAMPLE",
+    "confidence" : 1.0
+  }, {
+    "sourceTable" : "order_items",
+    "sourceColumn" : "order_item_id",
+    "targetTable" : "orders",
+    "targetColumn" : "tenant_id",
+    "relationshipType" : "DATA_SAMPLE",
+    "confidence" : 1.0
+  }, {
+    "sourceTable" : "order_items",
+    "sourceColumn" : "order_item_id",
+    "targetTable" : "orders",
+    "targetColumn" : "user_id",
+    "relationshipType" : "DATA_SAMPLE",
+    "confidence" : 1.0
+  }, {
+    "sourceTable" : "order_items",
+    "sourceColumn" : "order_item_id",
+    "targetTable" : "orders",
+    "targetColumn" : "order_id",
+    "relationshipType" : "DATA_SAMPLE",
+    "confidence" : 1.0
+  }, {
+    "sourceTable" : "order_items",
+    "sourceColumn" : "quantity",
+    "targetTable" : "orders",
+    "targetColumn" : "tenant_id",
+    "relationshipType" : "DATA_SAMPLE",
+    "confidence" : 1.0
+  }, {
+    "sourceTable" : "order_items",
+    "sourceColumn" : "quantity",
+    "targetTable" : "orders",
+    "targetColumn" : "user_id",
+    "relationshipType" : "DATA_SAMPLE",
+    "confidence" : 1.0
+  }, {
+    "sourceTable" : "order_items",
+    "sourceColumn" : "quantity",
+    "targetTable" : "orders",
+    "targetColumn" : "order_id",
+    "relationshipType" : "DATA_SAMPLE",
+    "confidence" : 1.0
+  }, {
+    "sourceTable" : "order_items",
+    "sourceColumn" : "product_id",
+    "targetTable" : "orders",
+    "targetColumn" : "tenant_id",
+    "relationshipType" : "DATA_SAMPLE",
+    "confidence" : 1.0
+  }, {
+    "sourceTable" : "order_items",
+    "sourceColumn" : "product_id",
+    "targetTable" : "orders",
+    "targetColumn" : "user_id",
+    "relationshipType" : "DATA_SAMPLE",
+    "confidence" : 1.0
+  }, {
+    "sourceTable" : "order_items",
+    "sourceColumn" : "product_id",
+    "targetTable" : "orders",
+    "targetColumn" : "order_id",
+    "relationshipType" : "DATA_SAMPLE",
+    "confidence" : 1.0
+  }, {
+    "sourceTable" : "order_items",
+    "sourceColumn" : "order_id",
+    "targetTable" : "orders",
+    "targetColumn" : "tenant_id",
+    "relationshipType" : "DATA_SAMPLE",
+    "confidence" : 1.0
+  }, {
+    "sourceTable" : "order_items",
+    "sourceColumn" : "order_id",
+    "targetTable" : "orders",
+    "targetColumn" : "user_id",
+    "relationshipType" : "DATA_SAMPLE",
+    "confidence" : 1.0
+  }, {
+    "sourceTable" : "order_items",
+    "sourceColumn" : "order_id",
+    "targetTable" : "orders",
+    "targetColumn" : "order_id",
+    "relationshipType" : "DATA_SAMPLE",
+    "confidence" : 1.0
+  }, {
+    "sourceTable" : "order_items",
+    "sourceColumn" : "order_item_id",
+    "targetTable" : "payments",
+    "targetColumn" : "user_id",
+    "relationshipType" : "DATA_SAMPLE",
+    "confidence" : 1.0
+  }, {
+    "sourceTable" : "order_items",
+    "sourceColumn" : "order_item_id",
+    "targetTable" : "payments",
+    "targetColumn" : "payment_id",
+    "relationshipType" : "DATA_SAMPLE",
+    "confidence" : 1.0
+  }, {
+    "sourceTable" : "order_items",
+    "sourceColumn" : "order_item_id",
+    "targetTable" : "payments",
+    "targetColumn" : "order_id",
+    "relationshipType" : "DATA_SAMPLE",
+    "confidence" : 1.0
+  }, {
+    "sourceTable" : "order_items",
+    "sourceColumn" : "quantity",
+    "targetTable" : "payments",
+    "targetColumn" : "user_id",
+    "relationshipType" : "DATA_SAMPLE",
+    "confidence" : 1.0
+  }, {
+    "sourceTable" : "order_items",
+    "sourceColumn" : "quantity",
+    "targetTable" : "payments",
+    "targetColumn" : "payment_id",
+    "relationshipType" : "DATA_SAMPLE",
+    "confidence" : 1.0
+  }, {
+    "sourceTable" : "order_items",
+    "sourceColumn" : "quantity",
+    "targetTable" : "payments",
+    "targetColumn" : "order_id",
+    "relationshipType" : "DATA_SAMPLE",
+    "confidence" : 1.0
+  }, {
+    "sourceTable" : "order_items",
+    "sourceColumn" : "price",
+    "targetTable" : "payments",
+    "targetColumn" : "amount",
+    "relationshipType" : "DATA_SAMPLE",
+    "confidence" : 1.0
+  }, {
+    "sourceTable" : "order_items",
+    "sourceColumn" : "product_id",
+    "targetTable" : "payments",
+    "targetColumn" : "user_id",
+    "relationshipType" : "DATA_SAMPLE",
+    "confidence" : 1.0
+  }, {
+    "sourceTable" : "order_items",
+    "sourceColumn" : "product_id",
+    "targetTable" : "payments",
+    "targetColumn" : "payment_id",
+    "relationshipType" : "DATA_SAMPLE",
+    "confidence" : 1.0
+  }, {
+    "sourceTable" : "order_items",
+    "sourceColumn" : "product_id",
+    "targetTable" : "payments",
+    "targetColumn" : "order_id",
+    "relationshipType" : "DATA_SAMPLE",
+    "confidence" : 1.0
+  }, {
+    "sourceTable" : "order_items",
+    "sourceColumn" : "order_id",
+    "targetTable" : "payments",
+    "targetColumn" : "user_id",
+    "relationshipType" : "DATA_SAMPLE",
+    "confidence" : 1.0
+  }, {
+    "sourceTable" : "order_items",
+    "sourceColumn" : "order_id",
+    "targetTable" : "payments",
+    "targetColumn" : "payment_id",
+    "relationshipType" : "DATA_SAMPLE",
+    "confidence" : 1.0
+  }, {
+    "sourceTable" : "order_items",
+    "sourceColumn" : "order_id",
+    "targetTable" : "payments",
+    "targetColumn" : "order_id",
+    "relationshipType" : "DATA_SAMPLE",
+    "confidence" : 1.0
+  }, {
+    "sourceTable" : "order_items",
+    "sourceColumn" : "order_item_id",
+    "targetTable" : "roles",
+    "targetColumn" : "role_id",
+    "relationshipType" : "DATA_SAMPLE",
+    "confidence" : 1.0
+  }, {
+    "sourceTable" : "order_items",
+    "sourceColumn" : "quantity",
+    "targetTable" : "roles",
+    "targetColumn" : "role_id",
+    "relationshipType" : "DATA_SAMPLE",
+    "confidence" : 1.0
+  }, {
+    "sourceTable" : "order_items",
+    "sourceColumn" : "product_id",
+    "targetTable" : "roles",
+    "targetColumn" : "role_id",
+    "relationshipType" : "DATA_SAMPLE",
+    "confidence" : 1.0
+  }, {
+    "sourceTable" : "order_items",
+    "sourceColumn" : "order_id",
+    "targetTable" : "roles",
+    "targetColumn" : "role_id",
+    "relationshipType" : "DATA_SAMPLE",
+    "confidence" : 1.0
+  }, {
+    "sourceTable" : "order_items",
+    "sourceColumn" : "order_item_id",
+    "targetTable" : "products",
+    "targetColumn" : "category_id",
+    "relationshipType" : "DATA_SAMPLE",
+    "confidence" : 1.0
+  }, {
+    "sourceTable" : "order_items",
+    "sourceColumn" : "order_item_id",
+    "targetTable" : "products",
+    "targetColumn" : "product_id",
+    "relationshipType" : "DATA_SAMPLE",
+    "confidence" : 1.0
+  }, {
+    "sourceTable" : "order_items",
+    "sourceColumn" : "quantity",
+    "targetTable" : "products",
+    "targetColumn" : "category_id",
+    "relationshipType" : "DATA_SAMPLE",
+    "confidence" : 1.0
+  }, {
+    "sourceTable" : "order_items",
+    "sourceColumn" : "quantity",
+    "targetTable" : "products",
+    "targetColumn" : "product_id",
+    "relationshipType" : "DATA_SAMPLE",
+    "confidence" : 1.0
+  }, {
+    "sourceTable" : "order_items",
+    "sourceColumn" : "price",
+    "targetTable" : "products",
+    "targetColumn" : "price",
+    "relationshipType" : "DATA_SAMPLE",
+    "confidence" : 1.0
+  }, {
+    "sourceTable" : "order_items",
+    "sourceColumn" : "product_id",
+    "targetTable" : "products",
+    "targetColumn" : "category_id",
+    "relationshipType" : "DATA_SAMPLE",
+    "confidence" : 1.0
+  }, {
+    "sourceTable" : "order_items",
+    "sourceColumn" : "product_id",
+    "targetTable" : "products",
+    "targetColumn" : "product_id",
+    "relationshipType" : "DATA_SAMPLE",
+    "confidence" : 1.0
+  }, {
+    "sourceTable" : "order_items",
+    "sourceColumn" : "order_id",
+    "targetTable" : "products",
+    "targetColumn" : "category_id",
+    "relationshipType" : "DATA_SAMPLE",
+    "confidence" : 1.0
+  }, {
+    "sourceTable" : "order_items",
+    "sourceColumn" : "order_id",
+    "targetTable" : "products",
+    "targetColumn" : "product_id",
+    "relationshipType" : "DATA_SAMPLE",
+    "confidence" : 1.0
+  }, {
+    "sourceTable" : "order_items",
+    "sourceColumn" : "order_item_id",
+    "targetTable" : "categories",
+    "targetColumn" : "category_id",
+    "relationshipType" : "DATA_SAMPLE",
+    "confidence" : 1.0
+  }, {
+    "sourceTable" : "order_items",
+    "sourceColumn" : "quantity",
+    "targetTable" : "categories",
+    "targetColumn" : "category_id",
+    "relationshipType" : "DATA_SAMPLE",
+    "confidence" : 1.0
+  }, {
+    "sourceTable" : "order_items",
+    "sourceColumn" : "product_id",
+    "targetTable" : "categories",
+    "targetColumn" : "category_id",
+    "relationshipType" : "DATA_SAMPLE",
+    "confidence" : 1.0
+  }, {
+    "sourceTable" : "order_items",
+    "sourceColumn" : "order_id",
+    "targetTable" : "categories",
+    "targetColumn" : "category_id",
+    "relationshipType" : "DATA_SAMPLE",
+    "confidence" : 1.0
+  }, {
+    "sourceTable" : "order_items",
+    "sourceColumn" : "order_item_id",
+    "targetTable" : "tenants",
+    "targetColumn" : "tenant_id",
+    "relationshipType" : "DATA_SAMPLE",
+    "confidence" : 1.0
+  }, {
+    "sourceTable" : "order_items",
+    "sourceColumn" : "quantity",
+    "targetTable" : "tenants",
+    "targetColumn" : "tenant_id",
+    "relationshipType" : "DATA_SAMPLE",
+    "confidence" : 1.0
+  }, {
+    "sourceTable" : "order_items",
+    "sourceColumn" : "product_id",
+    "targetTable" : "tenants",
+    "targetColumn" : "tenant_id",
+    "relationshipType" : "DATA_SAMPLE",
+    "confidence" : 1.0
+  }, {
+    "sourceTable" : "order_items",
+    "sourceColumn" : "order_id",
+    "targetTable" : "tenants",
+    "targetColumn" : "tenant_id",
+    "relationshipType" : "DATA_SAMPLE",
+    "confidence" : 1.0
+  }, {
+    "sourceTable" : "users",
+    "sourceColumn" : "tenant_id",
+    "targetTable" : "orders",
+    "targetColumn" : "tenant_id",
+    "relationshipType" : "DATA_SAMPLE",
+    "confidence" : 1.0
+  }, {
+    "sourceTable" : "users",
+    "sourceColumn" : "tenant_id",
+    "targetTable" : "orders",
+    "targetColumn" : "user_id",
+    "relationshipType" : "DATA_SAMPLE",
+    "confidence" : 1.0
+  }, {
+    "sourceTable" : "users",
+    "sourceColumn" : "tenant_id",
+    "targetTable" : "orders",
+    "targetColumn" : "order_id",
+    "relationshipType" : "DATA_SAMPLE",
+    "confidence" : 1.0
+  }, {
+    "sourceTable" : "users",
+    "sourceColumn" : "user_id",
+    "targetTable" : "orders",
+    "targetColumn" : "tenant_id",
+    "relationshipType" : "DATA_SAMPLE",
+    "confidence" : 1.0
+  }, {
+    "sourceTable" : "users",
+    "sourceColumn" : "user_id",
+    "targetTable" : "orders",
+    "targetColumn" : "user_id",
+    "relationshipType" : "DATA_SAMPLE",
+    "confidence" : 1.0
+  }, {
+    "sourceTable" : "users",
+    "sourceColumn" : "user_id",
+    "targetTable" : "orders",
+    "targetColumn" : "order_id",
+    "relationshipType" : "DATA_SAMPLE",
+    "confidence" : 1.0
+  }, {
+    "sourceTable" : "users",
+    "sourceColumn" : "tenant_id",
+    "targetTable" : "payments",
+    "targetColumn" : "user_id",
+    "relationshipType" : "DATA_SAMPLE",
+    "confidence" : 1.0
+  }, {
+    "sourceTable" : "users",
+    "sourceColumn" : "tenant_id",
+    "targetTable" : "payments",
+    "targetColumn" : "payment_id",
+    "relationshipType" : "DATA_SAMPLE",
+    "confidence" : 1.0
+  }, {
+    "sourceTable" : "users",
+    "sourceColumn" : "tenant_id",
+    "targetTable" : "payments",
+    "targetColumn" : "order_id",
+    "relationshipType" : "DATA_SAMPLE",
+    "confidence" : 1.0
+  }, {
+    "sourceTable" : "users",
+    "sourceColumn" : "user_id",
+    "targetTable" : "payments",
+    "targetColumn" : "user_id",
+    "relationshipType" : "DATA_SAMPLE",
+    "confidence" : 1.0
+  }, {
+    "sourceTable" : "users",
+    "sourceColumn" : "user_id",
+    "targetTable" : "payments",
+    "targetColumn" : "payment_id",
+    "relationshipType" : "DATA_SAMPLE",
+    "confidence" : 1.0
+  }, {
+    "sourceTable" : "users",
+    "sourceColumn" : "user_id",
+    "targetTable" : "payments",
+    "targetColumn" : "order_id",
+    "relationshipType" : "DATA_SAMPLE",
+    "confidence" : 1.0
+  }, {
+    "sourceTable" : "users",
+    "sourceColumn" : "tenant_id",
+    "targetTable" : "roles",
+    "targetColumn" : "role_id",
+    "relationshipType" : "DATA_SAMPLE",
+    "confidence" : 1.0
+  }, {
+    "sourceTable" : "users",
+    "sourceColumn" : "user_id",
+    "targetTable" : "roles",
+    "targetColumn" : "role_id",
+    "relationshipType" : "DATA_SAMPLE",
+    "confidence" : 1.0
+  }, {
+    "sourceTable" : "users",
+    "sourceColumn" : "tenant_id",
+    "targetTable" : "products",
+    "targetColumn" : "category_id",
+    "relationshipType" : "DATA_SAMPLE",
+    "confidence" : 1.0
+  }, {
+    "sourceTable" : "users",
+    "sourceColumn" : "tenant_id",
+    "targetTable" : "products",
+    "targetColumn" : "product_id",
+    "relationshipType" : "DATA_SAMPLE",
+    "confidence" : 1.0
+  }, {
+    "sourceTable" : "users",
+    "sourceColumn" : "user_id",
+    "targetTable" : "products",
+    "targetColumn" : "category_id",
+    "relationshipType" : "DATA_SAMPLE",
+    "confidence" : 1.0
+  }, {
+    "sourceTable" : "users",
+    "sourceColumn" : "user_id",
+    "targetTable" : "products",
+    "targetColumn" : "product_id",
+    "relationshipType" : "DATA_SAMPLE",
+    "confidence" : 1.0
+  }, {
+    "sourceTable" : "users",
+    "sourceColumn" : "tenant_id",
+    "targetTable" : "categories",
+    "targetColumn" : "category_id",
+    "relationshipType" : "DATA_SAMPLE",
+    "confidence" : 1.0
+  }, {
+    "sourceTable" : "users",
+    "sourceColumn" : "user_id",
+    "targetTable" : "categories",
+    "targetColumn" : "category_id",
+    "relationshipType" : "DATA_SAMPLE",
+    "confidence" : 1.0
+  }, {
+    "sourceTable" : "users",
+    "sourceColumn" : "tenant_id",
+    "targetTable" : "tenants",
+    "targetColumn" : "tenant_id",
+    "relationshipType" : "DATA_SAMPLE",
+    "confidence" : 1.0
+  }, {
+    "sourceTable" : "users",
+    "sourceColumn" : "user_id",
+    "targetTable" : "tenants",
+    "targetColumn" : "tenant_id",
+    "relationshipType" : "DATA_SAMPLE",
+    "confidence" : 1.0
+  }, {
+    "sourceTable" : "users",
+    "sourceColumn" : "created_at",
+    "targetTable" : "tenants",
+    "targetColumn" : "created_at",
+    "relationshipType" : "DATA_SAMPLE",
     "confidence" : 1.0
   }, {
     "sourceTable" : "orders",
-    "targetTable" : "customers",
-    "sourceColumn" : "customer_id",
-    "targetColumn" : "customer_id",
-    "type" : "inferred",
-    "confidence" : 0.6
+    "sourceColumn" : "tenant_id",
+    "targetTable" : "payments",
+    "targetColumn" : "user_id",
+    "relationshipType" : "DATA_SAMPLE",
+    "confidence" : 1.0
   }, {
     "sourceTable" : "orders",
-    "targetTable" : "tenants",
     "sourceColumn" : "tenant_id",
-    "targetColumn" : "tenant_id",
-    "type" : "inferred",
-    "confidence" : 0.6
+    "targetTable" : "payments",
+    "targetColumn" : "payment_id",
+    "relationshipType" : "DATA_SAMPLE",
+    "confidence" : 1.0
   }, {
     "sourceTable" : "orders",
-    "targetTable" : "user_roles",
-    "sourceColumn" : "user_id",
-    "targetColumn" : "user_id",
-    "type" : "inferred",
-    "confidence" : 0.6
+    "sourceColumn" : "tenant_id",
+    "targetTable" : "payments",
+    "targetColumn" : "order_id",
+    "relationshipType" : "DATA_SAMPLE",
+    "confidence" : 1.0
   }, {
     "sourceTable" : "orders",
-    "targetTable" : "users",
     "sourceColumn" : "user_id",
+    "targetTable" : "payments",
     "targetColumn" : "user_id",
-    "type" : "inferred",
-    "confidence" : 0.6
+    "relationshipType" : "DATA_SAMPLE",
+    "confidence" : 1.0
   }, {
-    "sourceTable" : "payments",
-    "targetTable" : "orders",
-    "sourceColumn" : "order_id",
-    "targetColumn" : "order_id",
-    "type" : "inferred",
-    "confidence" : 0.6
-  }, {
-    "sourceTable" : "payments",
-    "targetTable" : "orders",
-    "sourceColumn" : "order_id",
-    "targetColumn" : "order_id",
-    "type" : "inferred",
-    "confidence" : 0.6
-  }, {
-    "sourceTable" : "payments",
-    "targetTable" : "orders",
-    "sourceColumn" : "order_id",
-    "targetColumn" : "order_id",
-    "type" : "inferred",
-    "confidence" : 0.6
-  }, {
-    "sourceTable" : "payments",
-    "targetTable" : "orders",
-    "sourceColumn" : "order_id",
-    "targetColumn" : "order_id",
-    "type" : "inferred",
-    "confidence" : 0.6
-  }, {
-    "sourceTable" : "payments",
-    "targetTable" : "orders",
-    "sourceColumn" : "order_id",
-    "targetColumn" : "order_id",
-    "type" : "inferred",
-    "confidence" : 0.6
-  }, {
-    "sourceTable" : "payments",
-    "targetTable" : "orders",
-    "sourceColumn" : "order_id",
-    "targetColumn" : "order_id",
-    "type" : "inferred",
-    "confidence" : 0.6
-  }, {
-    "sourceTable" : "payments",
-    "targetTable" : "orders",
-    "sourceColumn" : "order_id",
-    "targetColumn" : "order_id",
-    "type" : "inferred",
-    "confidence" : 0.6
-  }, {
-    "sourceTable" : "payments",
-    "targetTable" : "orders",
-    "sourceColumn" : "order_id",
-    "targetColumn" : "order_id",
-    "type" : "inferred",
-    "confidence" : 0.6
-  }, {
-    "sourceTable" : "payments",
-    "targetTable" : "user_roles",
+    "sourceTable" : "orders",
     "sourceColumn" : "user_id",
-    "targetColumn" : "user_id",
-    "type" : "inferred",
-    "confidence" : 0.6
+    "targetTable" : "payments",
+    "targetColumn" : "payment_id",
+    "relationshipType" : "DATA_SAMPLE",
+    "confidence" : 1.0
   }, {
-    "sourceTable" : "payments",
-    "targetTable" : "users",
+    "sourceTable" : "orders",
     "sourceColumn" : "user_id",
+    "targetTable" : "payments",
+    "targetColumn" : "order_id",
+    "relationshipType" : "DATA_SAMPLE",
+    "confidence" : 1.0
+  }, {
+    "sourceTable" : "orders",
+    "sourceColumn" : "order_id",
+    "targetTable" : "payments",
     "targetColumn" : "user_id",
-    "type" : "inferred",
-    "confidence" : 0.6
+    "relationshipType" : "DATA_SAMPLE",
+    "confidence" : 1.0
   }, {
-    "sourceTable" : "audit_logs",
-    "targetTable" : "user_roles",
-    "sourceColumn" : "user_id",
-    "targetColumn" : "user_id",
-    "type" : "inferred",
-    "confidence" : 0.6
-  }, {
-    "sourceTable" : "audit_logs",
-    "targetTable" : "users",
-    "sourceColumn" : "user_id",
-    "targetColumn" : "user_id",
-    "type" : "inferred",
-    "confidence" : 0.6
-  }, {
-    "sourceTable" : "aux_table_1",
-    "targetTable" : "orders",
+    "sourceTable" : "orders",
     "sourceColumn" : "order_id",
-    "targetColumn" : "order_id",
-    "type" : "inferred",
-    "confidence" : 0.6
+    "targetTable" : "payments",
+    "targetColumn" : "payment_id",
+    "relationshipType" : "DATA_SAMPLE",
+    "confidence" : 1.0
   }, {
-    "sourceTable" : "aux_table_1",
-    "targetTable" : "orders",
+    "sourceTable" : "orders",
     "sourceColumn" : "order_id",
+    "targetTable" : "payments",
     "targetColumn" : "order_id",
-    "type" : "inferred",
-    "confidence" : 0.6
+    "relationshipType" : "DATA_SAMPLE",
+    "confidence" : 1.0
   }, {
-    "sourceTable" : "aux_table_1",
-    "targetTable" : "orders",
-    "sourceColumn" : "order_id",
-    "targetColumn" : "order_id",
-    "type" : "inferred",
-    "confidence" : 0.6
-  }, {
-    "sourceTable" : "aux_table_1",
-    "targetTable" : "orders",
-    "sourceColumn" : "order_id",
-    "targetColumn" : "order_id",
-    "type" : "inferred",
-    "confidence" : 0.6
-  }, {
-    "sourceTable" : "aux_table_1",
-    "targetTable" : "tenants",
+    "sourceTable" : "orders",
     "sourceColumn" : "tenant_id",
-    "targetColumn" : "tenant_id",
-    "type" : "inferred",
-    "confidence" : 0.6
+    "targetTable" : "roles",
+    "targetColumn" : "role_id",
+    "relationshipType" : "DATA_SAMPLE",
+    "confidence" : 1.0
   }, {
-    "sourceTable" : "aux_table_1",
-    "targetTable" : "user_roles",
+    "sourceTable" : "orders",
     "sourceColumn" : "user_id",
-    "targetColumn" : "user_id",
-    "type" : "inferred",
-    "confidence" : 0.6
+    "targetTable" : "roles",
+    "targetColumn" : "role_id",
+    "relationshipType" : "DATA_SAMPLE",
+    "confidence" : 1.0
   }, {
-    "sourceTable" : "aux_table_1",
-    "targetTable" : "users",
-    "sourceColumn" : "user_id",
-    "targetColumn" : "user_id",
-    "type" : "inferred",
-    "confidence" : 0.6
-  }, {
-    "sourceTable" : "aux_table_10",
-    "targetTable" : "orders",
+    "sourceTable" : "orders",
     "sourceColumn" : "order_id",
-    "targetColumn" : "order_id",
-    "type" : "inferred",
-    "confidence" : 0.6
+    "targetTable" : "roles",
+    "targetColumn" : "role_id",
+    "relationshipType" : "DATA_SAMPLE",
+    "confidence" : 1.0
   }, {
-    "sourceTable" : "aux_table_10",
-    "targetTable" : "orders",
-    "sourceColumn" : "order_id",
-    "targetColumn" : "order_id",
-    "type" : "inferred",
-    "confidence" : 0.6
-  }, {
-    "sourceTable" : "aux_table_10",
-    "targetTable" : "orders",
-    "sourceColumn" : "order_id",
-    "targetColumn" : "order_id",
-    "type" : "inferred",
-    "confidence" : 0.6
-  }, {
-    "sourceTable" : "aux_table_10",
-    "targetTable" : "orders",
-    "sourceColumn" : "order_id",
-    "targetColumn" : "order_id",
-    "type" : "inferred",
-    "confidence" : 0.6
-  }, {
-    "sourceTable" : "aux_table_10",
-    "targetTable" : "tenants",
+    "sourceTable" : "orders",
     "sourceColumn" : "tenant_id",
-    "targetColumn" : "tenant_id",
-    "type" : "inferred",
-    "confidence" : 0.6
-  }, {
-    "sourceTable" : "aux_table_10",
-    "targetTable" : "user_roles",
-    "sourceColumn" : "user_id",
-    "targetColumn" : "user_id",
-    "type" : "inferred",
-    "confidence" : 0.6
-  }, {
-    "sourceTable" : "aux_table_10",
-    "targetTable" : "users",
-    "sourceColumn" : "user_id",
-    "targetColumn" : "user_id",
-    "type" : "inferred",
-    "confidence" : 0.6
-  }, {
-    "sourceTable" : "aux_table_11",
-    "targetTable" : "orders",
-    "sourceColumn" : "order_id",
-    "targetColumn" : "order_id",
-    "type" : "inferred",
-    "confidence" : 0.6
-  }, {
-    "sourceTable" : "aux_table_11",
-    "targetTable" : "orders",
-    "sourceColumn" : "order_id",
-    "targetColumn" : "order_id",
-    "type" : "inferred",
-    "confidence" : 0.6
-  }, {
-    "sourceTable" : "aux_table_11",
-    "targetTable" : "orders",
-    "sourceColumn" : "order_id",
-    "targetColumn" : "order_id",
-    "type" : "inferred",
-    "confidence" : 0.6
-  }, {
-    "sourceTable" : "aux_table_11",
-    "targetTable" : "orders",
-    "sourceColumn" : "order_id",
-    "targetColumn" : "order_id",
-    "type" : "inferred",
-    "confidence" : 0.6
-  }, {
-    "sourceTable" : "aux_table_11",
-    "targetTable" : "tenants",
-    "sourceColumn" : "tenant_id",
-    "targetColumn" : "tenant_id",
-    "type" : "inferred",
-    "confidence" : 0.6
-  }, {
-    "sourceTable" : "aux_table_11",
-    "targetTable" : "user_roles",
-    "sourceColumn" : "user_id",
-    "targetColumn" : "user_id",
-    "type" : "inferred",
-    "confidence" : 0.6
-  }, {
-    "sourceTable" : "aux_table_11",
-    "targetTable" : "users",
-    "sourceColumn" : "user_id",
-    "targetColumn" : "user_id",
-    "type" : "inferred",
-    "confidence" : 0.6
-  }, {
-    "sourceTable" : "aux_table_12",
-    "targetTable" : "orders",
-    "sourceColumn" : "order_id",
-    "targetColumn" : "order_id",
-    "type" : "inferred",
-    "confidence" : 0.6
-  }, {
-    "sourceTable" : "aux_table_12",
-    "targetTable" : "orders",
-    "sourceColumn" : "order_id",
-    "targetColumn" : "order_id",
-    "type" : "inferred",
-    "confidence" : 0.6
-  }, {
-    "sourceTable" : "aux_table_12",
-    "targetTable" : "orders",
-    "sourceColumn" : "order_id",
-    "targetColumn" : "order_id",
-    "type" : "inferred",
-    "confidence" : 0.6
-  }, {
-    "sourceTable" : "aux_table_12",
-    "targetTable" : "orders",
-    "sourceColumn" : "order_id",
-    "targetColumn" : "order_id",
-    "type" : "inferred",
-    "confidence" : 0.6
-  }, {
-    "sourceTable" : "aux_table_12",
-    "targetTable" : "tenants",
-    "sourceColumn" : "tenant_id",
-    "targetColumn" : "tenant_id",
-    "type" : "inferred",
-    "confidence" : 0.6
-  }, {
-    "sourceTable" : "aux_table_12",
-    "targetTable" : "user_roles",
-    "sourceColumn" : "user_id",
-    "targetColumn" : "user_id",
-    "type" : "inferred",
-    "confidence" : 0.6
-  }, {
-    "sourceTable" : "aux_table_12",
-    "targetTable" : "users",
-    "sourceColumn" : "user_id",
-    "targetColumn" : "user_id",
-    "type" : "inferred",
-    "confidence" : 0.6
-  }, {
-    "sourceTable" : "aux_table_13",
-    "targetTable" : "orders",
-    "sourceColumn" : "order_id",
-    "targetColumn" : "order_id",
-    "type" : "inferred",
-    "confidence" : 0.6
-  }, {
-    "sourceTable" : "aux_table_13",
-    "targetTable" : "orders",
-    "sourceColumn" : "order_id",
-    "targetColumn" : "order_id",
-    "type" : "inferred",
-    "confidence" : 0.6
-  }, {
-    "sourceTable" : "aux_table_13",
-    "targetTable" : "orders",
-    "sourceColumn" : "order_id",
-    "targetColumn" : "order_id",
-    "type" : "inferred",
-    "confidence" : 0.6
-  }, {
-    "sourceTable" : "aux_table_13",
-    "targetTable" : "orders",
-    "sourceColumn" : "order_id",
-    "targetColumn" : "order_id",
-    "type" : "inferred",
-    "confidence" : 0.6
-  }, {
-    "sourceTable" : "aux_table_13",
-    "targetTable" : "tenants",
-    "sourceColumn" : "tenant_id",
-    "targetColumn" : "tenant_id",
-    "type" : "inferred",
-    "confidence" : 0.6
-  }, {
-    "sourceTable" : "aux_table_13",
-    "targetTable" : "user_roles",
-    "sourceColumn" : "user_id",
-    "targetColumn" : "user_id",
-    "type" : "inferred",
-    "confidence" : 0.6
-  }, {
-    "sourceTable" : "aux_table_13",
-    "targetTable" : "users",
-    "sourceColumn" : "user_id",
-    "targetColumn" : "user_id",
-    "type" : "inferred",
-    "confidence" : 0.6
-  }, {
-    "sourceTable" : "aux_table_14",
-    "targetTable" : "orders",
-    "sourceColumn" : "order_id",
-    "targetColumn" : "order_id",
-    "type" : "inferred",
-    "confidence" : 0.6
-  }, {
-    "sourceTable" : "aux_table_14",
-    "targetTable" : "orders",
-    "sourceColumn" : "order_id",
-    "targetColumn" : "order_id",
-    "type" : "inferred",
-    "confidence" : 0.6
-  }, {
-    "sourceTable" : "aux_table_14",
-    "targetTable" : "orders",
-    "sourceColumn" : "order_id",
-    "targetColumn" : "order_id",
-    "type" : "inferred",
-    "confidence" : 0.6
-  }, {
-    "sourceTable" : "aux_table_14",
-    "targetTable" : "orders",
-    "sourceColumn" : "order_id",
-    "targetColumn" : "order_id",
-    "type" : "inferred",
-    "confidence" : 0.6
-  }, {
-    "sourceTable" : "aux_table_14",
-    "targetTable" : "tenants",
-    "sourceColumn" : "tenant_id",
-    "targetColumn" : "tenant_id",
-    "type" : "inferred",
-    "confidence" : 0.6
-  }, {
-    "sourceTable" : "aux_table_14",
-    "targetTable" : "user_roles",
-    "sourceColumn" : "user_id",
-    "targetColumn" : "user_id",
-    "type" : "inferred",
-    "confidence" : 0.6
-  }, {
-    "sourceTable" : "aux_table_14",
-    "targetTable" : "users",
-    "sourceColumn" : "user_id",
-    "targetColumn" : "user_id",
-    "type" : "inferred",
-    "confidence" : 0.6
-  }, {
-    "sourceTable" : "aux_table_15",
-    "targetTable" : "orders",
-    "sourceColumn" : "order_id",
-    "targetColumn" : "order_id",
-    "type" : "inferred",
-    "confidence" : 0.6
-  }, {
-    "sourceTable" : "aux_table_15",
-    "targetTable" : "orders",
-    "sourceColumn" : "order_id",
-    "targetColumn" : "order_id",
-    "type" : "inferred",
-    "confidence" : 0.6
-  }, {
-    "sourceTable" : "aux_table_15",
-    "targetTable" : "orders",
-    "sourceColumn" : "order_id",
-    "targetColumn" : "order_id",
-    "type" : "inferred",
-    "confidence" : 0.6
-  }, {
-    "sourceTable" : "aux_table_15",
-    "targetTable" : "orders",
-    "sourceColumn" : "order_id",
-    "targetColumn" : "order_id",
-    "type" : "inferred",
-    "confidence" : 0.6
-  }, {
-    "sourceTable" : "aux_table_15",
-    "targetTable" : "tenants",
-    "sourceColumn" : "tenant_id",
-    "targetColumn" : "tenant_id",
-    "type" : "inferred",
-    "confidence" : 0.6
-  }, {
-    "sourceTable" : "aux_table_15",
-    "targetTable" : "user_roles",
-    "sourceColumn" : "user_id",
-    "targetColumn" : "user_id",
-    "type" : "inferred",
-    "confidence" : 0.6
-  }, {
-    "sourceTable" : "aux_table_15",
-    "targetTable" : "users",
-    "sourceColumn" : "user_id",
-    "targetColumn" : "user_id",
-    "type" : "inferred",
-    "confidence" : 0.6
-  }, {
-    "sourceTable" : "aux_table_16",
-    "targetTable" : "orders",
-    "sourceColumn" : "order_id",
-    "targetColumn" : "order_id",
-    "type" : "inferred",
-    "confidence" : 0.6
-  }, {
-    "sourceTable" : "aux_table_16",
-    "targetTable" : "orders",
-    "sourceColumn" : "order_id",
-    "targetColumn" : "order_id",
-    "type" : "inferred",
-    "confidence" : 0.6
-  }, {
-    "sourceTable" : "aux_table_16",
-    "targetTable" : "orders",
-    "sourceColumn" : "order_id",
-    "targetColumn" : "order_id",
-    "type" : "inferred",
-    "confidence" : 0.6
-  }, {
-    "sourceTable" : "aux_table_16",
-    "targetTable" : "orders",
-    "sourceColumn" : "order_id",
-    "targetColumn" : "order_id",
-    "type" : "inferred",
-    "confidence" : 0.6
-  }, {
-    "sourceTable" : "aux_table_16",
-    "targetTable" : "tenants",
-    "sourceColumn" : "tenant_id",
-    "targetColumn" : "tenant_id",
-    "type" : "inferred",
-    "confidence" : 0.6
-  }, {
-    "sourceTable" : "aux_table_16",
-    "targetTable" : "user_roles",
-    "sourceColumn" : "user_id",
-    "targetColumn" : "user_id",
-    "type" : "inferred",
-    "confidence" : 0.6
-  }, {
-    "sourceTable" : "aux_table_16",
-    "targetTable" : "users",
-    "sourceColumn" : "user_id",
-    "targetColumn" : "user_id",
-    "type" : "inferred",
-    "confidence" : 0.6
-  }, {
-    "sourceTable" : "aux_table_17",
-    "targetTable" : "orders",
-    "sourceColumn" : "order_id",
-    "targetColumn" : "order_id",
-    "type" : "inferred",
-    "confidence" : 0.6
-  }, {
-    "sourceTable" : "aux_table_17",
-    "targetTable" : "orders",
-    "sourceColumn" : "order_id",
-    "targetColumn" : "order_id",
-    "type" : "inferred",
-    "confidence" : 0.6
-  }, {
-    "sourceTable" : "aux_table_17",
-    "targetTable" : "orders",
-    "sourceColumn" : "order_id",
-    "targetColumn" : "order_id",
-    "type" : "inferred",
-    "confidence" : 0.6
-  }, {
-    "sourceTable" : "aux_table_17",
-    "targetTable" : "orders",
-    "sourceColumn" : "order_id",
-    "targetColumn" : "order_id",
-    "type" : "inferred",
-    "confidence" : 0.6
-  }, {
-    "sourceTable" : "aux_table_17",
-    "targetTable" : "tenants",
-    "sourceColumn" : "tenant_id",
-    "targetColumn" : "tenant_id",
-    "type" : "inferred",
-    "confidence" : 0.6
-  }, {
-    "sourceTable" : "aux_table_17",
-    "targetTable" : "user_roles",
-    "sourceColumn" : "user_id",
-    "targetColumn" : "user_id",
-    "type" : "inferred",
-    "confidence" : 0.6
-  }, {
-    "sourceTable" : "aux_table_17",
-    "targetTable" : "users",
-    "sourceColumn" : "user_id",
-    "targetColumn" : "user_id",
-    "type" : "inferred",
-    "confidence" : 0.6
-  }, {
-    "sourceTable" : "aux_table_18",
-    "targetTable" : "orders",
-    "sourceColumn" : "order_id",
-    "targetColumn" : "order_id",
-    "type" : "inferred",
-    "confidence" : 0.6
-  }, {
-    "sourceTable" : "aux_table_18",
-    "targetTable" : "orders",
-    "sourceColumn" : "order_id",
-    "targetColumn" : "order_id",
-    "type" : "inferred",
-    "confidence" : 0.6
-  }, {
-    "sourceTable" : "aux_table_18",
-    "targetTable" : "orders",
-    "sourceColumn" : "order_id",
-    "targetColumn" : "order_id",
-    "type" : "inferred",
-    "confidence" : 0.6
-  }, {
-    "sourceTable" : "aux_table_18",
-    "targetTable" : "orders",
-    "sourceColumn" : "order_id",
-    "targetColumn" : "order_id",
-    "type" : "inferred",
-    "confidence" : 0.6
-  }, {
-    "sourceTable" : "aux_table_18",
-    "targetTable" : "tenants",
-    "sourceColumn" : "tenant_id",
-    "targetColumn" : "tenant_id",
-    "type" : "inferred",
-    "confidence" : 0.6
-  }, {
-    "sourceTable" : "aux_table_18",
-    "targetTable" : "user_roles",
-    "sourceColumn" : "user_id",
-    "targetColumn" : "user_id",
-    "type" : "inferred",
-    "confidence" : 0.6
-  }, {
-    "sourceTable" : "aux_table_18",
-    "targetTable" : "users",
-    "sourceColumn" : "user_id",
-    "targetColumn" : "user_id",
-    "type" : "inferred",
-    "confidence" : 0.6
-  }, {
-    "sourceTable" : "aux_table_19",
-    "targetTable" : "orders",
-    "sourceColumn" : "order_id",
-    "targetColumn" : "order_id",
-    "type" : "inferred",
-    "confidence" : 0.6
-  }, {
-    "sourceTable" : "aux_table_19",
-    "targetTable" : "orders",
-    "sourceColumn" : "order_id",
-    "targetColumn" : "order_id",
-    "type" : "inferred",
-    "confidence" : 0.6
-  }, {
-    "sourceTable" : "aux_table_19",
-    "targetTable" : "orders",
-    "sourceColumn" : "order_id",
-    "targetColumn" : "order_id",
-    "type" : "inferred",
-    "confidence" : 0.6
-  }, {
-    "sourceTable" : "aux_table_19",
-    "targetTable" : "orders",
-    "sourceColumn" : "order_id",
-    "targetColumn" : "order_id",
-    "type" : "inferred",
-    "confidence" : 0.6
-  }, {
-    "sourceTable" : "aux_table_19",
-    "targetTable" : "tenants",
-    "sourceColumn" : "tenant_id",
-    "targetColumn" : "tenant_id",
-    "type" : "inferred",
-    "confidence" : 0.6
-  }, {
-    "sourceTable" : "aux_table_19",
-    "targetTable" : "user_roles",
-    "sourceColumn" : "user_id",
-    "targetColumn" : "user_id",
-    "type" : "inferred",
-    "confidence" : 0.6
-  }, {
-    "sourceTable" : "aux_table_19",
-    "targetTable" : "users",
-    "sourceColumn" : "user_id",
-    "targetColumn" : "user_id",
-    "type" : "inferred",
-    "confidence" : 0.6
-  }, {
-    "sourceTable" : "aux_table_2",
-    "targetTable" : "orders",
-    "sourceColumn" : "order_id",
-    "targetColumn" : "order_id",
-    "type" : "inferred",
-    "confidence" : 0.6
-  }, {
-    "sourceTable" : "aux_table_2",
-    "targetTable" : "orders",
-    "sourceColumn" : "order_id",
-    "targetColumn" : "order_id",
-    "type" : "inferred",
-    "confidence" : 0.6
-  }, {
-    "sourceTable" : "aux_table_2",
-    "targetTable" : "orders",
-    "sourceColumn" : "order_id",
-    "targetColumn" : "order_id",
-    "type" : "inferred",
-    "confidence" : 0.6
-  }, {
-    "sourceTable" : "aux_table_2",
-    "targetTable" : "orders",
-    "sourceColumn" : "order_id",
-    "targetColumn" : "order_id",
-    "type" : "inferred",
-    "confidence" : 0.6
-  }, {
-    "sourceTable" : "aux_table_2",
-    "targetTable" : "tenants",
-    "sourceColumn" : "tenant_id",
-    "targetColumn" : "tenant_id",
-    "type" : "inferred",
-    "confidence" : 0.6
-  }, {
-    "sourceTable" : "aux_table_2",
-    "targetTable" : "user_roles",
-    "sourceColumn" : "user_id",
-    "targetColumn" : "user_id",
-    "type" : "inferred",
-    "confidence" : 0.6
-  }, {
-    "sourceTable" : "aux_table_2",
-    "targetTable" : "users",
-    "sourceColumn" : "user_id",
-    "targetColumn" : "user_id",
-    "type" : "inferred",
-    "confidence" : 0.6
-  }, {
-    "sourceTable" : "aux_table_20",
-    "targetTable" : "orders",
-    "sourceColumn" : "order_id",
-    "targetColumn" : "order_id",
-    "type" : "inferred",
-    "confidence" : 0.6
-  }, {
-    "sourceTable" : "aux_table_20",
-    "targetTable" : "orders",
-    "sourceColumn" : "order_id",
-    "targetColumn" : "order_id",
-    "type" : "inferred",
-    "confidence" : 0.6
-  }, {
-    "sourceTable" : "aux_table_20",
-    "targetTable" : "orders",
-    "sourceColumn" : "order_id",
-    "targetColumn" : "order_id",
-    "type" : "inferred",
-    "confidence" : 0.6
-  }, {
-    "sourceTable" : "aux_table_20",
-    "targetTable" : "orders",
-    "sourceColumn" : "order_id",
-    "targetColumn" : "order_id",
-    "type" : "inferred",
-    "confidence" : 0.6
-  }, {
-    "sourceTable" : "aux_table_20",
-    "targetTable" : "tenants",
-    "sourceColumn" : "tenant_id",
-    "targetColumn" : "tenant_id",
-    "type" : "inferred",
-    "confidence" : 0.6
-  }, {
-    "sourceTable" : "aux_table_20",
-    "targetTable" : "user_roles",
-    "sourceColumn" : "user_id",
-    "targetColumn" : "user_id",
-    "type" : "inferred",
-    "confidence" : 0.6
-  }, {
-    "sourceTable" : "aux_table_20",
-    "targetTable" : "users",
-    "sourceColumn" : "user_id",
-    "targetColumn" : "user_id",
-    "type" : "inferred",
-    "confidence" : 0.6
-  }, {
-    "sourceTable" : "aux_table_21",
-    "targetTable" : "orders",
-    "sourceColumn" : "order_id",
-    "targetColumn" : "order_id",
-    "type" : "inferred",
-    "confidence" : 0.6
-  }, {
-    "sourceTable" : "aux_table_21",
-    "targetTable" : "orders",
-    "sourceColumn" : "order_id",
-    "targetColumn" : "order_id",
-    "type" : "inferred",
-    "confidence" : 0.6
-  }, {
-    "sourceTable" : "aux_table_21",
-    "targetTable" : "orders",
-    "sourceColumn" : "order_id",
-    "targetColumn" : "order_id",
-    "type" : "inferred",
-    "confidence" : 0.6
-  }, {
-    "sourceTable" : "aux_table_21",
-    "targetTable" : "orders",
-    "sourceColumn" : "order_id",
-    "targetColumn" : "order_id",
-    "type" : "inferred",
-    "confidence" : 0.6
-  }, {
-    "sourceTable" : "aux_table_21",
-    "targetTable" : "tenants",
-    "sourceColumn" : "tenant_id",
-    "targetColumn" : "tenant_id",
-    "type" : "inferred",
-    "confidence" : 0.6
-  }, {
-    "sourceTable" : "aux_table_21",
-    "targetTable" : "user_roles",
-    "sourceColumn" : "user_id",
-    "targetColumn" : "user_id",
-    "type" : "inferred",
-    "confidence" : 0.6
-  }, {
-    "sourceTable" : "aux_table_21",
-    "targetTable" : "users",
-    "sourceColumn" : "user_id",
-    "targetColumn" : "user_id",
-    "type" : "inferred",
-    "confidence" : 0.6
-  }, {
-    "sourceTable" : "aux_table_22",
-    "targetTable" : "orders",
-    "sourceColumn" : "order_id",
-    "targetColumn" : "order_id",
-    "type" : "inferred",
-    "confidence" : 0.6
-  }, {
-    "sourceTable" : "aux_table_22",
-    "targetTable" : "orders",
-    "sourceColumn" : "order_id",
-    "targetColumn" : "order_id",
-    "type" : "inferred",
-    "confidence" : 0.6
-  }, {
-    "sourceTable" : "aux_table_22",
-    "targetTable" : "orders",
-    "sourceColumn" : "order_id",
-    "targetColumn" : "order_id",
-    "type" : "inferred",
-    "confidence" : 0.6
-  }, {
-    "sourceTable" : "aux_table_22",
-    "targetTable" : "orders",
-    "sourceColumn" : "order_id",
-    "targetColumn" : "order_id",
-    "type" : "inferred",
-    "confidence" : 0.6
-  }, {
-    "sourceTable" : "aux_table_22",
-    "targetTable" : "tenants",
-    "sourceColumn" : "tenant_id",
-    "targetColumn" : "tenant_id",
-    "type" : "inferred",
-    "confidence" : 0.6
-  }, {
-    "sourceTable" : "aux_table_22",
-    "targetTable" : "user_roles",
-    "sourceColumn" : "user_id",
-    "targetColumn" : "user_id",
-    "type" : "inferred",
-    "confidence" : 0.6
-  }, {
-    "sourceTable" : "aux_table_22",
-    "targetTable" : "users",
-    "sourceColumn" : "user_id",
-    "targetColumn" : "user_id",
-    "type" : "inferred",
-    "confidence" : 0.6
-  }, {
-    "sourceTable" : "aux_table_23",
-    "targetTable" : "orders",
-    "sourceColumn" : "order_id",
-    "targetColumn" : "order_id",
-    "type" : "inferred",
-    "confidence" : 0.6
-  }, {
-    "sourceTable" : "aux_table_23",
-    "targetTable" : "orders",
-    "sourceColumn" : "order_id",
-    "targetColumn" : "order_id",
-    "type" : "inferred",
-    "confidence" : 0.6
-  }, {
-    "sourceTable" : "aux_table_23",
-    "targetTable" : "orders",
-    "sourceColumn" : "order_id",
-    "targetColumn" : "order_id",
-    "type" : "inferred",
-    "confidence" : 0.6
-  }, {
-    "sourceTable" : "aux_table_23",
-    "targetTable" : "orders",
-    "sourceColumn" : "order_id",
-    "targetColumn" : "order_id",
-    "type" : "inferred",
-    "confidence" : 0.6
-  }, {
-    "sourceTable" : "aux_table_23",
-    "targetTable" : "tenants",
-    "sourceColumn" : "tenant_id",
-    "targetColumn" : "tenant_id",
-    "type" : "inferred",
-    "confidence" : 0.6
-  }, {
-    "sourceTable" : "aux_table_23",
-    "targetTable" : "user_roles",
-    "sourceColumn" : "user_id",
-    "targetColumn" : "user_id",
-    "type" : "inferred",
-    "confidence" : 0.6
-  }, {
-    "sourceTable" : "aux_table_23",
-    "targetTable" : "users",
-    "sourceColumn" : "user_id",
-    "targetColumn" : "user_id",
-    "type" : "inferred",
-    "confidence" : 0.6
-  }, {
-    "sourceTable" : "aux_table_24",
-    "targetTable" : "orders",
-    "sourceColumn" : "order_id",
-    "targetColumn" : "order_id",
-    "type" : "inferred",
-    "confidence" : 0.6
-  }, {
-    "sourceTable" : "aux_table_24",
-    "targetTable" : "orders",
-    "sourceColumn" : "order_id",
-    "targetColumn" : "order_id",
-    "type" : "inferred",
-    "confidence" : 0.6
-  }, {
-    "sourceTable" : "aux_table_24",
-    "targetTable" : "orders",
-    "sourceColumn" : "order_id",
-    "targetColumn" : "order_id",
-    "type" : "inferred",
-    "confidence" : 0.6
-  }, {
-    "sourceTable" : "aux_table_24",
-    "targetTable" : "orders",
-    "sourceColumn" : "order_id",
-    "targetColumn" : "order_id",
-    "type" : "inferred",
-    "confidence" : 0.6
-  }, {
-    "sourceTable" : "aux_table_24",
-    "targetTable" : "tenants",
-    "sourceColumn" : "tenant_id",
-    "targetColumn" : "tenant_id",
-    "type" : "inferred",
-    "confidence" : 0.6
-  }, {
-    "sourceTable" : "aux_table_24",
-    "targetTable" : "user_roles",
-    "sourceColumn" : "user_id",
-    "targetColumn" : "user_id",
-    "type" : "inferred",
-    "confidence" : 0.6
-  }, {
-    "sourceTable" : "aux_table_24",
-    "targetTable" : "users",
-    "sourceColumn" : "user_id",
-    "targetColumn" : "user_id",
-    "type" : "inferred",
-    "confidence" : 0.6
-  }, {
-    "sourceTable" : "aux_table_25",
-    "targetTable" : "orders",
-    "sourceColumn" : "order_id",
-    "targetColumn" : "order_id",
-    "type" : "inferred",
-    "confidence" : 0.6
-  }, {
-    "sourceTable" : "aux_table_25",
-    "targetTable" : "orders",
-    "sourceColumn" : "order_id",
-    "targetColumn" : "order_id",
-    "type" : "inferred",
-    "confidence" : 0.6
-  }, {
-    "sourceTable" : "aux_table_25",
-    "targetTable" : "orders",
-    "sourceColumn" : "order_id",
-    "targetColumn" : "order_id",
-    "type" : "inferred",
-    "confidence" : 0.6
-  }, {
-    "sourceTable" : "aux_table_25",
-    "targetTable" : "orders",
-    "sourceColumn" : "order_id",
-    "targetColumn" : "order_id",
-    "type" : "inferred",
-    "confidence" : 0.6
-  }, {
-    "sourceTable" : "aux_table_25",
-    "targetTable" : "tenants",
-    "sourceColumn" : "tenant_id",
-    "targetColumn" : "tenant_id",
-    "type" : "inferred",
-    "confidence" : 0.6
-  }, {
-    "sourceTable" : "aux_table_25",
-    "targetTable" : "user_roles",
-    "sourceColumn" : "user_id",
-    "targetColumn" : "user_id",
-    "type" : "inferred",
-    "confidence" : 0.6
-  }, {
-    "sourceTable" : "aux_table_25",
-    "targetTable" : "users",
-    "sourceColumn" : "user_id",
-    "targetColumn" : "user_id",
-    "type" : "inferred",
-    "confidence" : 0.6
-  }, {
-    "sourceTable" : "aux_table_26",
-    "targetTable" : "orders",
-    "sourceColumn" : "order_id",
-    "targetColumn" : "order_id",
-    "type" : "inferred",
-    "confidence" : 0.6
-  }, {
-    "sourceTable" : "aux_table_26",
-    "targetTable" : "orders",
-    "sourceColumn" : "order_id",
-    "targetColumn" : "order_id",
-    "type" : "inferred",
-    "confidence" : 0.6
-  }, {
-    "sourceTable" : "aux_table_26",
-    "targetTable" : "orders",
-    "sourceColumn" : "order_id",
-    "targetColumn" : "order_id",
-    "type" : "inferred",
-    "confidence" : 0.6
-  }, {
-    "sourceTable" : "aux_table_26",
-    "targetTable" : "orders",
-    "sourceColumn" : "order_id",
-    "targetColumn" : "order_id",
-    "type" : "inferred",
-    "confidence" : 0.6
-  }, {
-    "sourceTable" : "aux_table_26",
-    "targetTable" : "tenants",
-    "sourceColumn" : "tenant_id",
-    "targetColumn" : "tenant_id",
-    "type" : "inferred",
-    "confidence" : 0.6
-  }, {
-    "sourceTable" : "aux_table_26",
-    "targetTable" : "user_roles",
-    "sourceColumn" : "user_id",
-    "targetColumn" : "user_id",
-    "type" : "inferred",
-    "confidence" : 0.6
-  }, {
-    "sourceTable" : "aux_table_26",
-    "targetTable" : "users",
-    "sourceColumn" : "user_id",
-    "targetColumn" : "user_id",
-    "type" : "inferred",
-    "confidence" : 0.6
-  }, {
-    "sourceTable" : "aux_table_27",
-    "targetTable" : "orders",
-    "sourceColumn" : "order_id",
-    "targetColumn" : "order_id",
-    "type" : "inferred",
-    "confidence" : 0.6
-  }, {
-    "sourceTable" : "aux_table_27",
-    "targetTable" : "orders",
-    "sourceColumn" : "order_id",
-    "targetColumn" : "order_id",
-    "type" : "inferred",
-    "confidence" : 0.6
-  }, {
-    "sourceTable" : "aux_table_27",
-    "targetTable" : "orders",
-    "sourceColumn" : "order_id",
-    "targetColumn" : "order_id",
-    "type" : "inferred",
-    "confidence" : 0.6
-  }, {
-    "sourceTable" : "aux_table_27",
-    "targetTable" : "orders",
-    "sourceColumn" : "order_id",
-    "targetColumn" : "order_id",
-    "type" : "inferred",
-    "confidence" : 0.6
-  }, {
-    "sourceTable" : "aux_table_27",
-    "targetTable" : "tenants",
-    "sourceColumn" : "tenant_id",
-    "targetColumn" : "tenant_id",
-    "type" : "inferred",
-    "confidence" : 0.6
-  }, {
-    "sourceTable" : "aux_table_27",
-    "targetTable" : "user_roles",
-    "sourceColumn" : "user_id",
-    "targetColumn" : "user_id",
-    "type" : "inferred",
-    "confidence" : 0.6
-  }, {
-    "sourceTable" : "aux_table_27",
-    "targetTable" : "users",
-    "sourceColumn" : "user_id",
-    "targetColumn" : "user_id",
-    "type" : "inferred",
-    "confidence" : 0.6
-  }, {
-    "sourceTable" : "aux_table_28",
-    "targetTable" : "orders",
-    "sourceColumn" : "order_id",
-    "targetColumn" : "order_id",
-    "type" : "inferred",
-    "confidence" : 0.6
-  }, {
-    "sourceTable" : "aux_table_28",
-    "targetTable" : "orders",
-    "sourceColumn" : "order_id",
-    "targetColumn" : "order_id",
-    "type" : "inferred",
-    "confidence" : 0.6
-  }, {
-    "sourceTable" : "aux_table_28",
-    "targetTable" : "orders",
-    "sourceColumn" : "order_id",
-    "targetColumn" : "order_id",
-    "type" : "inferred",
-    "confidence" : 0.6
-  }, {
-    "sourceTable" : "aux_table_28",
-    "targetTable" : "orders",
-    "sourceColumn" : "order_id",
-    "targetColumn" : "order_id",
-    "type" : "inferred",
-    "confidence" : 0.6
-  }, {
-    "sourceTable" : "aux_table_28",
-    "targetTable" : "tenants",
-    "sourceColumn" : "tenant_id",
-    "targetColumn" : "tenant_id",
-    "type" : "inferred",
-    "confidence" : 0.6
-  }, {
-    "sourceTable" : "aux_table_28",
-    "targetTable" : "user_roles",
-    "sourceColumn" : "user_id",
-    "targetColumn" : "user_id",
-    "type" : "inferred",
-    "confidence" : 0.6
-  }, {
-    "sourceTable" : "aux_table_28",
-    "targetTable" : "users",
-    "sourceColumn" : "user_id",
-    "targetColumn" : "user_id",
-    "type" : "inferred",
-    "confidence" : 0.6
-  }, {
-    "sourceTable" : "aux_table_29",
-    "targetTable" : "orders",
-    "sourceColumn" : "order_id",
-    "targetColumn" : "order_id",
-    "type" : "inferred",
-    "confidence" : 0.6
-  }, {
-    "sourceTable" : "aux_table_29",
-    "targetTable" : "orders",
-    "sourceColumn" : "order_id",
-    "targetColumn" : "order_id",
-    "type" : "inferred",
-    "confidence" : 0.6
-  }, {
-    "sourceTable" : "aux_table_29",
-    "targetTable" : "orders",
-    "sourceColumn" : "order_id",
-    "targetColumn" : "order_id",
-    "type" : "inferred",
-    "confidence" : 0.6
-  }, {
-    "sourceTable" : "aux_table_29",
-    "targetTable" : "orders",
-    "sourceColumn" : "order_id",
-    "targetColumn" : "order_id",
-    "type" : "inferred",
-    "confidence" : 0.6
-  }, {
-    "sourceTable" : "aux_table_29",
-    "targetTable" : "tenants",
-    "sourceColumn" : "tenant_id",
-    "targetColumn" : "tenant_id",
-    "type" : "inferred",
-    "confidence" : 0.6
-  }, {
-    "sourceTable" : "aux_table_29",
-    "targetTable" : "user_roles",
-    "sourceColumn" : "user_id",
-    "targetColumn" : "user_id",
-    "type" : "inferred",
-    "confidence" : 0.6
-  }, {
-    "sourceTable" : "aux_table_29",
-    "targetTable" : "users",
-    "sourceColumn" : "user_id",
-    "targetColumn" : "user_id",
-    "type" : "inferred",
-    "confidence" : 0.6
-  }, {
-    "sourceTable" : "aux_table_3",
-    "targetTable" : "orders",
-    "sourceColumn" : "order_id",
-    "targetColumn" : "order_id",
-    "type" : "inferred",
-    "confidence" : 0.6
-  }, {
-    "sourceTable" : "aux_table_3",
-    "targetTable" : "orders",
-    "sourceColumn" : "order_id",
-    "targetColumn" : "order_id",
-    "type" : "inferred",
-    "confidence" : 0.6
-  }, {
-    "sourceTable" : "aux_table_3",
-    "targetTable" : "orders",
-    "sourceColumn" : "order_id",
-    "targetColumn" : "order_id",
-    "type" : "inferred",
-    "confidence" : 0.6
-  }, {
-    "sourceTable" : "aux_table_3",
-    "targetTable" : "orders",
-    "sourceColumn" : "order_id",
-    "targetColumn" : "order_id",
-    "type" : "inferred",
-    "confidence" : 0.6
-  }, {
-    "sourceTable" : "aux_table_3",
-    "targetTable" : "tenants",
-    "sourceColumn" : "tenant_id",
-    "targetColumn" : "tenant_id",
-    "type" : "inferred",
-    "confidence" : 0.6
-  }, {
-    "sourceTable" : "aux_table_3",
-    "targetTable" : "user_roles",
-    "sourceColumn" : "user_id",
-    "targetColumn" : "user_id",
-    "type" : "inferred",
-    "confidence" : 0.6
-  }, {
-    "sourceTable" : "aux_table_3",
-    "targetTable" : "users",
-    "sourceColumn" : "user_id",
-    "targetColumn" : "user_id",
-    "type" : "inferred",
-    "confidence" : 0.6
-  }, {
-    "sourceTable" : "aux_table_30",
-    "targetTable" : "orders",
-    "sourceColumn" : "order_id",
-    "targetColumn" : "order_id",
-    "type" : "inferred",
-    "confidence" : 0.6
-  }, {
-    "sourceTable" : "aux_table_30",
-    "targetTable" : "orders",
-    "sourceColumn" : "order_id",
-    "targetColumn" : "order_id",
-    "type" : "inferred",
-    "confidence" : 0.6
-  }, {
-    "sourceTable" : "aux_table_30",
-    "targetTable" : "orders",
-    "sourceColumn" : "order_id",
-    "targetColumn" : "order_id",
-    "type" : "inferred",
-    "confidence" : 0.6
-  }, {
-    "sourceTable" : "aux_table_30",
-    "targetTable" : "orders",
-    "sourceColumn" : "order_id",
-    "targetColumn" : "order_id",
-    "type" : "inferred",
-    "confidence" : 0.6
-  }, {
-    "sourceTable" : "aux_table_30",
-    "targetTable" : "tenants",
-    "sourceColumn" : "tenant_id",
-    "targetColumn" : "tenant_id",
-    "type" : "inferred",
-    "confidence" : 0.6
-  }, {
-    "sourceTable" : "aux_table_30",
-    "targetTable" : "user_roles",
-    "sourceColumn" : "user_id",
-    "targetColumn" : "user_id",
-    "type" : "inferred",
-    "confidence" : 0.6
-  }, {
-    "sourceTable" : "aux_table_30",
-    "targetTable" : "users",
-    "sourceColumn" : "user_id",
-    "targetColumn" : "user_id",
-    "type" : "inferred",
-    "confidence" : 0.6
-  }, {
-    "sourceTable" : "aux_table_31",
-    "targetTable" : "orders",
-    "sourceColumn" : "order_id",
-    "targetColumn" : "order_id",
-    "type" : "inferred",
-    "confidence" : 0.6
-  }, {
-    "sourceTable" : "aux_table_31",
-    "targetTable" : "orders",
-    "sourceColumn" : "order_id",
-    "targetColumn" : "order_id",
-    "type" : "inferred",
-    "confidence" : 0.6
-  }, {
-    "sourceTable" : "aux_table_31",
-    "targetTable" : "orders",
-    "sourceColumn" : "order_id",
-    "targetColumn" : "order_id",
-    "type" : "inferred",
-    "confidence" : 0.6
-  }, {
-    "sourceTable" : "aux_table_31",
-    "targetTable" : "orders",
-    "sourceColumn" : "order_id",
-    "targetColumn" : "order_id",
-    "type" : "inferred",
-    "confidence" : 0.6
-  }, {
-    "sourceTable" : "aux_table_31",
-    "targetTable" : "tenants",
-    "sourceColumn" : "tenant_id",
-    "targetColumn" : "tenant_id",
-    "type" : "inferred",
-    "confidence" : 0.6
-  }, {
-    "sourceTable" : "aux_table_31",
-    "targetTable" : "user_roles",
-    "sourceColumn" : "user_id",
-    "targetColumn" : "user_id",
-    "type" : "inferred",
-    "confidence" : 0.6
-  }, {
-    "sourceTable" : "aux_table_31",
-    "targetTable" : "users",
-    "sourceColumn" : "user_id",
-    "targetColumn" : "user_id",
-    "type" : "inferred",
-    "confidence" : 0.6
-  }, {
-    "sourceTable" : "aux_table_32",
-    "targetTable" : "orders",
-    "sourceColumn" : "order_id",
-    "targetColumn" : "order_id",
-    "type" : "inferred",
-    "confidence" : 0.6
-  }, {
-    "sourceTable" : "aux_table_32",
-    "targetTable" : "orders",
-    "sourceColumn" : "order_id",
-    "targetColumn" : "order_id",
-    "type" : "inferred",
-    "confidence" : 0.6
-  }, {
-    "sourceTable" : "aux_table_32",
-    "targetTable" : "orders",
-    "sourceColumn" : "order_id",
-    "targetColumn" : "order_id",
-    "type" : "inferred",
-    "confidence" : 0.6
-  }, {
-    "sourceTable" : "aux_table_32",
-    "targetTable" : "orders",
-    "sourceColumn" : "order_id",
-    "targetColumn" : "order_id",
-    "type" : "inferred",
-    "confidence" : 0.6
-  }, {
-    "sourceTable" : "aux_table_32",
-    "targetTable" : "tenants",
-    "sourceColumn" : "tenant_id",
-    "targetColumn" : "tenant_id",
-    "type" : "inferred",
-    "confidence" : 0.6
-  }, {
-    "sourceTable" : "aux_table_32",
-    "targetTable" : "user_roles",
-    "sourceColumn" : "user_id",
-    "targetColumn" : "user_id",
-    "type" : "inferred",
-    "confidence" : 0.6
-  }, {
-    "sourceTable" : "aux_table_32",
-    "targetTable" : "users",
-    "sourceColumn" : "user_id",
-    "targetColumn" : "user_id",
-    "type" : "inferred",
-    "confidence" : 0.6
-  }, {
-    "sourceTable" : "aux_table_33",
-    "targetTable" : "orders",
-    "sourceColumn" : "order_id",
-    "targetColumn" : "order_id",
-    "type" : "inferred",
-    "confidence" : 0.6
-  }, {
-    "sourceTable" : "aux_table_33",
-    "targetTable" : "orders",
-    "sourceColumn" : "order_id",
-    "targetColumn" : "order_id",
-    "type" : "inferred",
-    "confidence" : 0.6
-  }, {
-    "sourceTable" : "aux_table_33",
-    "targetTable" : "orders",
-    "sourceColumn" : "order_id",
-    "targetColumn" : "order_id",
-    "type" : "inferred",
-    "confidence" : 0.6
-  }, {
-    "sourceTable" : "aux_table_33",
-    "targetTable" : "orders",
-    "sourceColumn" : "order_id",
-    "targetColumn" : "order_id",
-    "type" : "inferred",
-    "confidence" : 0.6
-  }, {
-    "sourceTable" : "aux_table_33",
-    "targetTable" : "tenants",
-    "sourceColumn" : "tenant_id",
-    "targetColumn" : "tenant_id",
-    "type" : "inferred",
-    "confidence" : 0.6
-  }, {
-    "sourceTable" : "aux_table_33",
-    "targetTable" : "user_roles",
-    "sourceColumn" : "user_id",
-    "targetColumn" : "user_id",
-    "type" : "inferred",
-    "confidence" : 0.6
-  }, {
-    "sourceTable" : "aux_table_33",
-    "targetTable" : "users",
-    "sourceColumn" : "user_id",
-    "targetColumn" : "user_id",
-    "type" : "inferred",
-    "confidence" : 0.6
-  }, {
-    "sourceTable" : "aux_table_34",
-    "targetTable" : "orders",
-    "sourceColumn" : "order_id",
-    "targetColumn" : "order_id",
-    "type" : "inferred",
-    "confidence" : 0.6
-  }, {
-    "sourceTable" : "aux_table_34",
-    "targetTable" : "orders",
-    "sourceColumn" : "order_id",
-    "targetColumn" : "order_id",
-    "type" : "inferred",
-    "confidence" : 0.6
-  }, {
-    "sourceTable" : "aux_table_34",
-    "targetTable" : "orders",
-    "sourceColumn" : "order_id",
-    "targetColumn" : "order_id",
-    "type" : "inferred",
-    "confidence" : 0.6
-  }, {
-    "sourceTable" : "aux_table_34",
-    "targetTable" : "orders",
-    "sourceColumn" : "order_id",
-    "targetColumn" : "order_id",
-    "type" : "inferred",
-    "confidence" : 0.6
-  }, {
-    "sourceTable" : "aux_table_34",
-    "targetTable" : "tenants",
-    "sourceColumn" : "tenant_id",
-    "targetColumn" : "tenant_id",
-    "type" : "inferred",
-    "confidence" : 0.6
-  }, {
-    "sourceTable" : "aux_table_34",
-    "targetTable" : "user_roles",
-    "sourceColumn" : "user_id",
-    "targetColumn" : "user_id",
-    "type" : "inferred",
-    "confidence" : 0.6
-  }, {
-    "sourceTable" : "aux_table_34",
-    "targetTable" : "users",
-    "sourceColumn" : "user_id",
-    "targetColumn" : "user_id",
-    "type" : "inferred",
-    "confidence" : 0.6
-  }, {
-    "sourceTable" : "aux_table_35",
-    "targetTable" : "orders",
-    "sourceColumn" : "order_id",
-    "targetColumn" : "order_id",
-    "type" : "inferred",
-    "confidence" : 0.6
-  }, {
-    "sourceTable" : "aux_table_35",
-    "targetTable" : "orders",
-    "sourceColumn" : "order_id",
-    "targetColumn" : "order_id",
-    "type" : "inferred",
-    "confidence" : 0.6
-  }, {
-    "sourceTable" : "aux_table_35",
-    "targetTable" : "orders",
-    "sourceColumn" : "order_id",
-    "targetColumn" : "order_id",
-    "type" : "inferred",
-    "confidence" : 0.6
-  }, {
-    "sourceTable" : "aux_table_35",
-    "targetTable" : "orders",
-    "sourceColumn" : "order_id",
-    "targetColumn" : "order_id",
-    "type" : "inferred",
-    "confidence" : 0.6
-  }, {
-    "sourceTable" : "aux_table_35",
-    "targetTable" : "tenants",
-    "sourceColumn" : "tenant_id",
-    "targetColumn" : "tenant_id",
-    "type" : "inferred",
-    "confidence" : 0.6
-  }, {
-    "sourceTable" : "aux_table_35",
-    "targetTable" : "user_roles",
-    "sourceColumn" : "user_id",
-    "targetColumn" : "user_id",
-    "type" : "inferred",
-    "confidence" : 0.6
-  }, {
-    "sourceTable" : "aux_table_35",
-    "targetTable" : "users",
-    "sourceColumn" : "user_id",
-    "targetColumn" : "user_id",
-    "type" : "inferred",
-    "confidence" : 0.6
-  }, {
-    "sourceTable" : "aux_table_36",
-    "targetTable" : "orders",
-    "sourceColumn" : "order_id",
-    "targetColumn" : "order_id",
-    "type" : "inferred",
-    "confidence" : 0.6
-  }, {
-    "sourceTable" : "aux_table_36",
-    "targetTable" : "orders",
-    "sourceColumn" : "order_id",
-    "targetColumn" : "order_id",
-    "type" : "inferred",
-    "confidence" : 0.6
-  }, {
-    "sourceTable" : "aux_table_36",
-    "targetTable" : "orders",
-    "sourceColumn" : "order_id",
-    "targetColumn" : "order_id",
-    "type" : "inferred",
-    "confidence" : 0.6
-  }, {
-    "sourceTable" : "aux_table_36",
-    "targetTable" : "orders",
-    "sourceColumn" : "order_id",
-    "targetColumn" : "order_id",
-    "type" : "inferred",
-    "confidence" : 0.6
-  }, {
-    "sourceTable" : "aux_table_36",
-    "targetTable" : "tenants",
-    "sourceColumn" : "tenant_id",
-    "targetColumn" : "tenant_id",
-    "type" : "inferred",
-    "confidence" : 0.6
-  }, {
-    "sourceTable" : "aux_table_36",
-    "targetTable" : "user_roles",
-    "sourceColumn" : "user_id",
-    "targetColumn" : "user_id",
-    "type" : "inferred",
-    "confidence" : 0.6
-  }, {
-    "sourceTable" : "aux_table_36",
-    "targetTable" : "users",
-    "sourceColumn" : "user_id",
-    "targetColumn" : "user_id",
-    "type" : "inferred",
-    "confidence" : 0.6
-  }, {
-    "sourceTable" : "aux_table_37",
-    "targetTable" : "orders",
-    "sourceColumn" : "order_id",
-    "targetColumn" : "order_id",
-    "type" : "inferred",
-    "confidence" : 0.6
-  }, {
-    "sourceTable" : "aux_table_37",
-    "targetTable" : "orders",
-    "sourceColumn" : "order_id",
-    "targetColumn" : "order_id",
-    "type" : "inferred",
-    "confidence" : 0.6
-  }, {
-    "sourceTable" : "aux_table_37",
-    "targetTable" : "orders",
-    "sourceColumn" : "order_id",
-    "targetColumn" : "order_id",
-    "type" : "inferred",
-    "confidence" : 0.6
-  }, {
-    "sourceTable" : "aux_table_37",
-    "targetTable" : "orders",
-    "sourceColumn" : "order_id",
-    "targetColumn" : "order_id",
-    "type" : "inferred",
-    "confidence" : 0.6
-  }, {
-    "sourceTable" : "aux_table_37",
-    "targetTable" : "tenants",
-    "sourceColumn" : "tenant_id",
-    "targetColumn" : "tenant_id",
-    "type" : "inferred",
-    "confidence" : 0.6
-  }, {
-    "sourceTable" : "aux_table_37",
-    "targetTable" : "user_roles",
-    "sourceColumn" : "user_id",
-    "targetColumn" : "user_id",
-    "type" : "inferred",
-    "confidence" : 0.6
-  }, {
-    "sourceTable" : "aux_table_37",
-    "targetTable" : "users",
-    "sourceColumn" : "user_id",
-    "targetColumn" : "user_id",
-    "type" : "inferred",
-    "confidence" : 0.6
-  }, {
-    "sourceTable" : "aux_table_38",
-    "targetTable" : "orders",
-    "sourceColumn" : "order_id",
-    "targetColumn" : "order_id",
-    "type" : "inferred",
-    "confidence" : 0.6
-  }, {
-    "sourceTable" : "aux_table_38",
-    "targetTable" : "orders",
-    "sourceColumn" : "order_id",
-    "targetColumn" : "order_id",
-    "type" : "inferred",
-    "confidence" : 0.6
-  }, {
-    "sourceTable" : "aux_table_38",
-    "targetTable" : "orders",
-    "sourceColumn" : "order_id",
-    "targetColumn" : "order_id",
-    "type" : "inferred",
-    "confidence" : 0.6
-  }, {
-    "sourceTable" : "aux_table_38",
-    "targetTable" : "orders",
-    "sourceColumn" : "order_id",
-    "targetColumn" : "order_id",
-    "type" : "inferred",
-    "confidence" : 0.6
-  }, {
-    "sourceTable" : "aux_table_38",
-    "targetTable" : "tenants",
-    "sourceColumn" : "tenant_id",
-    "targetColumn" : "tenant_id",
-    "type" : "inferred",
-    "confidence" : 0.6
-  }, {
-    "sourceTable" : "aux_table_38",
-    "targetTable" : "user_roles",
-    "sourceColumn" : "user_id",
-    "targetColumn" : "user_id",
-    "type" : "inferred",
-    "confidence" : 0.6
-  }, {
-    "sourceTable" : "aux_table_38",
-    "targetTable" : "users",
-    "sourceColumn" : "user_id",
-    "targetColumn" : "user_id",
-    "type" : "inferred",
-    "confidence" : 0.6
-  }, {
-    "sourceTable" : "aux_table_39",
-    "targetTable" : "orders",
-    "sourceColumn" : "order_id",
-    "targetColumn" : "order_id",
-    "type" : "inferred",
-    "confidence" : 0.6
-  }, {
-    "sourceTable" : "aux_table_39",
-    "targetTable" : "orders",
-    "sourceColumn" : "order_id",
-    "targetColumn" : "order_id",
-    "type" : "inferred",
-    "confidence" : 0.6
-  }, {
-    "sourceTable" : "aux_table_39",
-    "targetTable" : "orders",
-    "sourceColumn" : "order_id",
-    "targetColumn" : "order_id",
-    "type" : "inferred",
-    "confidence" : 0.6
-  }, {
-    "sourceTable" : "aux_table_39",
-    "targetTable" : "orders",
-    "sourceColumn" : "order_id",
-    "targetColumn" : "order_id",
-    "type" : "inferred",
-    "confidence" : 0.6
-  }, {
-    "sourceTable" : "aux_table_39",
-    "targetTable" : "tenants",
-    "sourceColumn" : "tenant_id",
-    "targetColumn" : "tenant_id",
-    "type" : "inferred",
-    "confidence" : 0.6
-  }, {
-    "sourceTable" : "aux_table_39",
-    "targetTable" : "user_roles",
-    "sourceColumn" : "user_id",
-    "targetColumn" : "user_id",
-    "type" : "inferred",
-    "confidence" : 0.6
-  }, {
-    "sourceTable" : "aux_table_39",
-    "targetTable" : "users",
-    "sourceColumn" : "user_id",
-    "targetColumn" : "user_id",
-    "type" : "inferred",
-    "confidence" : 0.6
-  }, {
-    "sourceTable" : "aux_table_4",
-    "targetTable" : "orders",
-    "sourceColumn" : "order_id",
-    "targetColumn" : "order_id",
-    "type" : "inferred",
-    "confidence" : 0.6
-  }, {
-    "sourceTable" : "aux_table_4",
-    "targetTable" : "orders",
-    "sourceColumn" : "order_id",
-    "targetColumn" : "order_id",
-    "type" : "inferred",
-    "confidence" : 0.6
-  }, {
-    "sourceTable" : "aux_table_4",
-    "targetTable" : "orders",
-    "sourceColumn" : "order_id",
-    "targetColumn" : "order_id",
-    "type" : "inferred",
-    "confidence" : 0.6
-  }, {
-    "sourceTable" : "aux_table_4",
-    "targetTable" : "orders",
-    "sourceColumn" : "order_id",
-    "targetColumn" : "order_id",
-    "type" : "inferred",
-    "confidence" : 0.6
-  }, {
-    "sourceTable" : "aux_table_4",
-    "targetTable" : "tenants",
-    "sourceColumn" : "tenant_id",
-    "targetColumn" : "tenant_id",
-    "type" : "inferred",
-    "confidence" : 0.6
-  }, {
-    "sourceTable" : "aux_table_4",
-    "targetTable" : "user_roles",
-    "sourceColumn" : "user_id",
-    "targetColumn" : "user_id",
-    "type" : "inferred",
-    "confidence" : 0.6
-  }, {
-    "sourceTable" : "aux_table_4",
-    "targetTable" : "users",
-    "sourceColumn" : "user_id",
-    "targetColumn" : "user_id",
-    "type" : "inferred",
-    "confidence" : 0.6
-  }, {
-    "sourceTable" : "aux_table_40",
-    "targetTable" : "orders",
-    "sourceColumn" : "order_id",
-    "targetColumn" : "order_id",
-    "type" : "inferred",
-    "confidence" : 0.6
-  }, {
-    "sourceTable" : "aux_table_40",
-    "targetTable" : "orders",
-    "sourceColumn" : "order_id",
-    "targetColumn" : "order_id",
-    "type" : "inferred",
-    "confidence" : 0.6
-  }, {
-    "sourceTable" : "aux_table_40",
-    "targetTable" : "orders",
-    "sourceColumn" : "order_id",
-    "targetColumn" : "order_id",
-    "type" : "inferred",
-    "confidence" : 0.6
-  }, {
-    "sourceTable" : "aux_table_40",
-    "targetTable" : "orders",
-    "sourceColumn" : "order_id",
-    "targetColumn" : "order_id",
-    "type" : "inferred",
-    "confidence" : 0.6
-  }, {
-    "sourceTable" : "aux_table_40",
-    "targetTable" : "tenants",
-    "sourceColumn" : "tenant_id",
-    "targetColumn" : "tenant_id",
-    "type" : "inferred",
-    "confidence" : 0.6
-  }, {
-    "sourceTable" : "aux_table_40",
-    "targetTable" : "user_roles",
-    "sourceColumn" : "user_id",
-    "targetColumn" : "user_id",
-    "type" : "inferred",
-    "confidence" : 0.6
-  }, {
-    "sourceTable" : "aux_table_40",
-    "targetTable" : "users",
-    "sourceColumn" : "user_id",
-    "targetColumn" : "user_id",
-    "type" : "inferred",
-    "confidence" : 0.6
-  }, {
-    "sourceTable" : "aux_table_41",
-    "targetTable" : "orders",
-    "sourceColumn" : "order_id",
-    "targetColumn" : "order_id",
-    "type" : "inferred",
-    "confidence" : 0.6
-  }, {
-    "sourceTable" : "aux_table_41",
-    "targetTable" : "orders",
-    "sourceColumn" : "order_id",
-    "targetColumn" : "order_id",
-    "type" : "inferred",
-    "confidence" : 0.6
-  }, {
-    "sourceTable" : "aux_table_41",
-    "targetTable" : "orders",
-    "sourceColumn" : "order_id",
-    "targetColumn" : "order_id",
-    "type" : "inferred",
-    "confidence" : 0.6
-  }, {
-    "sourceTable" : "aux_table_41",
-    "targetTable" : "orders",
-    "sourceColumn" : "order_id",
-    "targetColumn" : "order_id",
-    "type" : "inferred",
-    "confidence" : 0.6
-  }, {
-    "sourceTable" : "aux_table_41",
-    "targetTable" : "tenants",
-    "sourceColumn" : "tenant_id",
-    "targetColumn" : "tenant_id",
-    "type" : "inferred",
-    "confidence" : 0.6
-  }, {
-    "sourceTable" : "aux_table_41",
-    "targetTable" : "user_roles",
-    "sourceColumn" : "user_id",
-    "targetColumn" : "user_id",
-    "type" : "inferred",
-    "confidence" : 0.6
-  }, {
-    "sourceTable" : "aux_table_41",
-    "targetTable" : "users",
-    "sourceColumn" : "user_id",
-    "targetColumn" : "user_id",
-    "type" : "inferred",
-    "confidence" : 0.6
-  }, {
-    "sourceTable" : "aux_table_42",
-    "targetTable" : "orders",
-    "sourceColumn" : "order_id",
-    "targetColumn" : "order_id",
-    "type" : "inferred",
-    "confidence" : 0.6
-  }, {
-    "sourceTable" : "aux_table_42",
-    "targetTable" : "orders",
-    "sourceColumn" : "order_id",
-    "targetColumn" : "order_id",
-    "type" : "inferred",
-    "confidence" : 0.6
-  }, {
-    "sourceTable" : "aux_table_42",
-    "targetTable" : "orders",
-    "sourceColumn" : "order_id",
-    "targetColumn" : "order_id",
-    "type" : "inferred",
-    "confidence" : 0.6
-  }, {
-    "sourceTable" : "aux_table_42",
-    "targetTable" : "orders",
-    "sourceColumn" : "order_id",
-    "targetColumn" : "order_id",
-    "type" : "inferred",
-    "confidence" : 0.6
-  }, {
-    "sourceTable" : "aux_table_42",
-    "targetTable" : "tenants",
-    "sourceColumn" : "tenant_id",
-    "targetColumn" : "tenant_id",
-    "type" : "inferred",
-    "confidence" : 0.6
-  }, {
-    "sourceTable" : "aux_table_42",
-    "targetTable" : "user_roles",
-    "sourceColumn" : "user_id",
-    "targetColumn" : "user_id",
-    "type" : "inferred",
-    "confidence" : 0.6
-  }, {
-    "sourceTable" : "aux_table_42",
-    "targetTable" : "users",
-    "sourceColumn" : "user_id",
-    "targetColumn" : "user_id",
-    "type" : "inferred",
-    "confidence" : 0.6
-  }, {
-    "sourceTable" : "aux_table_43",
-    "targetTable" : "orders",
-    "sourceColumn" : "order_id",
-    "targetColumn" : "order_id",
-    "type" : "inferred",
-    "confidence" : 0.6
-  }, {
-    "sourceTable" : "aux_table_43",
-    "targetTable" : "orders",
-    "sourceColumn" : "order_id",
-    "targetColumn" : "order_id",
-    "type" : "inferred",
-    "confidence" : 0.6
-  }, {
-    "sourceTable" : "aux_table_43",
-    "targetTable" : "orders",
-    "sourceColumn" : "order_id",
-    "targetColumn" : "order_id",
-    "type" : "inferred",
-    "confidence" : 0.6
-  }, {
-    "sourceTable" : "aux_table_43",
-    "targetTable" : "orders",
-    "sourceColumn" : "order_id",
-    "targetColumn" : "order_id",
-    "type" : "inferred",
-    "confidence" : 0.6
-  }, {
-    "sourceTable" : "aux_table_43",
-    "targetTable" : "tenants",
-    "sourceColumn" : "tenant_id",
-    "targetColumn" : "tenant_id",
-    "type" : "inferred",
-    "confidence" : 0.6
-  }, {
-    "sourceTable" : "aux_table_43",
-    "targetTable" : "user_roles",
-    "sourceColumn" : "user_id",
-    "targetColumn" : "user_id",
-    "type" : "inferred",
-    "confidence" : 0.6
-  }, {
-    "sourceTable" : "aux_table_43",
-    "targetTable" : "users",
-    "sourceColumn" : "user_id",
-    "targetColumn" : "user_id",
-    "type" : "inferred",
-    "confidence" : 0.6
-  }, {
-    "sourceTable" : "aux_table_44",
-    "targetTable" : "orders",
-    "sourceColumn" : "order_id",
-    "targetColumn" : "order_id",
-    "type" : "inferred",
-    "confidence" : 0.6
-  }, {
-    "sourceTable" : "aux_table_44",
-    "targetTable" : "orders",
-    "sourceColumn" : "order_id",
-    "targetColumn" : "order_id",
-    "type" : "inferred",
-    "confidence" : 0.6
-  }, {
-    "sourceTable" : "aux_table_44",
-    "targetTable" : "orders",
-    "sourceColumn" : "order_id",
-    "targetColumn" : "order_id",
-    "type" : "inferred",
-    "confidence" : 0.6
-  }, {
-    "sourceTable" : "aux_table_44",
-    "targetTable" : "orders",
-    "sourceColumn" : "order_id",
-    "targetColumn" : "order_id",
-    "type" : "inferred",
-    "confidence" : 0.6
-  }, {
-    "sourceTable" : "aux_table_44",
-    "targetTable" : "tenants",
-    "sourceColumn" : "tenant_id",
-    "targetColumn" : "tenant_id",
-    "type" : "inferred",
-    "confidence" : 0.6
-  }, {
-    "sourceTable" : "aux_table_44",
-    "targetTable" : "user_roles",
-    "sourceColumn" : "user_id",
-    "targetColumn" : "user_id",
-    "type" : "inferred",
-    "confidence" : 0.6
-  }, {
-    "sourceTable" : "aux_table_44",
-    "targetTable" : "users",
-    "sourceColumn" : "user_id",
-    "targetColumn" : "user_id",
-    "type" : "inferred",
-    "confidence" : 0.6
-  }, {
-    "sourceTable" : "aux_table_45",
-    "targetTable" : "orders",
-    "sourceColumn" : "order_id",
-    "targetColumn" : "order_id",
-    "type" : "inferred",
-    "confidence" : 0.6
-  }, {
-    "sourceTable" : "aux_table_45",
-    "targetTable" : "orders",
-    "sourceColumn" : "order_id",
-    "targetColumn" : "order_id",
-    "type" : "inferred",
-    "confidence" : 0.6
-  }, {
-    "sourceTable" : "aux_table_45",
-    "targetTable" : "orders",
-    "sourceColumn" : "order_id",
-    "targetColumn" : "order_id",
-    "type" : "inferred",
-    "confidence" : 0.6
-  }, {
-    "sourceTable" : "aux_table_45",
-    "targetTable" : "orders",
-    "sourceColumn" : "order_id",
-    "targetColumn" : "order_id",
-    "type" : "inferred",
-    "confidence" : 0.6
-  }, {
-    "sourceTable" : "aux_table_45",
-    "targetTable" : "tenants",
-    "sourceColumn" : "tenant_id",
-    "targetColumn" : "tenant_id",
-    "type" : "inferred",
-    "confidence" : 0.6
-  }, {
-    "sourceTable" : "aux_table_45",
-    "targetTable" : "user_roles",
-    "sourceColumn" : "user_id",
-    "targetColumn" : "user_id",
-    "type" : "inferred",
-    "confidence" : 0.6
-  }, {
-    "sourceTable" : "aux_table_45",
-    "targetTable" : "users",
-    "sourceColumn" : "user_id",
-    "targetColumn" : "user_id",
-    "type" : "inferred",
-    "confidence" : 0.6
-  }, {
-    "sourceTable" : "aux_table_46",
-    "targetTable" : "orders",
-    "sourceColumn" : "order_id",
-    "targetColumn" : "order_id",
-    "type" : "inferred",
-    "confidence" : 0.6
-  }, {
-    "sourceTable" : "aux_table_46",
-    "targetTable" : "orders",
-    "sourceColumn" : "order_id",
-    "targetColumn" : "order_id",
-    "type" : "inferred",
-    "confidence" : 0.6
-  }, {
-    "sourceTable" : "aux_table_46",
-    "targetTable" : "orders",
-    "sourceColumn" : "order_id",
-    "targetColumn" : "order_id",
-    "type" : "inferred",
-    "confidence" : 0.6
-  }, {
-    "sourceTable" : "aux_table_46",
-    "targetTable" : "orders",
-    "sourceColumn" : "order_id",
-    "targetColumn" : "order_id",
-    "type" : "inferred",
-    "confidence" : 0.6
-  }, {
-    "sourceTable" : "aux_table_46",
-    "targetTable" : "tenants",
-    "sourceColumn" : "tenant_id",
-    "targetColumn" : "tenant_id",
-    "type" : "inferred",
-    "confidence" : 0.6
-  }, {
-    "sourceTable" : "aux_table_46",
-    "targetTable" : "user_roles",
-    "sourceColumn" : "user_id",
-    "targetColumn" : "user_id",
-    "type" : "inferred",
-    "confidence" : 0.6
-  }, {
-    "sourceTable" : "aux_table_46",
-    "targetTable" : "users",
-    "sourceColumn" : "user_id",
-    "targetColumn" : "user_id",
-    "type" : "inferred",
-    "confidence" : 0.6
-  }, {
-    "sourceTable" : "aux_table_47",
-    "targetTable" : "orders",
-    "sourceColumn" : "order_id",
-    "targetColumn" : "order_id",
-    "type" : "inferred",
-    "confidence" : 0.6
-  }, {
-    "sourceTable" : "aux_table_47",
-    "targetTable" : "orders",
-    "sourceColumn" : "order_id",
-    "targetColumn" : "order_id",
-    "type" : "inferred",
-    "confidence" : 0.6
-  }, {
-    "sourceTable" : "aux_table_47",
-    "targetTable" : "orders",
-    "sourceColumn" : "order_id",
-    "targetColumn" : "order_id",
-    "type" : "inferred",
-    "confidence" : 0.6
-  }, {
-    "sourceTable" : "aux_table_47",
-    "targetTable" : "orders",
-    "sourceColumn" : "order_id",
-    "targetColumn" : "order_id",
-    "type" : "inferred",
-    "confidence" : 0.6
-  }, {
-    "sourceTable" : "aux_table_47",
-    "targetTable" : "tenants",
-    "sourceColumn" : "tenant_id",
-    "targetColumn" : "tenant_id",
-    "type" : "inferred",
-    "confidence" : 0.6
-  }, {
-    "sourceTable" : "aux_table_47",
-    "targetTable" : "user_roles",
-    "sourceColumn" : "user_id",
-    "targetColumn" : "user_id",
-    "type" : "inferred",
-    "confidence" : 0.6
-  }, {
-    "sourceTable" : "aux_table_47",
-    "targetTable" : "users",
-    "sourceColumn" : "user_id",
-    "targetColumn" : "user_id",
-    "type" : "inferred",
-    "confidence" : 0.6
-  }, {
-    "sourceTable" : "aux_table_48",
-    "targetTable" : "orders",
-    "sourceColumn" : "order_id",
-    "targetColumn" : "order_id",
-    "type" : "inferred",
-    "confidence" : 0.6
-  }, {
-    "sourceTable" : "aux_table_48",
-    "targetTable" : "orders",
-    "sourceColumn" : "order_id",
-    "targetColumn" : "order_id",
-    "type" : "inferred",
-    "confidence" : 0.6
-  }, {
-    "sourceTable" : "aux_table_48",
-    "targetTable" : "orders",
-    "sourceColumn" : "order_id",
-    "targetColumn" : "order_id",
-    "type" : "inferred",
-    "confidence" : 0.6
-  }, {
-    "sourceTable" : "aux_table_48",
-    "targetTable" : "orders",
-    "sourceColumn" : "order_id",
-    "targetColumn" : "order_id",
-    "type" : "inferred",
-    "confidence" : 0.6
-  }, {
-    "sourceTable" : "aux_table_48",
-    "targetTable" : "tenants",
-    "sourceColumn" : "tenant_id",
-    "targetColumn" : "tenant_id",
-    "type" : "inferred",
-    "confidence" : 0.6
-  }, {
-    "sourceTable" : "aux_table_48",
-    "targetTable" : "user_roles",
-    "sourceColumn" : "user_id",
-    "targetColumn" : "user_id",
-    "type" : "inferred",
-    "confidence" : 0.6
-  }, {
-    "sourceTable" : "aux_table_48",
-    "targetTable" : "users",
-    "sourceColumn" : "user_id",
-    "targetColumn" : "user_id",
-    "type" : "inferred",
-    "confidence" : 0.6
-  }, {
-    "sourceTable" : "aux_table_49",
-    "targetTable" : "orders",
-    "sourceColumn" : "order_id",
-    "targetColumn" : "order_id",
-    "type" : "inferred",
-    "confidence" : 0.6
-  }, {
-    "sourceTable" : "aux_table_49",
-    "targetTable" : "orders",
-    "sourceColumn" : "order_id",
-    "targetColumn" : "order_id",
-    "type" : "inferred",
-    "confidence" : 0.6
-  }, {
-    "sourceTable" : "aux_table_49",
-    "targetTable" : "orders",
-    "sourceColumn" : "order_id",
-    "targetColumn" : "order_id",
-    "type" : "inferred",
-    "confidence" : 0.6
-  }, {
-    "sourceTable" : "aux_table_49",
-    "targetTable" : "orders",
-    "sourceColumn" : "order_id",
-    "targetColumn" : "order_id",
-    "type" : "inferred",
-    "confidence" : 0.6
-  }, {
-    "sourceTable" : "aux_table_49",
-    "targetTable" : "tenants",
-    "sourceColumn" : "tenant_id",
-    "targetColumn" : "tenant_id",
-    "type" : "inferred",
-    "confidence" : 0.6
-  }, {
-    "sourceTable" : "aux_table_49",
-    "targetTable" : "user_roles",
-    "sourceColumn" : "user_id",
-    "targetColumn" : "user_id",
-    "type" : "inferred",
-    "confidence" : 0.6
-  }, {
-    "sourceTable" : "aux_table_49",
-    "targetTable" : "users",
-    "sourceColumn" : "user_id",
-    "targetColumn" : "user_id",
-    "type" : "inferred",
-    "confidence" : 0.6
-  }, {
-    "sourceTable" : "aux_table_5",
-    "targetTable" : "orders",
-    "sourceColumn" : "order_id",
-    "targetColumn" : "order_id",
-    "type" : "inferred",
-    "confidence" : 0.6
-  }, {
-    "sourceTable" : "aux_table_5",
-    "targetTable" : "orders",
-    "sourceColumn" : "order_id",
-    "targetColumn" : "order_id",
-    "type" : "inferred",
-    "confidence" : 0.6
-  }, {
-    "sourceTable" : "aux_table_5",
-    "targetTable" : "orders",
-    "sourceColumn" : "order_id",
-    "targetColumn" : "order_id",
-    "type" : "inferred",
-    "confidence" : 0.6
-  }, {
-    "sourceTable" : "aux_table_5",
-    "targetTable" : "orders",
-    "sourceColumn" : "order_id",
-    "targetColumn" : "order_id",
-    "type" : "inferred",
-    "confidence" : 0.6
-  }, {
-    "sourceTable" : "aux_table_5",
-    "targetTable" : "tenants",
-    "sourceColumn" : "tenant_id",
-    "targetColumn" : "tenant_id",
-    "type" : "inferred",
-    "confidence" : 0.6
-  }, {
-    "sourceTable" : "aux_table_5",
-    "targetTable" : "user_roles",
-    "sourceColumn" : "user_id",
-    "targetColumn" : "user_id",
-    "type" : "inferred",
-    "confidence" : 0.6
-  }, {
-    "sourceTable" : "aux_table_5",
-    "targetTable" : "users",
-    "sourceColumn" : "user_id",
-    "targetColumn" : "user_id",
-    "type" : "inferred",
-    "confidence" : 0.6
-  }, {
-    "sourceTable" : "aux_table_50",
-    "targetTable" : "orders",
-    "sourceColumn" : "order_id",
-    "targetColumn" : "order_id",
-    "type" : "inferred",
-    "confidence" : 0.6
-  }, {
-    "sourceTable" : "aux_table_50",
-    "targetTable" : "orders",
-    "sourceColumn" : "order_id",
-    "targetColumn" : "order_id",
-    "type" : "inferred",
-    "confidence" : 0.6
-  }, {
-    "sourceTable" : "aux_table_50",
-    "targetTable" : "orders",
-    "sourceColumn" : "order_id",
-    "targetColumn" : "order_id",
-    "type" : "inferred",
-    "confidence" : 0.6
-  }, {
-    "sourceTable" : "aux_table_50",
-    "targetTable" : "orders",
-    "sourceColumn" : "order_id",
-    "targetColumn" : "order_id",
-    "type" : "inferred",
-    "confidence" : 0.6
-  }, {
-    "sourceTable" : "aux_table_50",
-    "targetTable" : "tenants",
-    "sourceColumn" : "tenant_id",
-    "targetColumn" : "tenant_id",
-    "type" : "inferred",
-    "confidence" : 0.6
-  }, {
-    "sourceTable" : "aux_table_50",
-    "targetTable" : "user_roles",
-    "sourceColumn" : "user_id",
-    "targetColumn" : "user_id",
-    "type" : "inferred",
-    "confidence" : 0.6
-  }, {
-    "sourceTable" : "aux_table_50",
-    "targetTable" : "users",
-    "sourceColumn" : "user_id",
-    "targetColumn" : "user_id",
-    "type" : "inferred",
-    "confidence" : 0.6
-  }, {
-    "sourceTable" : "aux_table_6",
-    "targetTable" : "orders",
-    "sourceColumn" : "order_id",
-    "targetColumn" : "order_id",
-    "type" : "inferred",
-    "confidence" : 0.6
-  }, {
-    "sourceTable" : "aux_table_6",
-    "targetTable" : "orders",
-    "sourceColumn" : "order_id",
-    "targetColumn" : "order_id",
-    "type" : "inferred",
-    "confidence" : 0.6
-  }, {
-    "sourceTable" : "aux_table_6",
-    "targetTable" : "orders",
-    "sourceColumn" : "order_id",
-    "targetColumn" : "order_id",
-    "type" : "inferred",
-    "confidence" : 0.6
-  }, {
-    "sourceTable" : "aux_table_6",
-    "targetTable" : "orders",
-    "sourceColumn" : "order_id",
-    "targetColumn" : "order_id",
-    "type" : "inferred",
-    "confidence" : 0.6
-  }, {
-    "sourceTable" : "aux_table_6",
-    "targetTable" : "tenants",
-    "sourceColumn" : "tenant_id",
-    "targetColumn" : "tenant_id",
-    "type" : "inferred",
-    "confidence" : 0.6
-  }, {
-    "sourceTable" : "aux_table_6",
-    "targetTable" : "user_roles",
-    "sourceColumn" : "user_id",
-    "targetColumn" : "user_id",
-    "type" : "inferred",
-    "confidence" : 0.6
-  }, {
-    "sourceTable" : "aux_table_6",
-    "targetTable" : "users",
-    "sourceColumn" : "user_id",
-    "targetColumn" : "user_id",
-    "type" : "inferred",
-    "confidence" : 0.6
-  }, {
-    "sourceTable" : "aux_table_7",
-    "targetTable" : "orders",
-    "sourceColumn" : "order_id",
-    "targetColumn" : "order_id",
-    "type" : "inferred",
-    "confidence" : 0.6
-  }, {
-    "sourceTable" : "aux_table_7",
-    "targetTable" : "orders",
-    "sourceColumn" : "order_id",
-    "targetColumn" : "order_id",
-    "type" : "inferred",
-    "confidence" : 0.6
-  }, {
-    "sourceTable" : "aux_table_7",
-    "targetTable" : "orders",
-    "sourceColumn" : "order_id",
-    "targetColumn" : "order_id",
-    "type" : "inferred",
-    "confidence" : 0.6
-  }, {
-    "sourceTable" : "aux_table_7",
-    "targetTable" : "orders",
-    "sourceColumn" : "order_id",
-    "targetColumn" : "order_id",
-    "type" : "inferred",
-    "confidence" : 0.6
-  }, {
-    "sourceTable" : "aux_table_7",
-    "targetTable" : "tenants",
-    "sourceColumn" : "tenant_id",
-    "targetColumn" : "tenant_id",
-    "type" : "inferred",
-    "confidence" : 0.6
-  }, {
-    "sourceTable" : "aux_table_7",
-    "targetTable" : "user_roles",
-    "sourceColumn" : "user_id",
-    "targetColumn" : "user_id",
-    "type" : "inferred",
-    "confidence" : 0.6
-  }, {
-    "sourceTable" : "aux_table_7",
-    "targetTable" : "users",
-    "sourceColumn" : "user_id",
-    "targetColumn" : "user_id",
-    "type" : "inferred",
-    "confidence" : 0.6
-  }, {
-    "sourceTable" : "aux_table_8",
-    "targetTable" : "orders",
-    "sourceColumn" : "order_id",
-    "targetColumn" : "order_id",
-    "type" : "inferred",
-    "confidence" : 0.6
-  }, {
-    "sourceTable" : "aux_table_8",
-    "targetTable" : "orders",
-    "sourceColumn" : "order_id",
-    "targetColumn" : "order_id",
-    "type" : "inferred",
-    "confidence" : 0.6
-  }, {
-    "sourceTable" : "aux_table_8",
-    "targetTable" : "orders",
-    "sourceColumn" : "order_id",
-    "targetColumn" : "order_id",
-    "type" : "inferred",
-    "confidence" : 0.6
-  }, {
-    "sourceTable" : "aux_table_8",
-    "targetTable" : "orders",
-    "sourceColumn" : "order_id",
-    "targetColumn" : "order_id",
-    "type" : "inferred",
-    "confidence" : 0.6
-  }, {
-    "sourceTable" : "aux_table_8",
-    "targetTable" : "tenants",
-    "sourceColumn" : "tenant_id",
-    "targetColumn" : "tenant_id",
-    "type" : "inferred",
-    "confidence" : 0.6
-  }, {
-    "sourceTable" : "aux_table_8",
-    "targetTable" : "user_roles",
-    "sourceColumn" : "user_id",
-    "targetColumn" : "user_id",
-    "type" : "inferred",
-    "confidence" : 0.6
-  }, {
-    "sourceTable" : "aux_table_8",
-    "targetTable" : "users",
-    "sourceColumn" : "user_id",
-    "targetColumn" : "user_id",
-    "type" : "inferred",
-    "confidence" : 0.6
-  }, {
-    "sourceTable" : "aux_table_9",
-    "targetTable" : "orders",
-    "sourceColumn" : "order_id",
-    "targetColumn" : "order_id",
-    "type" : "inferred",
-    "confidence" : 0.6
-  }, {
-    "sourceTable" : "aux_table_9",
-    "targetTable" : "orders",
-    "sourceColumn" : "order_id",
-    "targetColumn" : "order_id",
-    "type" : "inferred",
-    "confidence" : 0.6
-  }, {
-    "sourceTable" : "aux_table_9",
-    "targetTable" : "orders",
-    "sourceColumn" : "order_id",
-    "targetColumn" : "order_id",
-    "type" : "inferred",
-    "confidence" : 0.6
-  }, {
-    "sourceTable" : "aux_table_9",
-    "targetTable" : "orders",
-    "sourceColumn" : "order_id",
-    "targetColumn" : "order_id",
-    "type" : "inferred",
-    "confidence" : 0.6
-  }, {
-    "sourceTable" : "aux_table_9",
-    "targetTable" : "tenants",
-    "sourceColumn" : "tenant_id",
-    "targetColumn" : "tenant_id",
-    "type" : "inferred",
-    "confidence" : 0.6
-  }, {
-    "sourceTable" : "aux_table_9",
-    "targetTable" : "user_roles",
-    "sourceColumn" : "user_id",
-    "targetColumn" : "user_id",
-    "type" : "inferred",
-    "confidence" : 0.6
-  }, {
-    "sourceTable" : "aux_table_9",
-    "targetTable" : "users",
-    "sourceColumn" : "user_id",
-    "targetColumn" : "user_id",
-    "type" : "inferred",
-    "confidence" : 0.6
-  }, {
-    "sourceTable" : "inventory",
     "targetTable" : "products",
-    "sourceColumn" : "product_id",
-    "targetColumn" : "product_id",
-    "type" : "inferred",
-    "confidence" : 0.6
-  }, {
-    "sourceTable" : "invoices",
-    "targetTable" : "orders",
-    "sourceColumn" : "order_id",
-    "targetColumn" : "order_id",
-    "type" : "inferred",
-    "confidence" : 0.6
-  }, {
-    "sourceTable" : "invoices",
-    "targetTable" : "orders",
-    "sourceColumn" : "order_id",
-    "targetColumn" : "order_id",
-    "type" : "inferred",
-    "confidence" : 0.6
-  }, {
-    "sourceTable" : "invoices",
-    "targetTable" : "orders",
-    "sourceColumn" : "order_id",
-    "targetColumn" : "order_id",
-    "type" : "inferred",
-    "confidence" : 0.6
-  }, {
-    "sourceTable" : "invoices",
-    "targetTable" : "orders",
-    "sourceColumn" : "order_id",
-    "targetColumn" : "order_id",
-    "type" : "inferred",
-    "confidence" : 0.6
-  }, {
-    "sourceTable" : "notifications",
-    "targetTable" : "user_roles",
-    "sourceColumn" : "user_id",
-    "targetColumn" : "user_id",
-    "type" : "inferred",
-    "confidence" : 0.6
-  }, {
-    "sourceTable" : "notifications",
-    "targetTable" : "users",
-    "sourceColumn" : "user_id",
-    "targetColumn" : "user_id",
-    "type" : "inferred",
-    "confidence" : 0.6
-  }, {
-    "sourceTable" : "order_items",
-    "targetTable" : "orders",
-    "sourceColumn" : "order_id",
-    "targetColumn" : "order_id",
-    "type" : "inferred",
-    "confidence" : 0.6
-  }, {
-    "sourceTable" : "order_items",
-    "targetTable" : "orders",
-    "sourceColumn" : "order_id",
-    "targetColumn" : "order_id",
-    "type" : "inferred",
-    "confidence" : 0.6
-  }, {
-    "sourceTable" : "order_items",
-    "targetTable" : "orders",
-    "sourceColumn" : "order_id",
-    "targetColumn" : "order_id",
-    "type" : "inferred",
-    "confidence" : 0.6
-  }, {
-    "sourceTable" : "order_items",
-    "targetTable" : "orders",
-    "sourceColumn" : "order_id",
-    "targetColumn" : "order_id",
-    "type" : "inferred",
-    "confidence" : 0.6
-  }, {
-    "sourceTable" : "order_items",
-    "targetTable" : "products",
-    "sourceColumn" : "product_id",
-    "targetColumn" : "product_id",
-    "type" : "inferred",
-    "confidence" : 0.6
+    "targetColumn" : "category_id",
+    "relationshipType" : "DATA_SAMPLE",
+    "confidence" : 1.0
   }, {
     "sourceTable" : "orders",
-    "targetTable" : "customers",
-    "sourceColumn" : "customer_id",
-    "targetColumn" : "customer_id",
-    "type" : "inferred",
-    "confidence" : 0.6
-  }, {
-    "sourceTable" : "orders",
-    "targetTable" : "tenants",
     "sourceColumn" : "tenant_id",
+    "targetTable" : "products",
+    "targetColumn" : "product_id",
+    "relationshipType" : "DATA_SAMPLE",
+    "confidence" : 1.0
+  }, {
+    "sourceTable" : "orders",
+    "sourceColumn" : "user_id",
+    "targetTable" : "products",
+    "targetColumn" : "category_id",
+    "relationshipType" : "DATA_SAMPLE",
+    "confidence" : 1.0
+  }, {
+    "sourceTable" : "orders",
+    "sourceColumn" : "user_id",
+    "targetTable" : "products",
+    "targetColumn" : "product_id",
+    "relationshipType" : "DATA_SAMPLE",
+    "confidence" : 1.0
+  }, {
+    "sourceTable" : "orders",
+    "sourceColumn" : "order_id",
+    "targetTable" : "products",
+    "targetColumn" : "category_id",
+    "relationshipType" : "DATA_SAMPLE",
+    "confidence" : 1.0
+  }, {
+    "sourceTable" : "orders",
+    "sourceColumn" : "order_id",
+    "targetTable" : "products",
+    "targetColumn" : "product_id",
+    "relationshipType" : "DATA_SAMPLE",
+    "confidence" : 1.0
+  }, {
+    "sourceTable" : "orders",
+    "sourceColumn" : "tenant_id",
+    "targetTable" : "categories",
+    "targetColumn" : "category_id",
+    "relationshipType" : "DATA_SAMPLE",
+    "confidence" : 1.0
+  }, {
+    "sourceTable" : "orders",
+    "sourceColumn" : "user_id",
+    "targetTable" : "categories",
+    "targetColumn" : "category_id",
+    "relationshipType" : "DATA_SAMPLE",
+    "confidence" : 1.0
+  }, {
+    "sourceTable" : "orders",
+    "sourceColumn" : "order_id",
+    "targetTable" : "categories",
+    "targetColumn" : "category_id",
+    "relationshipType" : "DATA_SAMPLE",
+    "confidence" : 1.0
+  }, {
+    "sourceTable" : "orders",
+    "sourceColumn" : "tenant_id",
+    "targetTable" : "tenants",
     "targetColumn" : "tenant_id",
-    "type" : "inferred",
-    "confidence" : 0.6
+    "relationshipType" : "DATA_SAMPLE",
+    "confidence" : 1.0
   }, {
     "sourceTable" : "orders",
-    "targetTable" : "user_roles",
     "sourceColumn" : "user_id",
-    "targetColumn" : "user_id",
-    "type" : "inferred",
-    "confidence" : 0.6
+    "targetTable" : "tenants",
+    "targetColumn" : "tenant_id",
+    "relationshipType" : "DATA_SAMPLE",
+    "confidence" : 1.0
   }, {
     "sourceTable" : "orders",
-    "targetTable" : "users",
+    "sourceColumn" : "order_id",
+    "targetTable" : "tenants",
+    "targetColumn" : "tenant_id",
+    "relationshipType" : "DATA_SAMPLE",
+    "confidence" : 1.0
+  }, {
+    "sourceTable" : "payments",
     "sourceColumn" : "user_id",
-    "targetColumn" : "user_id",
-    "type" : "inferred",
-    "confidence" : 0.6
+    "targetTable" : "roles",
+    "targetColumn" : "role_id",
+    "relationshipType" : "DATA_SAMPLE",
+    "confidence" : 1.0
   }, {
     "sourceTable" : "payments",
-    "targetTable" : "orders",
+    "sourceColumn" : "payment_id",
+    "targetTable" : "roles",
+    "targetColumn" : "role_id",
+    "relationshipType" : "DATA_SAMPLE",
+    "confidence" : 1.0
+  }, {
+    "sourceTable" : "payments",
     "sourceColumn" : "order_id",
-    "targetColumn" : "order_id",
-    "type" : "inferred",
-    "confidence" : 0.6
+    "targetTable" : "roles",
+    "targetColumn" : "role_id",
+    "relationshipType" : "DATA_SAMPLE",
+    "confidence" : 1.0
   }, {
     "sourceTable" : "payments",
-    "targetTable" : "orders",
-    "sourceColumn" : "order_id",
-    "targetColumn" : "order_id",
-    "type" : "inferred",
-    "confidence" : 0.6
+    "sourceColumn" : "amount",
+    "targetTable" : "products",
+    "targetColumn" : "price",
+    "relationshipType" : "DATA_SAMPLE",
+    "confidence" : 1.0
   }, {
     "sourceTable" : "payments",
-    "targetTable" : "orders",
-    "sourceColumn" : "order_id",
-    "targetColumn" : "order_id",
-    "type" : "inferred",
-    "confidence" : 0.6
-  }, {
-    "sourceTable" : "payments",
-    "targetTable" : "orders",
-    "sourceColumn" : "order_id",
-    "targetColumn" : "order_id",
-    "type" : "inferred",
-    "confidence" : 0.6
-  }, {
-    "sourceTable" : "payments",
-    "targetTable" : "orders",
-    "sourceColumn" : "order_id",
-    "targetColumn" : "order_id",
-    "type" : "inferred",
-    "confidence" : 0.6
-  }, {
-    "sourceTable" : "payments",
-    "targetTable" : "orders",
-    "sourceColumn" : "order_id",
-    "targetColumn" : "order_id",
-    "type" : "inferred",
-    "confidence" : 0.6
-  }, {
-    "sourceTable" : "payments",
-    "targetTable" : "orders",
-    "sourceColumn" : "order_id",
-    "targetColumn" : "order_id",
-    "type" : "inferred",
-    "confidence" : 0.6
-  }, {
-    "sourceTable" : "payments",
-    "targetTable" : "orders",
-    "sourceColumn" : "order_id",
-    "targetColumn" : "order_id",
-    "type" : "inferred",
-    "confidence" : 0.6
-  }, {
-    "sourceTable" : "payments",
-    "targetTable" : "user_roles",
     "sourceColumn" : "user_id",
-    "targetColumn" : "user_id",
-    "type" : "inferred",
-    "confidence" : 0.6
+    "targetTable" : "products",
+    "targetColumn" : "category_id",
+    "relationshipType" : "DATA_SAMPLE",
+    "confidence" : 1.0
   }, {
     "sourceTable" : "payments",
-    "targetTable" : "users",
     "sourceColumn" : "user_id",
-    "targetColumn" : "user_id",
-    "type" : "inferred",
-    "confidence" : 0.6
+    "targetTable" : "products",
+    "targetColumn" : "product_id",
+    "relationshipType" : "DATA_SAMPLE",
+    "confidence" : 1.0
+  }, {
+    "sourceTable" : "payments",
+    "sourceColumn" : "payment_id",
+    "targetTable" : "products",
+    "targetColumn" : "category_id",
+    "relationshipType" : "DATA_SAMPLE",
+    "confidence" : 1.0
+  }, {
+    "sourceTable" : "payments",
+    "sourceColumn" : "payment_id",
+    "targetTable" : "products",
+    "targetColumn" : "product_id",
+    "relationshipType" : "DATA_SAMPLE",
+    "confidence" : 1.0
+  }, {
+    "sourceTable" : "payments",
+    "sourceColumn" : "order_id",
+    "targetTable" : "products",
+    "targetColumn" : "category_id",
+    "relationshipType" : "DATA_SAMPLE",
+    "confidence" : 1.0
+  }, {
+    "sourceTable" : "payments",
+    "sourceColumn" : "order_id",
+    "targetTable" : "products",
+    "targetColumn" : "product_id",
+    "relationshipType" : "DATA_SAMPLE",
+    "confidence" : 1.0
+  }, {
+    "sourceTable" : "payments",
+    "sourceColumn" : "user_id",
+    "targetTable" : "categories",
+    "targetColumn" : "category_id",
+    "relationshipType" : "DATA_SAMPLE",
+    "confidence" : 1.0
+  }, {
+    "sourceTable" : "payments",
+    "sourceColumn" : "payment_id",
+    "targetTable" : "categories",
+    "targetColumn" : "category_id",
+    "relationshipType" : "DATA_SAMPLE",
+    "confidence" : 1.0
+  }, {
+    "sourceTable" : "payments",
+    "sourceColumn" : "order_id",
+    "targetTable" : "categories",
+    "targetColumn" : "category_id",
+    "relationshipType" : "DATA_SAMPLE",
+    "confidence" : 1.0
+  }, {
+    "sourceTable" : "payments",
+    "sourceColumn" : "user_id",
+    "targetTable" : "tenants",
+    "targetColumn" : "tenant_id",
+    "relationshipType" : "DATA_SAMPLE",
+    "confidence" : 1.0
+  }, {
+    "sourceTable" : "payments",
+    "sourceColumn" : "payment_id",
+    "targetTable" : "tenants",
+    "targetColumn" : "tenant_id",
+    "relationshipType" : "DATA_SAMPLE",
+    "confidence" : 1.0
+  }, {
+    "sourceTable" : "payments",
+    "sourceColumn" : "order_id",
+    "targetTable" : "tenants",
+    "targetColumn" : "tenant_id",
+    "relationshipType" : "DATA_SAMPLE",
+    "confidence" : 1.0
+  }, {
+    "sourceTable" : "roles",
+    "sourceColumn" : "role_id",
+    "targetTable" : "products",
+    "targetColumn" : "category_id",
+    "relationshipType" : "DATA_SAMPLE",
+    "confidence" : 1.0
+  }, {
+    "sourceTable" : "roles",
+    "sourceColumn" : "role_id",
+    "targetTable" : "products",
+    "targetColumn" : "product_id",
+    "relationshipType" : "DATA_SAMPLE",
+    "confidence" : 1.0
+  }, {
+    "sourceTable" : "roles",
+    "sourceColumn" : "role_id",
+    "targetTable" : "categories",
+    "targetColumn" : "category_id",
+    "relationshipType" : "DATA_SAMPLE",
+    "confidence" : 1.0
+  }, {
+    "sourceTable" : "roles",
+    "sourceColumn" : "role_id",
+    "targetTable" : "tenants",
+    "targetColumn" : "tenant_id",
+    "relationshipType" : "DATA_SAMPLE",
+    "confidence" : 1.0
   }, {
     "sourceTable" : "products",
-    "targetTable" : "categories",
     "sourceColumn" : "category_id",
+    "targetTable" : "categories",
     "targetColumn" : "category_id",
-    "type" : "inferred",
-    "confidence" : 0.6
+    "relationshipType" : "DATA_SAMPLE",
+    "confidence" : 1.0
   }, {
-    "sourceTable" : "shipments",
-    "targetTable" : "orders",
-    "sourceColumn" : "order_id",
-    "targetColumn" : "order_id",
-    "type" : "inferred",
-    "confidence" : 0.6
+    "sourceTable" : "products",
+    "sourceColumn" : "product_id",
+    "targetTable" : "categories",
+    "targetColumn" : "category_id",
+    "relationshipType" : "DATA_SAMPLE",
+    "confidence" : 1.0
   }, {
-    "sourceTable" : "shipments",
-    "targetTable" : "orders",
-    "sourceColumn" : "order_id",
-    "targetColumn" : "order_id",
-    "type" : "inferred",
-    "confidence" : 0.6
-  }, {
-    "sourceTable" : "shipments",
-    "targetTable" : "orders",
-    "sourceColumn" : "order_id",
-    "targetColumn" : "order_id",
-    "type" : "inferred",
-    "confidence" : 0.6
-  }, {
-    "sourceTable" : "shipments",
-    "targetTable" : "orders",
-    "sourceColumn" : "order_id",
-    "targetColumn" : "order_id",
-    "type" : "inferred",
-    "confidence" : 0.6
-  }, {
-    "sourceTable" : "users",
+    "sourceTable" : "products",
+    "sourceColumn" : "category_id",
     "targetTable" : "tenants",
-    "sourceColumn" : "tenant_id",
     "targetColumn" : "tenant_id",
-    "type" : "inferred",
-    "confidence" : 0.6
+    "relationshipType" : "DATA_SAMPLE",
+    "confidence" : 1.0
+  }, {
+    "sourceTable" : "products",
+    "sourceColumn" : "product_id",
+    "targetTable" : "tenants",
+    "targetColumn" : "tenant_id",
+    "relationshipType" : "DATA_SAMPLE",
+    "confidence" : 1.0
+  }, {
+    "sourceTable" : "categories",
+    "sourceColumn" : "category_id",
+    "targetTable" : "tenants",
+    "targetColumn" : "tenant_id",
+    "relationshipType" : "DATA_SAMPLE",
+    "confidence" : 1.0
   } ]
 }

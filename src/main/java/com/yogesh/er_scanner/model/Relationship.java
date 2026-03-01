@@ -3,76 +3,33 @@ package com.yogesh.er_scanner.model;
 public class Relationship {
 
     private String sourceTable;
-    private String targetTable;
-
     private String sourceColumn;
+    private String targetTable;
     private String targetColumn;
-
-    private String type;       // strict | inferred
-    private double confidence; // 1.0 strict, 0.6 inferred
+    private RelationshipType relationshipType;
+    private double confidence;
 
     public Relationship() {}
 
     public Relationship(String sourceTable,
-                        String targetTable,
                         String sourceColumn,
+                        String targetTable,
                         String targetColumn,
-                        String type,
+                        RelationshipType relationshipType,
                         double confidence) {
 
         this.sourceTable = sourceTable;
-        this.targetTable = targetTable;
         this.sourceColumn = sourceColumn;
+        this.targetTable = targetTable;
         this.targetColumn = targetColumn;
-        this.type = type;
+        this.relationshipType = relationshipType;
         this.confidence = confidence;
     }
 
-    public String getSourceTable() {
-        return sourceTable;
-    }
-
-    public void setSourceTable(String sourceTable) {
-        this.sourceTable = sourceTable;
-    }
-
-    public String getTargetTable() {
-        return targetTable;
-    }
-
-    public void setTargetTable(String targetTable) {
-        this.targetTable = targetTable;
-    }
-
-    public String getSourceColumn() {
-        return sourceColumn;
-    }
-
-    public void setSourceColumn(String sourceColumn) {
-        this.sourceColumn = sourceColumn;
-    }
-
-    public String getTargetColumn() {
-        return targetColumn;
-    }
-
-    public void setTargetColumn(String targetColumn) {
-        this.targetColumn = targetColumn;
-    }
-
-    public String getType() {
-        return type;
-    }
-
-    public void setType(String type) {
-        this.type = type;
-    }
-
-    public double getConfidence() {
-        return confidence;
-    }
-
-    public void setConfidence(double confidence) {
-        this.confidence = confidence;
-    }
+    public String getSourceTable() { return sourceTable; }
+    public String getSourceColumn() { return sourceColumn; }
+    public String getTargetTable() { return targetTable; }
+    public String getTargetColumn() { return targetColumn; }
+    public RelationshipType getRelationshipType() { return relationshipType; }
+    public double getConfidence() { return confidence; }
 }

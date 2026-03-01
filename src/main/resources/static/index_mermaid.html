@@ -2,62 +2,80 @@
 <html>
 <head>
     <meta charset="UTF-8">
-    <title>ER Scanner – Domain View</title>
+    <title>ER Scanner – Domain Based Visualization</title>
 
+    <!-- Mermaid -->
     <script src="https://cdn.jsdelivr.net/npm/mermaid@10/dist/mermaid.min.js"></script>
+
+    <!-- Panzoom Library -->
+    <script src="https://cdn.jsdelivr.net/npm/@panzoom/panzoom@4.5.1/dist/panzoom.min.js"></script>
 
     <style>
         body {
-          margin:0;
-          font-family:Segoe UI, Arial, sans-serif;
-          background:#f4f6f9;
+            margin: 0;
+            font-family: Segoe UI, Arial, sans-serif;
+            background: #f4f6f9;
         }
 
         header {
-          padding:18px 30px;
-          background:#1f2937;
-          color:white;
-          font-size:20px;
-          font-weight:600;
+            padding: 18px 30px;
+            background: #1f2937;
+            color: white;
+            font-size: 20px;
+            font-weight: 600;
         }
 
         #controls {
-          padding:15px 30px;
-          background:white;
-          border-bottom:1px solid #ddd;
-          display:flex;
-          gap:10px;
-          align-items:center;
+            padding: 15px 30px;
+            background: white;
+            border-bottom: 1px solid #ddd;
+            display: flex;
+            gap: 10px;
+            align-items: center;
         }
 
         button, select {
-          padding:8px 14px;
-          border-radius:4px;
-          border:1px solid #ccc;
-          font-size:14px;
+            padding: 8px 14px;
+            border-radius: 4px;
+            border: 1px solid #ccc;
+            font-size: 14px;
         }
 
         button {
-          background:#2563eb;
-          color:white;
-          border:none;
-          cursor:pointer;
+            background: #2563eb;
+            color: white;
+            border: none;
+            cursor: pointer;
         }
 
         button:hover {
-          background:#1e40af;
+            background: #1e40af;
         }
 
         #diagramContainer {
-          padding:30px;
-          overflow:auto;
+            height: calc(100vh - 130px);
+            overflow: hidden;
+            background: #eef1f5;
+            position: relative;
+        }
+
+        #diagramWrapper {
+            width: 100%;
+            height: 100%;
+            overflow: hidden;
+            cursor: grab;
         }
 
         #diagram {
-          background:white;
-          padding:25px;
-          border-radius:8px;
-          box-shadow:0 2px 8px rgba(0,0,0,0.08);
+            width: max-content;
+            height: max-content;
+            padding: 40px;
+        }
+
+        .status {
+            margin-left: 10px;
+            color: #555;
+            font-size: 14px;
         }
     </style>
 </head>
@@ -70,78 +88,130 @@
 <div id="controls">
     <button onclick="scanDatabase()">Scan Database</button>
     <select id="domainSelect" onchange="renderSelectedDomain()"></select>
+    <span class="status" id="status"></span>
 </div>
 
 <div id="diagramContainer">
-    <div id="diagram">
-        Click "Scan Database" to generate domain-based ER diagrams.
+    <div id="diagramWrapper">
+        <div id="diagram">
+            Click "Scan Database" to generate ER diagrams.
+        </div>
     </div>
 </div>
 
 <script>
 
     mermaid.initialize({
-      startOnLoad:false,
-      theme:"default",
-      securityLevel:"loose"
+        startOnLoad: false,
+        theme: "default",
+        securityLevel: "loose",
+        er: {
+            layoutDirection: "TB" // Top-Bottom layout for better ER alignment
+        }
     });
 
     let domainChunks = {};
+    let panzoomInstance = null;
 
     // ======================
-    // Scan + Load Domains
+    // Scan Database
     // ======================
     async function scanDatabase() {
 
-      document.getElementById("diagram").innerHTML = "Scanning database...";
+        const diagram = document.getElementById("diagram");
+        const status = document.getElementById("status");
 
-      // Trigger scan
-      await fetch('/schema/scan', { method:'POST' });
+        diagram.innerHTML = "Scanning database...";
+        status.innerText = "";
 
-      // Fetch domain-based Mermaid chunks
-      const response = await fetch('/schema/er-mermaid-domains');
-      domainChunks = await response.json();
+        try {
+            await fetch('/schema/scan', { method: 'POST' });
 
-      const select = document.getElementById("domainSelect");
-      select.innerHTML = "";
+            const response = await fetch('/schema/er-mermaid-domains');
+            domainChunks = await response.json();
 
-      Object.keys(domainChunks).forEach(domainName => {
-        const option = document.createElement("option");
-        option.value = domainName;
-        option.text = domainName;
-        select.appendChild(option);
-      });
+            populateDropdown();
 
-      renderSelectedDomain();
+        } catch (e) {
+            diagram.innerHTML = "Error scanning database.";
+            console.error(e);
+        }
     }
 
     // ======================
-    // Render Selected Domain
+    // Populate Dropdown
+    // ======================
+    function populateDropdown() {
+
+        const select = document.getElementById("domainSelect");
+        select.innerHTML = "";
+
+        Object.entries(domainChunks).forEach(([domainName, diagramText]) => {
+
+            const tableCount =
+                (diagramText.match(/\n\s+[A-Z0-9_]+\s+\{/g) || []).length;
+
+            const option = document.createElement("option");
+            option.value = domainName;
+            option.text = `${domainName} (${tableCount} tables)`;
+            select.appendChild(option);
+        });
+
+        renderSelectedDomain();
+    }
+
+    // ======================
+    // Render Domain
     // ======================
     async function renderSelectedDomain() {
 
-      const select = document.getElementById("domainSelect");
-      const selectedDomain = select.value;
+        const select = document.getElementById("domainSelect");
+        const selectedDomain = select.value;
+        const status = document.getElementById("status");
 
-      if (!selectedDomain) return;
+        if (!selectedDomain) return;
 
-      const diagramText = domainChunks[selectedDomain];
+        const diagramText = domainChunks[selectedDomain];
+        const container = document.getElementById("diagram");
 
-      const container = document.getElementById("diagram");
-      container.innerHTML = "";
+        container.innerHTML = "";
 
-      try {
-        const { svg } = await mermaid.render(
-            "diagram_" + Date.now(),
-            diagramText
-        );
+        try {
 
-        container.innerHTML = svg;
+            const { svg } = await mermaid.render(
+                "diagram_" + Date.now(),
+                diagramText
+            );
 
-      } catch (error) {
-        container.innerHTML = "Error rendering diagram: " + error;
-        console.error(error);
-      }
+            container.innerHTML = svg;
+
+            const svgElement = container.querySelector("svg");
+
+            // Make SVG scalable
+            svgElement.style.width = "100%";
+            svgElement.style.height = "100%";
+
+            // Destroy previous panzoom
+            if (panzoomInstance) {
+                panzoomInstance.destroy();
+            }
+
+            // Enable zoom & pan
+            panzoomInstance = Panzoom(svgElement, {
+                maxScale: 5,
+                minScale: 0.3,
+                contain: 'outside'
+            });
+
+            svgElement.parentElement.addEventListener('wheel', panzoomInstance.zoomWithWheel);
+
+            status.innerText = `Rendered: ${selectedDomain}`;
+
+        } catch (error) {
+
+            container.innerHTML = "Error rendering diagram.";
+            console.error(error);
+        }
     }
 
 </script>

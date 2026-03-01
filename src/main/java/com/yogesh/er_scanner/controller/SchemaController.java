@@ -1,7 +1,10 @@
 package com.yogesh.er_scanner.controller;
 
+import com.yogesh.er_scanner.model.Schema;
 import com.yogesh.er_scanner.service.SchemaScanner;
 import com.yogesh.er_scanner.service.SchemaService;
+
+import org.springframework.http.ResponseEntity;
 import org.springframework.web.bind.annotation.*;
 
 import java.util.Map;
@@ -10,36 +13,72 @@ import java.util.Map;
 @RequestMapping("/schema")
 public class SchemaController {
 
-    private final SchemaScanner scanner;
-    private final SchemaService service;
+    private final SchemaScanner schemaScanner;
+    private final SchemaService schemaService;
 
-    public SchemaController(SchemaScanner scanner, SchemaService service) {
-        this.scanner = scanner;
-        this.service = service;
+    public SchemaController(SchemaScanner schemaScanner,
+                            SchemaService schemaService) {
+        this.schemaScanner = schemaScanner;
+        this.schemaService = schemaService;
     }
+
+    // =====================================================
+    // 1️⃣ Scan Configured Tables Only
+    // =====================================================
 
     @PostMapping("/scan")
-    public String scan() throws Exception {
+    public ResponseEntity<String> scanSchema() {
 
-        service.setSchema(scanner.scan());
-        service.writeAiJson();
+        try {
 
-        return "Schema scanned and files generated successfully.";
+            Schema scannedSchema = schemaScanner.scan();
+
+            // This merges DATA_SAMPLE relationships
+            schemaService.buildSchema(scannedSchema);
+
+            return ResponseEntity.ok(
+                    "Schema scanned successfully for configured tables.");
+
+        } catch (Exception e) {
+
+            e.printStackTrace();
+
+            return ResponseEntity.internalServerError()
+                    .body("Scan failed: " + e.getMessage());
+        }
     }
 
-    @GetMapping("/visual")
-    public Map<String, Object> visual() {
-        return service.generateVisualJson();
+    // =====================================================
+    // 2️⃣ Get Full Schema JSON (AI Compatible)
+    // =====================================================
+
+    @GetMapping("/json")
+    public ResponseEntity<Schema> getSchemaJson() {
+
+        return ResponseEntity.ok(
+                schemaService.getSchema());
     }
 
-    @GetMapping(value = "/er-mermaid", produces = "text/plain")
-    public String mermaid() {
-        return service.generateMermaid();
+    // =====================================================
+    // 3️⃣ Get Mermaid ER Diagram
+    // =====================================================
+
+    @GetMapping("/er-mermaid")
+    public ResponseEntity<String> getMermaid() {
+        System.out.println("Generating Mermaid ER Diagram..."+schemaService.generateMermaid());
+        return ResponseEntity.ok(
+                schemaService.generateMermaid());
     }
 
-    @GetMapping("er-mermaid-domains")
-    public Map<String, String> getMermaid() {
-        return service.generateMermaidChunks(25);
-    }
+    // =====================================================
+    // 4️⃣ Get Domain-Based Mermaid Chunks (Optional)
+    // =====================================================
 
+    @GetMapping("/er-mermaid-domains")
+    public ResponseEntity<Map<String, String>> getMermaidDomains() {
+
+        return ResponseEntity.ok(
+                schemaService.generateMermaidChunks(20)
+        );
+    }
 }

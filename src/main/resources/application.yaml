@@ -4,6 +4,95 @@ spring:
     username: root
     password: root
     driver-class-name: com.mysql.cj.jdbc.Driver
+    hikari:
+      maximum-pool-size: 5
+      minimum-idle: 1
+      connection-timeout: 30000
+      idle-timeout: 600000
+      max-lifetime: 1800000
+
+      # Oracle performance tuning
+      data-source-properties:
+        defaultRowPrefetch: 1000
+        oracle.net.CONNECT_TIMEOUT: 10000
+        oracle.net.READ_TIMEOUT: 30000
+
+server:
+  port: 8080
+
+# ------------------------------------------
+# Database Configuration
+# ------------------------------------------
+
+database:
+  type: mysql
+  schema: er_test
+
+# ------------------------------------------
+# Relationship Inference Configuration
+# ------------------------------------------
+
+relationship:
+  enabled: true
+  sample-size: 20        # Rows per table
+  max-tables: 100         # Safety guard
+  tables:
+    - audit_logs
+    - aux_table_2
+    - aux_table_20
+    - aux_table_21
+    - aux_table_22
+    - aux_table_23
+    - aux_table_24
+    - aux_table_25
+    - aux_table_26
+    - aux_table_27
+    - aux_table_28
+    - aux_table_29
+    - aux_table_3
+    - aux_table_30
+    - aux_table_31
+    - aux_table_32
+    - aux_table_33
+    - aux_table_34
+    - aux_table_35
+    - aux_table_36
+    - aux_table_37
+    - aux_table_38
+    - aux_table_39
+    - aux_table_4
+    - aux_table_40
+    - aux_table_41
+    - aux_table_42
+    - aux_table_43
+    - aux_table_44
+    - aux_table_45
+    - aux_table_46
+    - aux_table_47
+    - aux_table_48
+    - aux_table_49
+    - aux_table_5
+    - aux_table_50
+    - aux_table_6
+    - aux_table_7
+    - aux_table_8
+    - aux_table_9
+    - categories
+    - inventory
+    - invoices
+    - notifications
+    - order_items
+    - orders
+    - payments
+    - products
+    - roles
+    - shipments
+    - tenants
+    - user_roles
+    - users
+# ------------------------------------------
+# Output Directory
+# ------------------------------------------
 
 output:
   dir: output

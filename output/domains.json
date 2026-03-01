@@ -1,20 +1,5 @@
 {
-  "Audit & Operational": [
-    "audit_logs",
-    "orphan_table"
-  ],
   "Auxiliary Services": [
-    "aux_table_1",
-    "aux_table_10",
-    "aux_table_11",
-    "aux_table_12",
-    "aux_table_13",
-    "aux_table_14",
-    "aux_table_15",
-    "aux_table_16",
-    "aux_table_17",
-    "aux_table_18",
-    "aux_table_19",
     "aux_table_2",
     "aux_table_20",
     "aux_table_21",
@@ -56,7 +41,7 @@
     "aux_table_9"
   ],
   "Customer & User Management": [
-    "customers",
+    "audit_logs",
     "notifications",
     "roles",
     "tenants",
