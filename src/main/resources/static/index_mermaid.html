@@ -1,0 +1,150 @@
+<!DOCTYPE html>
+<html>
+<head>
+    <meta charset="UTF-8">
+    <title>ER Scanner – Domain View</title>
+
+    <script src="https://cdn.jsdelivr.net/npm/mermaid@10/dist/mermaid.min.js"></script>
+
+    <style>
+        body {
+          margin:0;
+          font-family:Segoe UI, Arial, sans-serif;
+          background:#f4f6f9;
+        }
+
+        header {
+          padding:18px 30px;
+          background:#1f2937;
+          color:white;
+          font-size:20px;
+          font-weight:600;
+        }
+
+        #controls {
+          padding:15px 30px;
+          background:white;
+          border-bottom:1px solid #ddd;
+          display:flex;
+          gap:10px;
+          align-items:center;
+        }
+
+        button, select {
+          padding:8px 14px;
+          border-radius:4px;
+          border:1px solid #ccc;
+          font-size:14px;
+        }
+
+        button {
+          background:#2563eb;
+          color:white;
+          border:none;
+          cursor:pointer;
+        }
+
+        button:hover {
+          background:#1e40af;
+        }
+
+        #diagramContainer {
+          padding:30px;
+          overflow:auto;
+        }
+
+        #diagram {
+          background:white;
+          padding:25px;
+          border-radius:8px;
+          box-shadow:0 2px 8px rgba(0,0,0,0.08);
+        }
+    </style>
+</head>
+<body>
+
+<header>
+    ER Scanner – Domain Based Visualization
+</header>
+
+<div id="controls">
+    <button onclick="scanDatabase()">Scan Database</button>
+    <select id="domainSelect" onchange="renderSelectedDomain()"></select>
+</div>
+
+<div id="diagramContainer">
+    <div id="diagram">
+        Click "Scan Database" to generate domain-based ER diagrams.
+    </div>
+</div>
+
+<script>
+
+    mermaid.initialize({
+      startOnLoad:false,
+      theme:"default",
+      securityLevel:"loose"
+    });
+
+    let domainChunks = {};
+
+    // ======================
+    // Scan + Load Domains
+    // ======================
+    async function scanDatabase() {
+
+      document.getElementById("diagram").innerHTML = "Scanning database...";
+
+      // Trigger scan
+      await fetch('/schema/scan', { method:'POST' });
+
+      // Fetch domain-based Mermaid chunks
+      const response = await fetch('/schema/er-mermaid-domains');
+      domainChunks = await response.json();
+
+      const select = document.getElementById("domainSelect");
+      select.innerHTML = "";
+
+      Object.keys(domainChunks).forEach(domainName => {
+        const option = document.createElement("option");
+        option.value = domainName;
+        option.text = domainName;
+        select.appendChild(option);
+      });
+
+      renderSelectedDomain();
+    }
+
+    // ======================
+    // Render Selected Domain
+    // ======================
+    async function renderSelectedDomain() {
+
+      const select = document.getElementById("domainSelect");
+      const selectedDomain = select.value;
+
+      if (!selectedDomain) return;
+
+      const diagramText = domainChunks[selectedDomain];
+
+      const container = document.getElementById("diagram");
+      container.innerHTML = "";
+
+      try {
+        const { svg } = await mermaid.render(
+            "diagram_" + Date.now(),
+            diagramText
+        );
+
+        container.innerHTML = svg;
+
+      } catch (error) {
+        container.innerHTML = "Error rendering diagram: " + error;
+        console.error(error);
+      }
+    }
+
+</script>
+
+</body>
+</html>

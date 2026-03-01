@@ -2,14 +2,14 @@
 <html>
 <head>
     <meta charset="UTF-8">
-    <title>ER Scanner</title>
+    <title>ER Scanner (Chunked Mermaid)</title>
 
     <script src="https://cdn.jsdelivr.net/npm/mermaid@10/dist/mermaid.min.js"></script>
 
     <style>
         body {
           margin:0;
-          font-family:Segoe UI, Arial, sans-serif;
+          font-family:Segoe UI, sans-serif;
           background:#f4f6f9;
         }
 
@@ -18,7 +18,6 @@
           background:#1f2937;
           color:white;
           font-size:20px;
-          font-weight:600;
         }
 
         #controls {
@@ -27,18 +26,9 @@
           border-bottom:1px solid #ddd;
         }
 
-        button {
-          padding:8px 14px;
-          border:none;
-          background:#2563eb;
-          color:white;
-          border-radius:4px;
-          cursor:pointer;
+        select, button {
+          padding:8px 12px;
           margin-right:10px;
-        }
-
-        button:hover {
-          background:#1e40af;
         }
 
         #diagramContainer {
@@ -56,18 +46,16 @@
 </head>
 <body>
 
-<header>
-    ER Scanner – Database Visualization
-</header>
+<header>ER Scanner – Chunked Mermaid View</header>
 
 <div id="controls">
-    <button onclick="scanAndRender()">Scan Database</button>
-    <button onclick="downloadMermaid()">Download ER Text</button>
+    <button onclick="scan()">Scan Database</button>
+    <select id="chunkSelect" onchange="renderChunk()"></select>
 </div>
 
 <div id="diagramContainer">
     <div class="mermaid" id="diagram">
-        Click "Scan Database" to generate ER diagram.
+        Click Scan Database to generate ER diagram.
     </div>
 </div>
 
@@ -76,41 +64,44 @@
     mermaid.initialize({
       startOnLoad:false,
       theme:"default",
-      securityLevel:"loose",
-      er: {
-        useMaxWidth:true
-      }
+      securityLevel:"loose"
     });
 
-    async function scanAndRender() {
+    let chunks = {};
 
-      document.getElementById("diagram").innerHTML = "Scanning database...";
+    async function scan() {
+
+      document.getElementById("diagram").innerHTML = "Scanning...";
 
       await fetch('/schema/scan', { method:'POST' });
 
-      const res = await fetch('/schema/er-mermaid');
-      const text = await res.text();
+      const res = await fetch('/schema/er-mermaid-chunks');
+      chunks = await res.json();
 
-      const element = document.getElementById("diagram");
-      element.innerHTML = text;
+      const select = document.getElementById("chunkSelect");
+      select.innerHTML = "";
 
-      mermaid.init(undefined, element);
+      Object.keys(chunks).forEach(key => {
+        const option = document.createElement("option");
+        option.value = key;
+        option.text = key;
+        select.appendChild(option);
+      });
+
+      renderChunk();
     }
 
-    async function downloadMermaid() {
+    function renderChunk() {
 
-      const res = await fetch('/schema/er-mermaid');
-      const text = await res.text();
+      const select = document.getElementById("chunkSelect");
+      const selected = select.value;
 
-      const blob = new Blob([text], { type: "text/plain" });
-      const url = window.URL.createObjectURL(blob);
+      if (!selected) return;
 
-      const a = document.createElement("a");
-      a.href = url;
-      a.download = "er-diagram.mmd";
-      a.click();
+      const element = document.getElementById("diagram");
+      element.innerHTML = chunks[selected];
 
-      window.URL.revokeObjectURL(url);
+      mermaid.init(undefined, element);
     }
 
 </script>

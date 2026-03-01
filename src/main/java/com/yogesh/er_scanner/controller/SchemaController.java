@@ -36,4 +36,10 @@ public class SchemaController {
     public String mermaid() {
         return service.generateMermaid();
     }
+
+    @GetMapping("/er-mermaid-chunks")
+    public Map<String, String> mermaidChunks() {
+        return service.generateMermaidChunks(40); // 40 tables per chunk
+    }
+
 }

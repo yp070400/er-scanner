@@ -107,4 +107,70 @@ public class SchemaService {
 
         return sb.toString();
     }
+
+    public Map<String, String> generateMermaidChunks(int maxTablesPerChunk) {
+
+        Schema s = getSchema();
+
+        List<Table> tables = s.getTables();
+        List<Relationship> relationships = s.getRelationships();
+
+        Map<String, String> chunks = new LinkedHashMap<>();
+
+        int totalTables = tables.size();
+        int chunkIndex = 1;
+
+        for (int i = 0; i < totalTables; i += maxTablesPerChunk) {
+
+            int end = Math.min(i + maxTablesPerChunk, totalTables);
+
+            List<Table> subTables = tables.subList(i, end);
+
+            Set<String> tableNames = new HashSet<>();
+            for (Table t : subTables) {
+                tableNames.add(t.getName());
+            }
+
+            StringBuilder sb = new StringBuilder();
+            sb.append("erDiagram\n");
+
+            // Add tables
+            for (Table t : subTables) {
+
+                sb.append("    ").append(t.getName().toUpperCase()).append(" {\n");
+
+                for (String col : t.getColumns()) {
+                    if (t.getPrimaryKeys().contains(col)) {
+                        sb.append("        string ").append(col).append(" PK\n");
+                    } else {
+                        sb.append("        string ").append(col).append("\n");
+                    }
+                }
+
+                sb.append("    }\n\n");
+            }
+
+            // Add relationships ONLY within this chunk
+            for (Relationship r : relationships) {
+                if (tableNames.contains(r.getSource()) &&
+                        tableNames.contains(r.getTarget())) {
+
+                    sb.append("    ")
+                            .append(r.getSource().toUpperCase())
+                            .append(" ||--o{ ")
+                            .append(r.getTarget().toUpperCase())
+                            .append(" : ")
+                            .append(r.getColumn())
+                            .append("\n");
+                }
+            }
+
+            chunks.put("Chunk " + chunkIndex, sb.toString());
+            chunkIndex++;
+        }
+
+        return chunks;
+    }
+
+
 }
