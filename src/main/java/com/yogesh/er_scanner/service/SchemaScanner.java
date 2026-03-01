@@ -24,94 +24,136 @@ public class SchemaScanner {
         try (Connection conn = dataSource.getConnection()) {
 
             DatabaseMetaData meta = conn.getMetaData();
-            ResultSet rsTables = meta.getTables(null, null, "%", new String[]{"TABLE"});
-
             Map<String, Table> tableMap = new HashMap<>();
 
-            while (rsTables.next()) {
+            // ===============================
+            // 1️⃣ Load Tables
+            // ===============================
+            try (ResultSet rsTables =
+                         meta.getTables(null, null, "%", new String[]{"TABLE"})) {
 
-                String tableName = rsTables.getString("TABLE_NAME");
+                while (rsTables.next()) {
 
-                List<Column> columns = new ArrayList<>();
+                    String tableName = rsTables.getString("TABLE_NAME");
 
-                ResultSet rsColumns = meta.getColumns(null, null, tableName, null);
-                while (rsColumns.next()) {
+                    Table table = new Table();
+                    table.setName(tableName);
+                    table.setColumns(new ArrayList<>());
 
-                    String colName = rsColumns.getString("COLUMN_NAME");
-                    String type = rsColumns.getString("TYPE_NAME");
-
-                    columns.add(new Column(colName, type, false));
+                    tables.add(table);
+                    tableMap.put(tableName, table);
                 }
+            }
 
-                ResultSet rsPK = meta.getPrimaryKeys(null, null, tableName);
-                while (rsPK.next()) {
+            // ===============================
+            // 2️⃣ Load Columns
+            // ===============================
+            for (Table table : tables) {
 
-                    String pkCol = rsPK.getString("COLUMN_NAME");
+                try (ResultSet rsColumns =
+                             meta.getColumns(null, null, table.getName(), null)) {
 
-                    for (Column c : columns) {
-                        if (c.getName().equalsIgnoreCase(pkCol)) {
-                            c.setPrimaryKey(true);
+                    while (rsColumns.next()) {
+
+                        String colName = rsColumns.getString("COLUMN_NAME");
+                        String type = rsColumns.getString("TYPE_NAME");
+
+                        table.getColumns().add(
+                                new Column(colName, type, false)
+                        );
+                    }
+                }
+            }
+
+            // ===============================
+            // 3️⃣ Load Primary Keys
+            // ===============================
+            // Build fast PK index for inference
+            Map<String, Set<String>> pkIndex = new HashMap<>();
+
+            for (Table table : tables) {
+
+                Set<String> pkCols = new HashSet<>();
+
+                try (ResultSet rsPK =
+                             meta.getPrimaryKeys(null, null, table.getName())) {
+
+                    while (rsPK.next()) {
+
+                        String pkCol = rsPK.getString("COLUMN_NAME");
+                        pkCols.add(pkCol.toLowerCase());
+
+                        for (Column c : table.getColumns()) {
+                            if (c.getName().equalsIgnoreCase(pkCol)) {
+                                c.setPrimaryKey(true);
+                            }
                         }
                     }
                 }
 
-                Table table = new Table(tableName, columns);
-                tables.add(table);
-                tableMap.put(tableName, table);
+                pkIndex.put(table.getName(), pkCols);
             }
 
-            // Strict FK detection
+            // ===============================
+            // 4️⃣ Load Foreign Keys (Strict)
+            // ===============================
             for (Table table : tables) {
 
-                ResultSet rsFK = meta.getImportedKeys(null, null, table.getName());
+                try (ResultSet rsFK =
+                             meta.getImportedKeys(null, null, table.getName())) {
 
-                while (rsFK.next()) {
+                    while (rsFK.next()) {
 
-                    String pkTable = rsFK.getString("PKTABLE_NAME");
-                    String fkColumn = rsFK.getString("FKCOLUMN_NAME");
-                    String pkColumn = rsFK.getString("PKCOLUMN_NAME");
+                        String pkTable = rsFK.getString("PKTABLE_NAME");
+                        String fkColumn = rsFK.getString("FKCOLUMN_NAME");
+                        String pkColumn = rsFK.getString("PKCOLUMN_NAME");
 
-                    relationships.add(
-                            new Relationship(
-                                    table.getName(),
-                                    pkTable,
-                                    fkColumn,
-                                    pkColumn,
-                                    "strict",
-                                    1.0
-                            )
-                    );
+                        relationships.add(
+                                new Relationship(
+                                        table.getName(),
+                                        pkTable,
+                                        fkColumn,
+                                        pkColumn,
+                                        "strict",
+                                        1.0
+                                )
+                        );
+                    }
                 }
             }
 
-            // Inferred relationship (column name matches PK)
-            for (Table t1 : tables) {
-                for (Table t2 : tables) {
+            // ===============================
+            // 5️⃣ Optimized Inferred Detection
+            // O(totalColumns) instead of O(n²)
+            // ===============================
 
-                    if (t1.getName().equalsIgnoreCase(t2.getName()))
-                        continue;
+            for (Table table : tables) {
 
-                    for (Column c1 : t1.getColumns()) {
+                for (Column column : table.getColumns()) {
 
-                        if (!c1.isPrimaryKey()) {
+                    if (column.isPrimaryKey()) continue;
 
-                            for (Column c2 : t2.getColumns()) {
+                    String colName = column.getName().toLowerCase();
 
-                                if (c2.isPrimaryKey() &&
-                                        c1.getName().equalsIgnoreCase(c2.getName())) {
+                    for (Map.Entry<String, Set<String>> entry : pkIndex.entrySet()) {
 
-                                    relationships.add(
-                                            new Relationship(
-                                                    t1.getName(),
-                                                    t2.getName(),
-                                                    c1.getName(),
-                                                    c2.getName(),
-                                                    "inferred",
-                                                    0.6
-                                            )
-                                    );
-                                }
-                            }
+                        String targetTable = entry.getKey();
+
+                        if (targetTable.equalsIgnoreCase(table.getName()))
+                            continue;
+
+                        if (entry.getValue().contains(colName)) {
+
+                            relationships.add(
+                                    new Relationship(
+                                            table.getName(),
+                                            targetTable,
+                                            column.getName(),
+                                            column.getName(),
+                                            "inferred",
+                                            0.6
+                                    )
+                            );
                         }
                     }
                 }
