@@ -4,21 +4,37 @@ public class Column {
 
     private String name;
     private String type;
-    private boolean nullable;
-    private ForeignKey foreignKey;
+    private boolean primaryKey;
 
-    public Column(String name, String type, boolean nullable) {
+    public Column() {}
+
+    public Column(String name, String type, boolean primaryKey) {
         this.name = name;
         this.type = type;
-        this.nullable = nullable;
+        this.primaryKey = primaryKey;
     }
 
-    public String getName() { return name; }
-    public String getType() { return type; }
-    public boolean isNullable() { return nullable; }
+    public String getName() {
+        return name;
+    }
 
-    public ForeignKey getForeignKey() { return foreignKey; }
-    public void setForeignKey(ForeignKey foreignKey) {
-        this.foreignKey = foreignKey;
+    public void setName(String name) {
+        this.name = name;
+    }
+
+    public String getType() {
+        return type;
+    }
+
+    public void setType(String type) {
+        this.type = type;
+    }
+
+    public boolean isPrimaryKey() {
+        return primaryKey;
+    }
+
+    public void setPrimaryKey(boolean primaryKey) {
+        this.primaryKey = primaryKey;
     }
 }

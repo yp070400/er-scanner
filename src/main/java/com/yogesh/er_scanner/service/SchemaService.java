@@ -1,16 +1,21 @@
 package com.yogesh.er_scanner.service;
 
+import com.fasterxml.jackson.core.type.TypeReference;
 import com.fasterxml.jackson.databind.ObjectMapper;
 import com.yogesh.er_scanner.model.*;
+
 import org.springframework.stereotype.Service;
 
 import java.io.File;
 import java.util.*;
+import java.util.stream.Collectors;
 
 @Service
 public class SchemaService {
 
     private Schema schema;
+
+    // ================== SCHEMA STATE ==================
 
     public void setSchema(Schema schema) {
         this.schema = schema;
@@ -23,7 +28,8 @@ public class SchemaService {
         return schema;
     }
 
-    // ================= VISUAL JSON =================
+    // ================== VISUAL JSON (Cytoscape) ==================
+
     public Map<String, Object> generateVisualJson() {
 
         Schema s = getSchema();
@@ -31,13 +37,18 @@ public class SchemaService {
         List<Map<String, Object>> nodes = new ArrayList<>();
         List<Map<String, Object>> edges = new ArrayList<>();
 
-        for (Table t : s.getTables()) {
+        for (Table table : s.getTables()) {
 
             Map<String, Object> data = new HashMap<>();
-            data.put("id", t.getName());
-            data.put("label", t.getName());
-            data.put("columns", t.getColumns());
-            data.put("primaryKeys", t.getPrimaryKeys());
+            data.put("id", table.getName());
+            data.put("label", table.getName());
+            data.put("columns", table.getColumns());
+            data.put("primaryKeys",
+                    table.getColumns().stream()
+                            .filter(Column::isPrimaryKey)
+                            .map(Column::getName)
+                            .collect(Collectors.toList())
+            );
 
             nodes.add(Map.of("data", data));
         }
@@ -45,10 +56,14 @@ public class SchemaService {
         for (Relationship r : s.getRelationships()) {
 
             Map<String, Object> data = new HashMap<>();
-            data.put("id", r.getSource() + "_" + r.getTarget() + "_" + r.getColumn());
-            data.put("source", r.getSource());
-            data.put("target", r.getTarget());
-            data.put("column", r.getColumn());
+            data.put("id",
+                    r.getSourceTable() + "_"
+                            + r.getTargetTable() + "_"
+                            + r.getSourceColumn());
+
+            data.put("source", r.getSourceTable());
+            data.put("target", r.getTargetTable());
+            data.put("column", r.getSourceColumn());
             data.put("type", r.getType());
             data.put("confidence", r.getConfidence());
 
@@ -58,7 +73,8 @@ public class SchemaService {
         return Map.of("nodes", nodes, "edges", edges);
     }
 
-    // ================= AI JSON FILE =================
+    // ================== WRITE AI JSON ==================
+
     public void writeAiJson() throws Exception {
 
         ObjectMapper mapper = new ObjectMapper();
@@ -70,107 +86,148 @@ public class SchemaService {
                 .writeValue(new File("output/schema-ai.json"), getSchema());
     }
 
-    // ================= MERMAID ER =================
+    // ================== FULL MERMAID ==================
+
     public String generateMermaid() {
+
+        Schema s = getSchema();
+
+        return buildMermaidFromTables(s.getTables(), s.getRelationships());
+    }
+
+    // ================== DOMAIN-BASED MERMAID CHUNKS ==================
+
+    public Map<String, String> generateMermaidChunks(int maxTablesPerChunk) {
+
+        try {
+
+            ObjectMapper mapper = new ObjectMapper();
+
+            Schema schema = mapper.readValue(
+                    new File("output/schema-ai.json"),
+                    Schema.class
+            );
+
+            Map<String, List<String>> domainMap =
+                    mapper.readValue(
+                            new File("output/domains.json"),
+                            new TypeReference<Map<String, List<String>>>() {}
+                    );
+
+            Map<String, String> result = new LinkedHashMap<>();
+
+            for (Map.Entry<String, List<String>> entry : domainMap.entrySet()) {
+
+                String domainName = entry.getKey();
+                List<String> domainTables = entry.getValue();
+
+                // Filter real table objects
+                List<Table> tablesInDomain = schema.getTables().stream()
+                        .filter(t -> domainTables.contains(t.getName()))
+                        .collect(Collectors.toList());
+
+                if (tablesInDomain.isEmpty()) continue;
+
+                // 🔥 CASE 1: SMALL DOMAIN (No Chunking Needed)
+                if (tablesInDomain.size() <= maxTablesPerChunk) {
+
+                    Set<String> tableNames = tablesInDomain.stream()
+                            .map(Table::getName)
+                            .collect(Collectors.toSet());
+
+                    List<Relationship> relationships = schema.getRelationships().stream()
+                            .filter(r ->
+                                    tableNames.contains(r.getSourceTable())
+                                            && tableNames.contains(r.getTargetTable()))
+                            .collect(Collectors.toList());
+
+                    String mermaid = buildMermaidFromTables(tablesInDomain, relationships);
+
+                    result.put(domainName, mermaid);
+                }
+
+                // 🔥 CASE 2: LARGE DOMAIN (Chunk It)
+                else {
+
+                    int part = 1;
+
+                    for (int i = 0; i < tablesInDomain.size(); i += maxTablesPerChunk) {
+
+                        List<Table> chunk =
+                                tablesInDomain.subList(
+                                        i,
+                                        Math.min(i + maxTablesPerChunk, tablesInDomain.size())
+                                );
+
+                        Set<String> chunkTableNames = chunk.stream()
+                                .map(Table::getName)
+                                .collect(Collectors.toSet());
+
+                        List<Relationship> relationships = schema.getRelationships().stream()
+                                .filter(r ->
+                                        chunkTableNames.contains(r.getSourceTable())
+                                                && chunkTableNames.contains(r.getTargetTable()))
+                                .collect(Collectors.toList());
+
+                        String mermaid = buildMermaidFromTables(chunk, relationships);
+
+                        result.put(domainName + " - Part " + part, mermaid);
+
+                        part++;
+                    }
+                }
+            }
+
+            return result;
+
+        } catch (Exception e) {
+            throw new RuntimeException("Failed to generate Mermaid domain diagrams", e);
+        }
+    }
+
+    // ================== INTERNAL MERMAID BUILDER ==================
+
+    private String buildMermaidFromTables(List<Table> tables,
+                                          List<Relationship> relationships) {
 
         StringBuilder sb = new StringBuilder();
         sb.append("erDiagram\n");
 
-        Schema s = getSchema();
+        // ----- TABLES -----
+        for (Table table : tables) {
 
-        for (Table t : s.getTables()) {
+            sb.append("    ")
+                    .append(table.getName().toUpperCase())
+                    .append(" {\n");
 
-            sb.append("    ").append(t.getName().toUpperCase()).append(" {\n");
+            for (Column column : table.getColumns()) {
 
-            for (String col : t.getColumns()) {
+                // 🔥 Always use safe type to prevent Mermaid syntax errors
+                sb.append("        string ")
+                        .append(column.getName());
 
-                if (t.getPrimaryKeys().contains(col)) {
-                    sb.append("        string ").append(col).append(" PK\n");
-                } else {
-                    sb.append("        string ").append(col).append("\n");
+                if (column.isPrimaryKey()) {
+                    sb.append(" PK");
                 }
+
+                sb.append("\n");
             }
 
             sb.append("    }\n\n");
         }
 
-        for (Relationship r : s.getRelationships()) {
+        // ----- RELATIONSHIPS -----
+        for (Relationship r : relationships) {
 
             sb.append("    ")
-                    .append(r.getSource().toUpperCase())
+                    .append(r.getSourceTable().toUpperCase())
                     .append(" ||--o{ ")
-                    .append(r.getTarget().toUpperCase())
+                    .append(r.getTargetTable().toUpperCase())
                     .append(" : ")
-                    .append(r.getColumn())
+                    .append(r.getSourceColumn())
                     .append("\n");
         }
 
         return sb.toString();
     }
-
-    public Map<String, String> generateMermaidChunks(int maxTablesPerChunk) {
-
-        Schema s = getSchema();
-
-        List<Table> tables = s.getTables();
-        List<Relationship> relationships = s.getRelationships();
-
-        Map<String, String> chunks = new LinkedHashMap<>();
-
-        int totalTables = tables.size();
-        int chunkIndex = 1;
-
-        for (int i = 0; i < totalTables; i += maxTablesPerChunk) {
-
-            int end = Math.min(i + maxTablesPerChunk, totalTables);
-
-            List<Table> subTables = tables.subList(i, end);
-
-            Set<String> tableNames = new HashSet<>();
-            for (Table t : subTables) {
-                tableNames.add(t.getName());
-            }
-
-            StringBuilder sb = new StringBuilder();
-            sb.append("erDiagram\n");
-
-            // Add tables
-            for (Table t : subTables) {
-
-                sb.append("    ").append(t.getName().toUpperCase()).append(" {\n");
-
-                for (String col : t.getColumns()) {
-                    if (t.getPrimaryKeys().contains(col)) {
-                        sb.append("        string ").append(col).append(" PK\n");
-                    } else {
-                        sb.append("        string ").append(col).append("\n");
-                    }
-                }
-
-                sb.append("    }\n\n");
-            }
-
-            // Add relationships ONLY within this chunk
-            for (Relationship r : relationships) {
-                if (tableNames.contains(r.getSource()) &&
-                        tableNames.contains(r.getTarget())) {
-
-                    sb.append("    ")
-                            .append(r.getSource().toUpperCase())
-                            .append(" ||--o{ ")
-                            .append(r.getTarget().toUpperCase())
-                            .append(" : ")
-                            .append(r.getColumn())
-                            .append("\n");
-                }
-            }
-
-            chunks.put("Chunk " + chunkIndex, sb.toString());
-            chunkIndex++;
-        }
-
-        return chunks;
-    }
-
-
 }

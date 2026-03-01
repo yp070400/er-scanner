@@ -1,0 +1,24 @@
+You are a database architect.
+
+I will give you a JSON file containing database schema metadata.
+
+Your task:
+1. Group tables into logical business domains.
+2. Use business meaning, naming similarity, shared column names, and foreign key relationships.
+3. Keep each domain under 30 tables if possible.
+4. Every table must belong to exactly one domain.
+5. Return ONLY valid JSON in this format:
+6. Prefer grouping by connected foreign key graph components first.
+7. Then refine by business naming.
+8. If a domain exceeds 30 tables, split it into logical subdomains.
+
+{
+  "Domain Name 1": ["table1", "table2"],
+  "Domain Name 2": ["table3"]
+}
+
+Do not return explanations.
+Do not return markdown.
+Only return valid JSON.
+
+Here is the schema:

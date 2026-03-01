@@ -2,106 +2,206 @@
 <html>
 <head>
     <meta charset="UTF-8">
-    <title>ER Scanner (Chunked Mermaid)</title>
+    <title>ER Scanner – Domain View</title>
 
     <script src="https://cdn.jsdelivr.net/npm/mermaid@10/dist/mermaid.min.js"></script>
 
     <style>
         body {
-          margin:0;
-          font-family:Segoe UI, sans-serif;
-          background:#f4f6f9;
+            margin:0;
+            font-family:Segoe UI, Arial, sans-serif;
+            background:#f4f6f9;
         }
 
         header {
-          padding:15px 25px;
-          background:#1f2937;
-          color:white;
-          font-size:20px;
+            padding:18px 30px;
+            background:#1f2937;
+            color:white;
+            font-size:20px;
+            font-weight:600;
         }
 
         #controls {
-          padding:15px 25px;
-          background:white;
-          border-bottom:1px solid #ddd;
+            padding:15px 30px;
+            background:white;
+            border-bottom:1px solid #ddd;
+            display:flex;
+            gap:12px;
+            align-items:center;
         }
 
-        select, button {
-          padding:8px 12px;
-          margin-right:10px;
+        button, select {
+            padding:8px 14px;
+            border-radius:4px;
+            border:1px solid #ccc;
+            font-size:14px;
+        }
+
+        button {
+            background:#2563eb;
+            color:white;
+            border:none;
+            cursor:pointer;
+        }
+
+        button:hover {
+            background:#1e40af;
         }
 
         #diagramContainer {
-          padding:30px;
-          overflow:auto;
+            padding:30px;
+            overflow:auto;
         }
 
-        .mermaid {
-          background:white;
-          padding:20px;
-          border-radius:8px;
-          box-shadow:0 2px 8px rgba(0,0,0,0.08);
+        #diagram {
+            background:white;
+            padding:25px;
+            border-radius:8px;
+            box-shadow:0 2px 8px rgba(0,0,0,0.08);
+            min-height:300px;
+        }
+
+        .info {
+            color:#555;
+            font-size:14px;
         }
     </style>
 </head>
 <body>
 
-<header>ER Scanner – Chunked Mermaid View</header>
+<header>
+    ER Scanner – Domain Based Visualization
+</header>
 
 <div id="controls">
-    <button onclick="scan()">Scan Database</button>
-    <select id="chunkSelect" onchange="renderChunk()"></select>
+    <button onclick="scanDatabase()">Scan Database</button>
+
+    <select id="domainSelect" onchange="renderSelectedDomain()">
+        <option value="">Select Domain</option>
+    </select>
+
+    <span id="metaInfo" class="info"></span>
 </div>
 
 <div id="diagramContainer">
-    <div class="mermaid" id="diagram">
-        Click Scan Database to generate ER diagram.
+    <div id="diagram">
+        Click "Scan Database" to generate domain-based ER diagrams.
     </div>
 </div>
 
 <script>
 
     mermaid.initialize({
-      startOnLoad:false,
-      theme:"default",
-      securityLevel:"loose"
+        startOnLoad:false,
+        theme:"default",
+        securityLevel:"loose"
     });
 
-    let chunks = {};
+    let domainChunks = {};
 
-    async function scan() {
+    // ======================
+    // Scan Database
+    // ======================
+    async function scanDatabase() {
 
-      document.getElementById("diagram").innerHTML = "Scanning...";
+        const diagram = document.getElementById("diagram");
+        diagram.innerHTML = "Scanning database... Please wait.";
 
-      await fetch('/schema/scan', { method:'POST' });
+        document.getElementById("metaInfo").innerText = "";
 
-      const res = await fetch('/schema/er-mermaid-chunks');
-      chunks = await res.json();
+        try {
 
-      const select = document.getElementById("chunkSelect");
-      select.innerHTML = "";
+            await fetch('/schema/scan', { method:'POST' });
 
-      Object.keys(chunks).forEach(key => {
-        const option = document.createElement("option");
-        option.value = key;
-        option.text = key;
-        select.appendChild(option);
-      });
+            const response = await fetch('/schema/er-mermaid-domains');
+            domainChunks = await response.json();
 
-      renderChunk();
+            populateDropdown();
+
+        } catch (error) {
+            diagram.innerHTML = "Error scanning database.";
+            console.error(error);
+        }
     }
 
-    function renderChunk() {
+    // ======================
+    // Populate Dropdown
+    // ======================
+    function populateDropdown() {
 
-      const select = document.getElementById("chunkSelect");
-      const selected = select.value;
+        const select = document.getElementById("domainSelect");
+        select.innerHTML = "";
 
-      if (!selected) return;
+        const keys = Object.keys(domainChunks);
 
-      const element = document.getElementById("diagram");
-      element.innerHTML = chunks[selected];
+        if (keys.length === 0) {
+            select.innerHTML = "<option>No domains found</option>";
+            return;
+        }
 
-      mermaid.init(undefined, element);
+        keys.sort();
+
+        keys.forEach(domainName => {
+
+            const diagramText = domainChunks[domainName];
+
+            // Count tables in diagram
+            const tableCount = (diagramText.match(/{/g) || []).length;
+
+            const option = document.createElement("option");
+            option.value = domainName;
+            option.text = `${domainName} (${tableCount} tables)`;
+
+            select.appendChild(option);
+        });
+
+        select.selectedIndex = 0;
+        renderSelectedDomain();
+    }
+
+    // ======================
+    // Render Domain
+    // ======================
+    async function renderSelectedDomain() {
+
+        const select = document.getElementById("domainSelect");
+        const selectedDomain = select.value;
+
+        if (!selectedDomain) return;
+
+        const diagramText = domainChunks[selectedDomain];
+
+        const container = document.getElementById("diagram");
+        container.innerHTML = "";
+
+        if (!diagramText || !diagramText.startsWith("erDiagram")) {
+
+            container.innerHTML =
+                "<span style='color:red'>Invalid Mermaid content received.</span>";
+
+            console.error("Invalid Mermaid:", diagramText);
+            return;
+        }
+
+        try {
+
+            const { svg } = await mermaid.render(
+                "diagram_" + Date.now(),
+                diagramText
+            );
+
+            container.innerHTML = svg;
+
+            document.getElementById("metaInfo").innerText =
+                "Rendered: " + selectedDomain;
+
+        } catch (error) {
+
+            container.innerHTML =
+                "<span style='color:red'>Error rendering diagram.</span>";
+
+            console.error(error);
+        }
     }
 
 </script>

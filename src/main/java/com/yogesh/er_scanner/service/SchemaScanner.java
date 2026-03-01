@@ -32,35 +32,51 @@ public class SchemaScanner {
 
                 String tableName = rsTables.getString("TABLE_NAME");
 
-                List<String> columns = new ArrayList<>();
-                List<String> primaryKeys = new ArrayList<>();
+                List<Column> columns = new ArrayList<>();
 
                 ResultSet rsColumns = meta.getColumns(null, null, tableName, null);
                 while (rsColumns.next()) {
-                    columns.add(rsColumns.getString("COLUMN_NAME"));
+
+                    String colName = rsColumns.getString("COLUMN_NAME");
+                    String type = rsColumns.getString("TYPE_NAME");
+
+                    columns.add(new Column(colName, type, false));
                 }
 
                 ResultSet rsPK = meta.getPrimaryKeys(null, null, tableName);
                 while (rsPK.next()) {
-                    primaryKeys.add(rsPK.getString("COLUMN_NAME"));
+
+                    String pkCol = rsPK.getString("COLUMN_NAME");
+
+                    for (Column c : columns) {
+                        if (c.getName().equalsIgnoreCase(pkCol)) {
+                            c.setPrimaryKey(true);
+                        }
+                    }
                 }
 
-                Table table = new Table(tableName, columns, primaryKeys);
+                Table table = new Table(tableName, columns);
                 tables.add(table);
                 tableMap.put(tableName, table);
+            }
 
-                // STRICT FK detection
-                ResultSet rsFK = meta.getImportedKeys(null, null, tableName);
+            // Strict FK detection
+            for (Table table : tables) {
+
+                ResultSet rsFK = meta.getImportedKeys(null, null, table.getName());
+
                 while (rsFK.next()) {
 
                     String pkTable = rsFK.getString("PKTABLE_NAME");
                     String fkColumn = rsFK.getString("FKCOLUMN_NAME");
+                    String pkColumn = rsFK.getString("PKCOLUMN_NAME");
 
                     relationships.add(
                             new Relationship(
-                                    tableName,
+                                    table.getName(),
                                     pkTable,
                                     fkColumn,
+                                    pkColumn,
                                     "strict",
                                     1.0
                             )
@@ -68,24 +84,34 @@ public class SchemaScanner {
                 }
             }
 
-            // INFERRED relationships (name match)
+            // Inferred relationship (column name matches PK)
             for (Table t1 : tables) {
                 for (Table t2 : tables) {
 
-                    if (t1 == t2) continue;
+                    if (t1.getName().equalsIgnoreCase(t2.getName()))
+                        continue;
 
-                    for (String col1 : t1.getColumns()) {
-                        if (t2.getPrimaryKeys().contains(col1)) {
+                    for (Column c1 : t1.getColumns()) {
 
-                            relationships.add(
-                                    new Relationship(
-                                            t1.getName(),
-                                            t2.getName(),
-                                            col1,
-                                            "inferred",
-                                            0.6
-                                    )
-                            );
+                        if (!c1.isPrimaryKey()) {
+
+                            for (Column c2 : t2.getColumns()) {
+
+                                if (c2.isPrimaryKey() &&
+                                        c1.getName().equalsIgnoreCase(c2.getName())) {
+
+                                    relationships.add(
+                                            new Relationship(
+                                                    t1.getName(),
+                                                    t2.getName(),
+                                                    c1.getName(),
+                                                    c2.getName(),
+                                                    "inferred",
+                                                    0.6
+                                            )
+                                    );
+                                }
+                            }
                         }
                     }
                 }
