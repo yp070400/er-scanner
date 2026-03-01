@@ -1,0 +1,12 @@
+-- Using schema.json and er_diagram.mmd as reference.
+-- Tables:
+-- customers(customer_id PK, name)
+-- orders(order_id PK, customer_id, amount)
+-- Relationship:
+-- orders.customer_id → customers.customer_id
+--
+-- Write a MySQL JOIN query to fetch:
+-- customer name
+-- order_id
+-- amount
+-- Only for customers who have orders.
