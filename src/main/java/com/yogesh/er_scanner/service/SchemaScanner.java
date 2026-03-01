@@ -18,23 +18,37 @@ public class SchemaScanner {
 
     public Schema scan() throws Exception {
 
+        long totalStart = System.currentTimeMillis();
+        System.out.println("=== SCHEMA SCAN STARTED ===");
+
         List<Table> tables = new ArrayList<>();
         List<Relationship> relationships = new ArrayList<>();
 
         try (Connection conn = dataSource.getConnection()) {
 
-            DatabaseMetaData meta = conn.getMetaData();
+            conn.setAutoCommit(false);
+
             Map<String, Table> tableMap = new HashMap<>();
 
-            // ===============================
-            // 1️⃣ Load Tables
-            // ===============================
-            try (ResultSet rsTables =
-                         meta.getTables(null, null, "%", new String[]{"TABLE"})) {
+            // ============================================================
+            // 1️⃣ LOAD TABLES
+            // ============================================================
 
-                while (rsTables.next()) {
+            long start = System.currentTimeMillis();
 
-                    String tableName = rsTables.getString("TABLE_NAME");
+            String tableSql = """
+                    SELECT table_name
+                    FROM all_tables
+                    WHERE owner = USER
+                      AND table_name NOT LIKE 'BIN$%'
+                    """;
+
+            try (PreparedStatement ps = conn.prepareStatement(tableSql);
+                 ResultSet rs = ps.executeQuery()) {
+
+                while (rs.next()) {
+
+                    String tableName = rs.getString("table_name");
 
                     Table table = new Table();
                     table.setName(tableName);
@@ -45,87 +59,157 @@ public class SchemaScanner {
                 }
             }
 
-            // ===============================
-            // 2️⃣ Load Columns
-            // ===============================
-            for (Table table : tables) {
+            System.out.println("Loaded tables: " + tables.size()
+                    + " in " + (System.currentTimeMillis() - start) + " ms");
 
-                try (ResultSet rsColumns =
-                             meta.getColumns(null, null, table.getName(), null)) {
+            // ============================================================
+            // 2️⃣ LOAD ALL COLUMNS
+            // ============================================================
 
-                    while (rsColumns.next()) {
+            start = System.currentTimeMillis();
 
-                        String colName = rsColumns.getString("COLUMN_NAME");
-                        String type = rsColumns.getString("TYPE_NAME");
+            String columnSql = """
+                    SELECT table_name, column_name, data_type
+                    FROM all_tab_columns
+                    WHERE owner = USER
+                    """;
 
+            int totalColumns = 0;
+
+            try (PreparedStatement ps = conn.prepareStatement(columnSql);
+                 ResultSet rs = ps.executeQuery()) {
+
+                while (rs.next()) {
+
+                    String tableName = rs.getString("table_name");
+                    String columnName = rs.getString("column_name");
+                    String dataType = rs.getString("data_type");
+
+                    Table table = tableMap.get(tableName);
+
+                    if (table != null) {
                         table.getColumns().add(
-                                new Column(colName, type, false)
+                                new Column(columnName, dataType, false)
                         );
+                        totalColumns++;
                     }
                 }
             }
 
-            // ===============================
-            // 3️⃣ Load Primary Keys
-            // ===============================
-            // Build fast PK index for inference
-            Map<String, Set<String>> pkIndex = new HashMap<>();
+            System.out.println("Loaded columns: " + totalColumns
+                    + " in " + (System.currentTimeMillis() - start) + " ms");
 
-            for (Table table : tables) {
+            // ============================================================
+            // 3️⃣ LOAD PRIMARY KEYS
+            // ============================================================
 
-                Set<String> pkCols = new HashSet<>();
+            start = System.currentTimeMillis();
 
-                try (ResultSet rsPK =
-                             meta.getPrimaryKeys(null, null, table.getName())) {
+            String pkSql = """
+                    SELECT acc.table_name, acc.column_name
+                    FROM all_constraints ac
+                    JOIN all_cons_columns acc
+                      ON ac.constraint_name = acc.constraint_name
+                     AND ac.owner = acc.owner
+                    WHERE ac.constraint_type = 'P'
+                      AND ac.owner = USER
+                    """;
 
-                    while (rsPK.next()) {
+            try (PreparedStatement ps = conn.prepareStatement(pkSql);
+                 ResultSet rs = ps.executeQuery()) {
 
-                        String pkCol = rsPK.getString("COLUMN_NAME");
-                        pkCols.add(pkCol.toLowerCase());
+                while (rs.next()) {
 
-                        for (Column c : table.getColumns()) {
-                            if (c.getName().equalsIgnoreCase(pkCol)) {
-                                c.setPrimaryKey(true);
+                    String tableName = rs.getString("table_name");
+                    String columnName = rs.getString("column_name");
+
+                    Table table = tableMap.get(tableName);
+
+                    if (table != null) {
+                        for (Column column : table.getColumns()) {
+                            if (column.getName().equalsIgnoreCase(columnName)) {
+                                column.setPrimaryKey(true);
                             }
                         }
                     }
                 }
-
-                pkIndex.put(table.getName(), pkCols);
             }
 
-            // ===============================
-            // 4️⃣ Load Foreign Keys (Strict)
-            // ===============================
+            System.out.println("Primary keys loaded in "
+                    + (System.currentTimeMillis() - start) + " ms");
+
+            // ============================================================
+            // 4️⃣ LOAD FOREIGN KEYS
+            // ============================================================
+
+            start = System.currentTimeMillis();
+
+            String fkSql = """
+                    SELECT
+                        a.table_name source_table,
+                        a.column_name source_column,
+                        c.table_name target_table,
+                        c.column_name target_column
+                    FROM all_constraints fk
+                    JOIN all_cons_columns a
+                      ON fk.constraint_name = a.constraint_name
+                     AND fk.owner = a.owner
+                    JOIN all_constraints pk
+                      ON fk.r_constraint_name = pk.constraint_name
+                     AND fk.owner = pk.owner
+                    JOIN all_cons_columns c
+                      ON pk.constraint_name = c.constraint_name
+                     AND pk.owner = c.owner
+                    WHERE fk.constraint_type = 'R'
+                      AND fk.owner = USER
+                    """;
+
+            int strictCount = 0;
+
+            try (PreparedStatement ps = conn.prepareStatement(fkSql);
+                 ResultSet rs = ps.executeQuery()) {
+
+                while (rs.next()) {
+
+                    relationships.add(
+                            new Relationship(
+                                    rs.getString("source_table"),
+                                    rs.getString("target_table"),
+                                    rs.getString("source_column"),
+                                    rs.getString("target_column"),
+                                    "strict",
+                                    1.0
+                            )
+                    );
+
+                    strictCount++;
+                }
+            }
+
+            System.out.println("Strict FKs loaded: " + strictCount
+                    + " in " + (System.currentTimeMillis() - start) + " ms");
+
+            // ============================================================
+            // 5️⃣ ULTRA-OPTIMIZED INFERRED RELATIONSHIPS
+            // ============================================================
+
+            start = System.currentTimeMillis();
+
+            Map<String, List<String>> pkReverseIndex = new HashMap<>();
+
             for (Table table : tables) {
-
-                try (ResultSet rsFK =
-                             meta.getImportedKeys(null, null, table.getName())) {
-
-                    while (rsFK.next()) {
-
-                        String pkTable = rsFK.getString("PKTABLE_NAME");
-                        String fkColumn = rsFK.getString("FKCOLUMN_NAME");
-                        String pkColumn = rsFK.getString("PKCOLUMN_NAME");
-
-                        relationships.add(
-                                new Relationship(
-                                        table.getName(),
-                                        pkTable,
-                                        fkColumn,
-                                        pkColumn,
-                                        "strict",
-                                        1.0
-                                )
-                        );
+                for (Column col : table.getColumns()) {
+                    if (col.isPrimaryKey()) {
+                        pkReverseIndex
+                                .computeIfAbsent(
+                                        col.getName().toLowerCase(),
+                                        k -> new ArrayList<>())
+                                .add(table.getName());
                     }
                 }
             }
 
-            // ===============================
-            // 5️⃣ Optimized Inferred Detection
-            // O(totalColumns) instead of O(n²)
-            // ===============================
+            int inferredCount = 0;
 
             for (Table table : tables) {
 
@@ -133,32 +217,41 @@ public class SchemaScanner {
 
                     if (column.isPrimaryKey()) continue;
 
-                    String colName = column.getName().toLowerCase();
+                    List<String> targets =
+                            pkReverseIndex.get(column.getName().toLowerCase());
 
-                    for (Map.Entry<String, Set<String>> entry : pkIndex.entrySet()) {
+                    if (targets != null) {
 
-                        String targetTable = entry.getKey();
+                        for (String targetTable : targets) {
 
-                        if (targetTable.equalsIgnoreCase(table.getName()))
-                            continue;
+                            if (!targetTable.equalsIgnoreCase(table.getName())) {
 
-                        if (entry.getValue().contains(colName)) {
+                                relationships.add(
+                                        new Relationship(
+                                                table.getName(),
+                                                targetTable,
+                                                column.getName(),
+                                                column.getName(),
+                                                "inferred",
+                                                0.6
+                                        )
+                                );
 
-                            relationships.add(
-                                    new Relationship(
-                                            table.getName(),
-                                            targetTable,
-                                            column.getName(),
-                                            column.getName(),
-                                            "inferred",
-                                            0.6
-                                    )
-                            );
+                                inferredCount++;
+                            }
                         }
                     }
                 }
             }
+
+            System.out.println("Inferred relationships: " + inferredCount
+                    + " in " + (System.currentTimeMillis() - start) + " ms");
         }
+
+        System.out.println("=== SCHEMA SCAN COMPLETED ===");
+        System.out.println("Total time: "
+                + (System.currentTimeMillis() - totalStart) + " ms");
+        System.out.println("================================");
 
         return new Schema(tables, relationships);
     }
