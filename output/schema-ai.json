@@ -1769,882 +1769,882 @@
     "sourceColumn" : "order_item_id",
     "targetTable" : "users",
     "targetColumn" : "tenant_id",
-    "relationshipType" : "DATA_SAMPLE",
+    "relationshipType" : "DATA_INFERRED",
     "confidence" : 1.0
   }, {
     "sourceTable" : "order_items",
     "sourceColumn" : "order_item_id",
     "targetTable" : "users",
     "targetColumn" : "user_id",
-    "relationshipType" : "DATA_SAMPLE",
+    "relationshipType" : "DATA_INFERRED",
     "confidence" : 1.0
   }, {
     "sourceTable" : "order_items",
     "sourceColumn" : "quantity",
     "targetTable" : "users",
     "targetColumn" : "tenant_id",
-    "relationshipType" : "DATA_SAMPLE",
+    "relationshipType" : "DATA_INFERRED",
     "confidence" : 1.0
   }, {
     "sourceTable" : "order_items",
     "sourceColumn" : "quantity",
     "targetTable" : "users",
     "targetColumn" : "user_id",
-    "relationshipType" : "DATA_SAMPLE",
+    "relationshipType" : "DATA_INFERRED",
     "confidence" : 1.0
   }, {
     "sourceTable" : "order_items",
     "sourceColumn" : "product_id",
     "targetTable" : "users",
     "targetColumn" : "tenant_id",
-    "relationshipType" : "DATA_SAMPLE",
+    "relationshipType" : "DATA_INFERRED",
     "confidence" : 1.0
   }, {
     "sourceTable" : "order_items",
     "sourceColumn" : "product_id",
     "targetTable" : "users",
     "targetColumn" : "user_id",
-    "relationshipType" : "DATA_SAMPLE",
+    "relationshipType" : "DATA_INFERRED",
     "confidence" : 1.0
   }, {
     "sourceTable" : "order_items",
     "sourceColumn" : "order_id",
     "targetTable" : "users",
     "targetColumn" : "tenant_id",
-    "relationshipType" : "DATA_SAMPLE",
+    "relationshipType" : "DATA_INFERRED",
     "confidence" : 1.0
   }, {
     "sourceTable" : "order_items",
     "sourceColumn" : "order_id",
     "targetTable" : "users",
     "targetColumn" : "user_id",
-    "relationshipType" : "DATA_SAMPLE",
+    "relationshipType" : "DATA_INFERRED",
     "confidence" : 1.0
   }, {
     "sourceTable" : "order_items",
     "sourceColumn" : "order_item_id",
     "targetTable" : "orders",
     "targetColumn" : "tenant_id",
-    "relationshipType" : "DATA_SAMPLE",
+    "relationshipType" : "DATA_INFERRED",
     "confidence" : 1.0
   }, {
     "sourceTable" : "order_items",
     "sourceColumn" : "order_item_id",
     "targetTable" : "orders",
     "targetColumn" : "user_id",
-    "relationshipType" : "DATA_SAMPLE",
+    "relationshipType" : "DATA_INFERRED",
     "confidence" : 1.0
   }, {
     "sourceTable" : "order_items",
     "sourceColumn" : "order_item_id",
     "targetTable" : "orders",
     "targetColumn" : "order_id",
-    "relationshipType" : "DATA_SAMPLE",
+    "relationshipType" : "DATA_INFERRED",
     "confidence" : 1.0
   }, {
     "sourceTable" : "order_items",
     "sourceColumn" : "quantity",
     "targetTable" : "orders",
     "targetColumn" : "tenant_id",
-    "relationshipType" : "DATA_SAMPLE",
+    "relationshipType" : "DATA_INFERRED",
     "confidence" : 1.0
   }, {
     "sourceTable" : "order_items",
     "sourceColumn" : "quantity",
     "targetTable" : "orders",
     "targetColumn" : "user_id",
-    "relationshipType" : "DATA_SAMPLE",
+    "relationshipType" : "DATA_INFERRED",
     "confidence" : 1.0
   }, {
     "sourceTable" : "order_items",
     "sourceColumn" : "quantity",
     "targetTable" : "orders",
     "targetColumn" : "order_id",
-    "relationshipType" : "DATA_SAMPLE",
+    "relationshipType" : "DATA_INFERRED",
     "confidence" : 1.0
   }, {
     "sourceTable" : "order_items",
     "sourceColumn" : "product_id",
     "targetTable" : "orders",
     "targetColumn" : "tenant_id",
-    "relationshipType" : "DATA_SAMPLE",
+    "relationshipType" : "DATA_INFERRED",
     "confidence" : 1.0
   }, {
     "sourceTable" : "order_items",
     "sourceColumn" : "product_id",
     "targetTable" : "orders",
     "targetColumn" : "user_id",
-    "relationshipType" : "DATA_SAMPLE",
+    "relationshipType" : "DATA_INFERRED",
     "confidence" : 1.0
   }, {
     "sourceTable" : "order_items",
     "sourceColumn" : "product_id",
     "targetTable" : "orders",
     "targetColumn" : "order_id",
-    "relationshipType" : "DATA_SAMPLE",
+    "relationshipType" : "DATA_INFERRED",
     "confidence" : 1.0
   }, {
     "sourceTable" : "order_items",
     "sourceColumn" : "order_id",
     "targetTable" : "orders",
     "targetColumn" : "tenant_id",
-    "relationshipType" : "DATA_SAMPLE",
+    "relationshipType" : "DATA_INFERRED",
     "confidence" : 1.0
   }, {
     "sourceTable" : "order_items",
     "sourceColumn" : "order_id",
     "targetTable" : "orders",
     "targetColumn" : "user_id",
-    "relationshipType" : "DATA_SAMPLE",
+    "relationshipType" : "DATA_INFERRED",
     "confidence" : 1.0
   }, {
     "sourceTable" : "order_items",
     "sourceColumn" : "order_id",
     "targetTable" : "orders",
     "targetColumn" : "order_id",
-    "relationshipType" : "DATA_SAMPLE",
+    "relationshipType" : "DATA_INFERRED",
     "confidence" : 1.0
   }, {
     "sourceTable" : "order_items",
     "sourceColumn" : "order_item_id",
     "targetTable" : "payments",
     "targetColumn" : "user_id",
-    "relationshipType" : "DATA_SAMPLE",
+    "relationshipType" : "DATA_INFERRED",
     "confidence" : 1.0
   }, {
     "sourceTable" : "order_items",
     "sourceColumn" : "order_item_id",
     "targetTable" : "payments",
     "targetColumn" : "payment_id",
-    "relationshipType" : "DATA_SAMPLE",
+    "relationshipType" : "DATA_INFERRED",
     "confidence" : 1.0
   }, {
     "sourceTable" : "order_items",
     "sourceColumn" : "order_item_id",
     "targetTable" : "payments",
     "targetColumn" : "order_id",
-    "relationshipType" : "DATA_SAMPLE",
+    "relationshipType" : "DATA_INFERRED",
     "confidence" : 1.0
   }, {
     "sourceTable" : "order_items",
     "sourceColumn" : "quantity",
     "targetTable" : "payments",
     "targetColumn" : "user_id",
-    "relationshipType" : "DATA_SAMPLE",
+    "relationshipType" : "DATA_INFERRED",
     "confidence" : 1.0
   }, {
     "sourceTable" : "order_items",
     "sourceColumn" : "quantity",
     "targetTable" : "payments",
     "targetColumn" : "payment_id",
-    "relationshipType" : "DATA_SAMPLE",
+    "relationshipType" : "DATA_INFERRED",
     "confidence" : 1.0
   }, {
     "sourceTable" : "order_items",
     "sourceColumn" : "quantity",
     "targetTable" : "payments",
     "targetColumn" : "order_id",
-    "relationshipType" : "DATA_SAMPLE",
+    "relationshipType" : "DATA_INFERRED",
     "confidence" : 1.0
   }, {
     "sourceTable" : "order_items",
     "sourceColumn" : "price",
     "targetTable" : "payments",
     "targetColumn" : "amount",
-    "relationshipType" : "DATA_SAMPLE",
+    "relationshipType" : "DATA_INFERRED",
     "confidence" : 1.0
   }, {
     "sourceTable" : "order_items",
     "sourceColumn" : "product_id",
     "targetTable" : "payments",
     "targetColumn" : "user_id",
-    "relationshipType" : "DATA_SAMPLE",
+    "relationshipType" : "DATA_INFERRED",
     "confidence" : 1.0
   }, {
     "sourceTable" : "order_items",
     "sourceColumn" : "product_id",
     "targetTable" : "payments",
     "targetColumn" : "payment_id",
-    "relationshipType" : "DATA_SAMPLE",
+    "relationshipType" : "DATA_INFERRED",
     "confidence" : 1.0
   }, {
     "sourceTable" : "order_items",
     "sourceColumn" : "product_id",
     "targetTable" : "payments",
     "targetColumn" : "order_id",
-    "relationshipType" : "DATA_SAMPLE",
+    "relationshipType" : "DATA_INFERRED",
     "confidence" : 1.0
   }, {
     "sourceTable" : "order_items",
     "sourceColumn" : "order_id",
     "targetTable" : "payments",
     "targetColumn" : "user_id",
-    "relationshipType" : "DATA_SAMPLE",
+    "relationshipType" : "DATA_INFERRED",
     "confidence" : 1.0
   }, {
     "sourceTable" : "order_items",
     "sourceColumn" : "order_id",
     "targetTable" : "payments",
     "targetColumn" : "payment_id",
-    "relationshipType" : "DATA_SAMPLE",
+    "relationshipType" : "DATA_INFERRED",
     "confidence" : 1.0
   }, {
     "sourceTable" : "order_items",
     "sourceColumn" : "order_id",
     "targetTable" : "payments",
     "targetColumn" : "order_id",
-    "relationshipType" : "DATA_SAMPLE",
+    "relationshipType" : "DATA_INFERRED",
     "confidence" : 1.0
   }, {
     "sourceTable" : "order_items",
     "sourceColumn" : "order_item_id",
     "targetTable" : "roles",
     "targetColumn" : "role_id",
-    "relationshipType" : "DATA_SAMPLE",
+    "relationshipType" : "DATA_INFERRED",
     "confidence" : 1.0
   }, {
     "sourceTable" : "order_items",
     "sourceColumn" : "quantity",
     "targetTable" : "roles",
     "targetColumn" : "role_id",
-    "relationshipType" : "DATA_SAMPLE",
+    "relationshipType" : "DATA_INFERRED",
     "confidence" : 1.0
   }, {
     "sourceTable" : "order_items",
     "sourceColumn" : "product_id",
     "targetTable" : "roles",
     "targetColumn" : "role_id",
-    "relationshipType" : "DATA_SAMPLE",
+    "relationshipType" : "DATA_INFERRED",
     "confidence" : 1.0
   }, {
     "sourceTable" : "order_items",
     "sourceColumn" : "order_id",
     "targetTable" : "roles",
     "targetColumn" : "role_id",
-    "relationshipType" : "DATA_SAMPLE",
+    "relationshipType" : "DATA_INFERRED",
     "confidence" : 1.0
   }, {
     "sourceTable" : "order_items",
     "sourceColumn" : "order_item_id",
     "targetTable" : "products",
     "targetColumn" : "category_id",
-    "relationshipType" : "DATA_SAMPLE",
+    "relationshipType" : "DATA_INFERRED",
     "confidence" : 1.0
   }, {
     "sourceTable" : "order_items",
     "sourceColumn" : "order_item_id",
     "targetTable" : "products",
     "targetColumn" : "product_id",
-    "relationshipType" : "DATA_SAMPLE",
+    "relationshipType" : "DATA_INFERRED",
     "confidence" : 1.0
   }, {
     "sourceTable" : "order_items",
     "sourceColumn" : "quantity",
     "targetTable" : "products",
     "targetColumn" : "category_id",
-    "relationshipType" : "DATA_SAMPLE",
+    "relationshipType" : "DATA_INFERRED",
     "confidence" : 1.0
   }, {
     "sourceTable" : "order_items",
     "sourceColumn" : "quantity",
     "targetTable" : "products",
     "targetColumn" : "product_id",
-    "relationshipType" : "DATA_SAMPLE",
+    "relationshipType" : "DATA_INFERRED",
     "confidence" : 1.0
   }, {
     "sourceTable" : "order_items",
     "sourceColumn" : "price",
     "targetTable" : "products",
     "targetColumn" : "price",
-    "relationshipType" : "DATA_SAMPLE",
+    "relationshipType" : "DATA_INFERRED",
     "confidence" : 1.0
   }, {
     "sourceTable" : "order_items",
     "sourceColumn" : "product_id",
     "targetTable" : "products",
     "targetColumn" : "category_id",
-    "relationshipType" : "DATA_SAMPLE",
+    "relationshipType" : "DATA_INFERRED",
     "confidence" : 1.0
   }, {
     "sourceTable" : "order_items",
     "sourceColumn" : "product_id",
     "targetTable" : "products",
     "targetColumn" : "product_id",
-    "relationshipType" : "DATA_SAMPLE",
+    "relationshipType" : "DATA_INFERRED",
     "confidence" : 1.0
   }, {
     "sourceTable" : "order_items",
     "sourceColumn" : "order_id",
     "targetTable" : "products",
     "targetColumn" : "category_id",
-    "relationshipType" : "DATA_SAMPLE",
+    "relationshipType" : "DATA_INFERRED",
     "confidence" : 1.0
   }, {
     "sourceTable" : "order_items",
     "sourceColumn" : "order_id",
     "targetTable" : "products",
     "targetColumn" : "product_id",
-    "relationshipType" : "DATA_SAMPLE",
+    "relationshipType" : "DATA_INFERRED",
     "confidence" : 1.0
   }, {
     "sourceTable" : "order_items",
     "sourceColumn" : "order_item_id",
     "targetTable" : "categories",
     "targetColumn" : "category_id",
-    "relationshipType" : "DATA_SAMPLE",
+    "relationshipType" : "DATA_INFERRED",
     "confidence" : 1.0
   }, {
     "sourceTable" : "order_items",
     "sourceColumn" : "quantity",
     "targetTable" : "categories",
     "targetColumn" : "category_id",
-    "relationshipType" : "DATA_SAMPLE",
+    "relationshipType" : "DATA_INFERRED",
     "confidence" : 1.0
   }, {
     "sourceTable" : "order_items",
     "sourceColumn" : "product_id",
     "targetTable" : "categories",
     "targetColumn" : "category_id",
-    "relationshipType" : "DATA_SAMPLE",
+    "relationshipType" : "DATA_INFERRED",
     "confidence" : 1.0
   }, {
     "sourceTable" : "order_items",
     "sourceColumn" : "order_id",
     "targetTable" : "categories",
     "targetColumn" : "category_id",
-    "relationshipType" : "DATA_SAMPLE",
+    "relationshipType" : "DATA_INFERRED",
     "confidence" : 1.0
   }, {
     "sourceTable" : "order_items",
     "sourceColumn" : "order_item_id",
     "targetTable" : "tenants",
     "targetColumn" : "tenant_id",
-    "relationshipType" : "DATA_SAMPLE",
+    "relationshipType" : "DATA_INFERRED",
     "confidence" : 1.0
   }, {
     "sourceTable" : "order_items",
     "sourceColumn" : "quantity",
     "targetTable" : "tenants",
     "targetColumn" : "tenant_id",
-    "relationshipType" : "DATA_SAMPLE",
+    "relationshipType" : "DATA_INFERRED",
     "confidence" : 1.0
   }, {
     "sourceTable" : "order_items",
     "sourceColumn" : "product_id",
     "targetTable" : "tenants",
     "targetColumn" : "tenant_id",
-    "relationshipType" : "DATA_SAMPLE",
+    "relationshipType" : "DATA_INFERRED",
     "confidence" : 1.0
   }, {
     "sourceTable" : "order_items",
     "sourceColumn" : "order_id",
     "targetTable" : "tenants",
     "targetColumn" : "tenant_id",
-    "relationshipType" : "DATA_SAMPLE",
+    "relationshipType" : "DATA_INFERRED",
     "confidence" : 1.0
   }, {
     "sourceTable" : "users",
     "sourceColumn" : "tenant_id",
     "targetTable" : "orders",
     "targetColumn" : "tenant_id",
-    "relationshipType" : "DATA_SAMPLE",
+    "relationshipType" : "DATA_INFERRED",
     "confidence" : 1.0
   }, {
     "sourceTable" : "users",
     "sourceColumn" : "tenant_id",
     "targetTable" : "orders",
     "targetColumn" : "user_id",
-    "relationshipType" : "DATA_SAMPLE",
+    "relationshipType" : "DATA_INFERRED",
     "confidence" : 1.0
   }, {
     "sourceTable" : "users",
     "sourceColumn" : "tenant_id",
     "targetTable" : "orders",
     "targetColumn" : "order_id",
-    "relationshipType" : "DATA_SAMPLE",
+    "relationshipType" : "DATA_INFERRED",
     "confidence" : 1.0
   }, {
     "sourceTable" : "users",
     "sourceColumn" : "user_id",
     "targetTable" : "orders",
     "targetColumn" : "tenant_id",
-    "relationshipType" : "DATA_SAMPLE",
+    "relationshipType" : "DATA_INFERRED",
     "confidence" : 1.0
   }, {
     "sourceTable" : "users",
     "sourceColumn" : "user_id",
     "targetTable" : "orders",
     "targetColumn" : "user_id",
-    "relationshipType" : "DATA_SAMPLE",
+    "relationshipType" : "DATA_INFERRED",
     "confidence" : 1.0
   }, {
     "sourceTable" : "users",
     "sourceColumn" : "user_id",
     "targetTable" : "orders",
     "targetColumn" : "order_id",
-    "relationshipType" : "DATA_SAMPLE",
+    "relationshipType" : "DATA_INFERRED",
     "confidence" : 1.0
   }, {
     "sourceTable" : "users",
     "sourceColumn" : "tenant_id",
     "targetTable" : "payments",
     "targetColumn" : "user_id",
-    "relationshipType" : "DATA_SAMPLE",
+    "relationshipType" : "DATA_INFERRED",
     "confidence" : 1.0
   }, {
     "sourceTable" : "users",
     "sourceColumn" : "tenant_id",
     "targetTable" : "payments",
     "targetColumn" : "payment_id",
-    "relationshipType" : "DATA_SAMPLE",
+    "relationshipType" : "DATA_INFERRED",
     "confidence" : 1.0
   }, {
     "sourceTable" : "users",
     "sourceColumn" : "tenant_id",
     "targetTable" : "payments",
     "targetColumn" : "order_id",
-    "relationshipType" : "DATA_SAMPLE",
+    "relationshipType" : "DATA_INFERRED",
     "confidence" : 1.0
   }, {
     "sourceTable" : "users",
     "sourceColumn" : "user_id",
     "targetTable" : "payments",
     "targetColumn" : "user_id",
-    "relationshipType" : "DATA_SAMPLE",
+    "relationshipType" : "DATA_INFERRED",
     "confidence" : 1.0
   }, {
     "sourceTable" : "users",
     "sourceColumn" : "user_id",
     "targetTable" : "payments",
     "targetColumn" : "payment_id",
-    "relationshipType" : "DATA_SAMPLE",
+    "relationshipType" : "DATA_INFERRED",
     "confidence" : 1.0
   }, {
     "sourceTable" : "users",
     "sourceColumn" : "user_id",
     "targetTable" : "payments",
     "targetColumn" : "order_id",
-    "relationshipType" : "DATA_SAMPLE",
+    "relationshipType" : "DATA_INFERRED",
     "confidence" : 1.0
   }, {
     "sourceTable" : "users",
     "sourceColumn" : "tenant_id",
     "targetTable" : "roles",
     "targetColumn" : "role_id",
-    "relationshipType" : "DATA_SAMPLE",
+    "relationshipType" : "DATA_INFERRED",
     "confidence" : 1.0
   }, {
     "sourceTable" : "users",
     "sourceColumn" : "user_id",
     "targetTable" : "roles",
     "targetColumn" : "role_id",
-    "relationshipType" : "DATA_SAMPLE",
+    "relationshipType" : "DATA_INFERRED",
     "confidence" : 1.0
   }, {
     "sourceTable" : "users",
     "sourceColumn" : "tenant_id",
     "targetTable" : "products",
     "targetColumn" : "category_id",
-    "relationshipType" : "DATA_SAMPLE",
+    "relationshipType" : "DATA_INFERRED",
     "confidence" : 1.0
   }, {
     "sourceTable" : "users",
     "sourceColumn" : "tenant_id",
     "targetTable" : "products",
     "targetColumn" : "product_id",
-    "relationshipType" : "DATA_SAMPLE",
+    "relationshipType" : "DATA_INFERRED",
     "confidence" : 1.0
   }, {
     "sourceTable" : "users",
     "sourceColumn" : "user_id",
     "targetTable" : "products",
     "targetColumn" : "category_id",
-    "relationshipType" : "DATA_SAMPLE",
+    "relationshipType" : "DATA_INFERRED",
     "confidence" : 1.0
   }, {
     "sourceTable" : "users",
     "sourceColumn" : "user_id",
     "targetTable" : "products",
     "targetColumn" : "product_id",
-    "relationshipType" : "DATA_SAMPLE",
+    "relationshipType" : "DATA_INFERRED",
     "confidence" : 1.0
   }, {
     "sourceTable" : "users",
     "sourceColumn" : "tenant_id",
     "targetTable" : "categories",
     "targetColumn" : "category_id",
-    "relationshipType" : "DATA_SAMPLE",
+    "relationshipType" : "DATA_INFERRED",
     "confidence" : 1.0
   }, {
     "sourceTable" : "users",
     "sourceColumn" : "user_id",
     "targetTable" : "categories",
     "targetColumn" : "category_id",
-    "relationshipType" : "DATA_SAMPLE",
+    "relationshipType" : "DATA_INFERRED",
     "confidence" : 1.0
   }, {
     "sourceTable" : "users",
     "sourceColumn" : "tenant_id",
     "targetTable" : "tenants",
     "targetColumn" : "tenant_id",
-    "relationshipType" : "DATA_SAMPLE",
+    "relationshipType" : "DATA_INFERRED",
     "confidence" : 1.0
   }, {
     "sourceTable" : "users",
     "sourceColumn" : "user_id",
     "targetTable" : "tenants",
     "targetColumn" : "tenant_id",
-    "relationshipType" : "DATA_SAMPLE",
+    "relationshipType" : "DATA_INFERRED",
     "confidence" : 1.0
   }, {
     "sourceTable" : "users",
     "sourceColumn" : "created_at",
     "targetTable" : "tenants",
     "targetColumn" : "created_at",
-    "relationshipType" : "DATA_SAMPLE",
+    "relationshipType" : "DATA_INFERRED",
     "confidence" : 1.0
   }, {
     "sourceTable" : "orders",
     "sourceColumn" : "tenant_id",
     "targetTable" : "payments",
     "targetColumn" : "user_id",
-    "relationshipType" : "DATA_SAMPLE",
+    "relationshipType" : "DATA_INFERRED",
     "confidence" : 1.0
   }, {
     "sourceTable" : "orders",
     "sourceColumn" : "tenant_id",
     "targetTable" : "payments",
     "targetColumn" : "payment_id",
-    "relationshipType" : "DATA_SAMPLE",
+    "relationshipType" : "DATA_INFERRED",
     "confidence" : 1.0
   }, {
     "sourceTable" : "orders",
     "sourceColumn" : "tenant_id",
     "targetTable" : "payments",
     "targetColumn" : "order_id",
-    "relationshipType" : "DATA_SAMPLE",
+    "relationshipType" : "DATA_INFERRED",
     "confidence" : 1.0
   }, {
     "sourceTable" : "orders",
     "sourceColumn" : "user_id",
     "targetTable" : "payments",
     "targetColumn" : "user_id",
-    "relationshipType" : "DATA_SAMPLE",
+    "relationshipType" : "DATA_INFERRED",
     "confidence" : 1.0
   }, {
     "sourceTable" : "orders",
     "sourceColumn" : "user_id",
     "targetTable" : "payments",
     "targetColumn" : "payment_id",
-    "relationshipType" : "DATA_SAMPLE",
+    "relationshipType" : "DATA_INFERRED",
     "confidence" : 1.0
   }, {
     "sourceTable" : "orders",
     "sourceColumn" : "user_id",
     "targetTable" : "payments",
     "targetColumn" : "order_id",
-    "relationshipType" : "DATA_SAMPLE",
+    "relationshipType" : "DATA_INFERRED",
     "confidence" : 1.0
   }, {
     "sourceTable" : "orders",
     "sourceColumn" : "order_id",
     "targetTable" : "payments",
     "targetColumn" : "user_id",
-    "relationshipType" : "DATA_SAMPLE",
+    "relationshipType" : "DATA_INFERRED",
     "confidence" : 1.0
   }, {
     "sourceTable" : "orders",
     "sourceColumn" : "order_id",
     "targetTable" : "payments",
     "targetColumn" : "payment_id",
-    "relationshipType" : "DATA_SAMPLE",
+    "relationshipType" : "DATA_INFERRED",
     "confidence" : 1.0
   }, {
     "sourceTable" : "orders",
     "sourceColumn" : "order_id",
     "targetTable" : "payments",
     "targetColumn" : "order_id",
-    "relationshipType" : "DATA_SAMPLE",
+    "relationshipType" : "DATA_INFERRED",
     "confidence" : 1.0
   }, {
     "sourceTable" : "orders",
     "sourceColumn" : "tenant_id",
     "targetTable" : "roles",
     "targetColumn" : "role_id",
-    "relationshipType" : "DATA_SAMPLE",
+    "relationshipType" : "DATA_INFERRED",
     "confidence" : 1.0
   }, {
     "sourceTable" : "orders",
     "sourceColumn" : "user_id",
     "targetTable" : "roles",
     "targetColumn" : "role_id",
-    "relationshipType" : "DATA_SAMPLE",
+    "relationshipType" : "DATA_INFERRED",
     "confidence" : 1.0
   }, {
     "sourceTable" : "orders",
     "sourceColumn" : "order_id",
     "targetTable" : "roles",
     "targetColumn" : "role_id",
-    "relationshipType" : "DATA_SAMPLE",
+    "relationshipType" : "DATA_INFERRED",
     "confidence" : 1.0
   }, {
     "sourceTable" : "orders",
     "sourceColumn" : "tenant_id",
     "targetTable" : "products",
     "targetColumn" : "category_id",
-    "relationshipType" : "DATA_SAMPLE",
+    "relationshipType" : "DATA_INFERRED",
     "confidence" : 1.0
   }, {
     "sourceTable" : "orders",
     "sourceColumn" : "tenant_id",
     "targetTable" : "products",
     "targetColumn" : "product_id",
-    "relationshipType" : "DATA_SAMPLE",
+    "relationshipType" : "DATA_INFERRED",
     "confidence" : 1.0
   }, {
     "sourceTable" : "orders",
     "sourceColumn" : "user_id",
     "targetTable" : "products",
     "targetColumn" : "category_id",
-    "relationshipType" : "DATA_SAMPLE",
+    "relationshipType" : "DATA_INFERRED",
     "confidence" : 1.0
   }, {
     "sourceTable" : "orders",
     "sourceColumn" : "user_id",
     "targetTable" : "products",
     "targetColumn" : "product_id",
-    "relationshipType" : "DATA_SAMPLE",
+    "relationshipType" : "DATA_INFERRED",
     "confidence" : 1.0
   }, {
     "sourceTable" : "orders",
     "sourceColumn" : "order_id",
     "targetTable" : "products",
     "targetColumn" : "category_id",
-    "relationshipType" : "DATA_SAMPLE",
+    "relationshipType" : "DATA_INFERRED",
     "confidence" : 1.0
   }, {
     "sourceTable" : "orders",
     "sourceColumn" : "order_id",
     "targetTable" : "products",
     "targetColumn" : "product_id",
-    "relationshipType" : "DATA_SAMPLE",
+    "relationshipType" : "DATA_INFERRED",
     "confidence" : 1.0
   }, {
     "sourceTable" : "orders",
     "sourceColumn" : "tenant_id",
     "targetTable" : "categories",
     "targetColumn" : "category_id",
-    "relationshipType" : "DATA_SAMPLE",
+    "relationshipType" : "DATA_INFERRED",
     "confidence" : 1.0
   }, {
     "sourceTable" : "orders",
     "sourceColumn" : "user_id",
     "targetTable" : "categories",
     "targetColumn" : "category_id",
-    "relationshipType" : "DATA_SAMPLE",
+    "relationshipType" : "DATA_INFERRED",
     "confidence" : 1.0
   }, {
     "sourceTable" : "orders",
     "sourceColumn" : "order_id",
     "targetTable" : "categories",
     "targetColumn" : "category_id",
-    "relationshipType" : "DATA_SAMPLE",
+    "relationshipType" : "DATA_INFERRED",
     "confidence" : 1.0
   }, {
     "sourceTable" : "orders",
     "sourceColumn" : "tenant_id",
     "targetTable" : "tenants",
     "targetColumn" : "tenant_id",
-    "relationshipType" : "DATA_SAMPLE",
+    "relationshipType" : "DATA_INFERRED",
     "confidence" : 1.0
   }, {
     "sourceTable" : "orders",
     "sourceColumn" : "user_id",
     "targetTable" : "tenants",
     "targetColumn" : "tenant_id",
-    "relationshipType" : "DATA_SAMPLE",
+    "relationshipType" : "DATA_INFERRED",
     "confidence" : 1.0
   }, {
     "sourceTable" : "orders",
     "sourceColumn" : "order_id",
     "targetTable" : "tenants",
     "targetColumn" : "tenant_id",
-    "relationshipType" : "DATA_SAMPLE",
+    "relationshipType" : "DATA_INFERRED",
     "confidence" : 1.0
   }, {
     "sourceTable" : "payments",
     "sourceColumn" : "user_id",
     "targetTable" : "roles",
     "targetColumn" : "role_id",
-    "relationshipType" : "DATA_SAMPLE",
+    "relationshipType" : "DATA_INFERRED",
     "confidence" : 1.0
   }, {
     "sourceTable" : "payments",
     "sourceColumn" : "payment_id",
     "targetTable" : "roles",
     "targetColumn" : "role_id",
-    "relationshipType" : "DATA_SAMPLE",
+    "relationshipType" : "DATA_INFERRED",
     "confidence" : 1.0
   }, {
     "sourceTable" : "payments",
     "sourceColumn" : "order_id",
     "targetTable" : "roles",
     "targetColumn" : "role_id",
-    "relationshipType" : "DATA_SAMPLE",
+    "relationshipType" : "DATA_INFERRED",
     "confidence" : 1.0
   }, {
     "sourceTable" : "payments",
     "sourceColumn" : "amount",
     "targetTable" : "products",
     "targetColumn" : "price",
-    "relationshipType" : "DATA_SAMPLE",
+    "relationshipType" : "DATA_INFERRED",
     "confidence" : 1.0
   }, {
     "sourceTable" : "payments",
     "sourceColumn" : "user_id",
     "targetTable" : "products",
     "targetColumn" : "category_id",
-    "relationshipType" : "DATA_SAMPLE",
+    "relationshipType" : "DATA_INFERRED",
     "confidence" : 1.0
   }, {
     "sourceTable" : "payments",
     "sourceColumn" : "user_id",
     "targetTable" : "products",
     "targetColumn" : "product_id",
-    "relationshipType" : "DATA_SAMPLE",
+    "relationshipType" : "DATA_INFERRED",
     "confidence" : 1.0
   }, {
     "sourceTable" : "payments",
     "sourceColumn" : "payment_id",
     "targetTable" : "products",
     "targetColumn" : "category_id",
-    "relationshipType" : "DATA_SAMPLE",
+    "relationshipType" : "DATA_INFERRED",
     "confidence" : 1.0
   }, {
     "sourceTable" : "payments",
     "sourceColumn" : "payment_id",
     "targetTable" : "products",
     "targetColumn" : "product_id",
-    "relationshipType" : "DATA_SAMPLE",
+    "relationshipType" : "DATA_INFERRED",
     "confidence" : 1.0
   }, {
     "sourceTable" : "payments",
     "sourceColumn" : "order_id",
     "targetTable" : "products",
     "targetColumn" : "category_id",
-    "relationshipType" : "DATA_SAMPLE",
+    "relationshipType" : "DATA_INFERRED",
     "confidence" : 1.0
   }, {
     "sourceTable" : "payments",
     "sourceColumn" : "order_id",
     "targetTable" : "products",
     "targetColumn" : "product_id",
-    "relationshipType" : "DATA_SAMPLE",
+    "relationshipType" : "DATA_INFERRED",
     "confidence" : 1.0
   }, {
     "sourceTable" : "payments",
     "sourceColumn" : "user_id",
     "targetTable" : "categories",
     "targetColumn" : "category_id",
-    "relationshipType" : "DATA_SAMPLE",
+    "relationshipType" : "DATA_INFERRED",
     "confidence" : 1.0
   }, {
     "sourceTable" : "payments",
     "sourceColumn" : "payment_id",
     "targetTable" : "categories",
     "targetColumn" : "category_id",
-    "relationshipType" : "DATA_SAMPLE",
+    "relationshipType" : "DATA_INFERRED",
     "confidence" : 1.0
   }, {
     "sourceTable" : "payments",
     "sourceColumn" : "order_id",
     "targetTable" : "categories",
     "targetColumn" : "category_id",
-    "relationshipType" : "DATA_SAMPLE",
+    "relationshipType" : "DATA_INFERRED",
     "confidence" : 1.0
   }, {
     "sourceTable" : "payments",
     "sourceColumn" : "user_id",
     "targetTable" : "tenants",
     "targetColumn" : "tenant_id",
-    "relationshipType" : "DATA_SAMPLE",
+    "relationshipType" : "DATA_INFERRED",
     "confidence" : 1.0
   }, {
     "sourceTable" : "payments",
     "sourceColumn" : "payment_id",
     "targetTable" : "tenants",
     "targetColumn" : "tenant_id",
-    "relationshipType" : "DATA_SAMPLE",
+    "relationshipType" : "DATA_INFERRED",
     "confidence" : 1.0
   }, {
     "sourceTable" : "payments",
     "sourceColumn" : "order_id",
     "targetTable" : "tenants",
     "targetColumn" : "tenant_id",
-    "relationshipType" : "DATA_SAMPLE",
+    "relationshipType" : "DATA_INFERRED",
     "confidence" : 1.0
   }, {
     "sourceTable" : "roles",
     "sourceColumn" : "role_id",
     "targetTable" : "products",
     "targetColumn" : "category_id",
-    "relationshipType" : "DATA_SAMPLE",
+    "relationshipType" : "DATA_INFERRED",
     "confidence" : 1.0
   }, {
     "sourceTable" : "roles",
     "sourceColumn" : "role_id",
     "targetTable" : "products",
     "targetColumn" : "product_id",
-    "relationshipType" : "DATA_SAMPLE",
+    "relationshipType" : "DATA_INFERRED",
     "confidence" : 1.0
   }, {
     "sourceTable" : "roles",
     "sourceColumn" : "role_id",
     "targetTable" : "categories",
     "targetColumn" : "category_id",
-    "relationshipType" : "DATA_SAMPLE",
+    "relationshipType" : "DATA_INFERRED",
     "confidence" : 1.0
   }, {
     "sourceTable" : "roles",
     "sourceColumn" : "role_id",
     "targetTable" : "tenants",
     "targetColumn" : "tenant_id",
-    "relationshipType" : "DATA_SAMPLE",
+    "relationshipType" : "DATA_INFERRED",
     "confidence" : 1.0
   }, {
     "sourceTable" : "products",
     "sourceColumn" : "category_id",
     "targetTable" : "categories",
     "targetColumn" : "category_id",
-    "relationshipType" : "DATA_SAMPLE",
+    "relationshipType" : "DATA_INFERRED",
     "confidence" : 1.0
   }, {
     "sourceTable" : "products",
     "sourceColumn" : "product_id",
     "targetTable" : "categories",
     "targetColumn" : "category_id",
-    "relationshipType" : "DATA_SAMPLE",
+    "relationshipType" : "DATA_INFERRED",
     "confidence" : 1.0
   }, {
     "sourceTable" : "products",
     "sourceColumn" : "category_id",
     "targetTable" : "tenants",
     "targetColumn" : "tenant_id",
-    "relationshipType" : "DATA_SAMPLE",
+    "relationshipType" : "DATA_INFERRED",
     "confidence" : 1.0
   }, {
     "sourceTable" : "products",
     "sourceColumn" : "product_id",
     "targetTable" : "tenants",
     "targetColumn" : "tenant_id",
-    "relationshipType" : "DATA_SAMPLE",
+    "relationshipType" : "DATA_INFERRED",
     "confidence" : 1.0
   }, {
     "sourceTable" : "categories",
     "sourceColumn" : "category_id",
     "targetTable" : "tenants",
     "targetColumn" : "tenant_id",
-    "relationshipType" : "DATA_SAMPLE",
+    "relationshipType" : "DATA_INFERRED",
     "confidence" : 1.0
   } ]
 }

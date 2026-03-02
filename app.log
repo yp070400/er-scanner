@@ -1,0 +1,35 @@
+
+  .   ____          _            __ _ _
+ /\\ / ___'_ __ _ _(_)_ __  __ _ \ \ \ \
+( ( )\___ | '_ | '_| | '_ \/ _` | \ \ \ \
+ \\/  ___)| |_)| | | | | || (_| |  ) ) ) )
+  '  |____| .__|_| |_|_| |_\__, | / / / /
+ =========|_|==============|___/=/_/_/_/
+
+ :: Spring Boot ::                (v4.0.3)
+
+2026-03-02T11:00:38.436+05:30  INFO 23194 --- [           main] c.y.er_scanner.ErScannerApplication      : Starting ErScannerApplication v0.0.1-SNAPSHOT using Java 25.0.1 with PID 23194 (/Users/yogeshchandraprasad/Development/Projects/er-scanner/target/er-scanner-0.0.1-SNAPSHOT.jar started by yogeshchandraprasad in /Users/yogeshchandraprasad/Development/Projects/er-scanner)
+2026-03-02T11:00:38.438+05:30  INFO 23194 --- [           main] c.y.er_scanner.ErScannerApplication      : No active profile set, falling back to 1 default profile: "default"
+2026-03-02T11:00:39.065+05:30  INFO 23194 --- [           main] o.s.boot.tomcat.TomcatWebServer          : Tomcat initialized with port 8080 (http)
+2026-03-02T11:00:39.070+05:30  INFO 23194 --- [           main] o.apache.catalina.core.StandardService   : Starting service [Tomcat]
+2026-03-02T11:00:39.070+05:30  INFO 23194 --- [           main] o.apache.catalina.core.StandardEngine    : Starting Servlet engine: [Apache Tomcat/11.0.18]
+2026-03-02T11:00:39.079+05:30  INFO 23194 --- [           main] b.w.c.s.WebApplicationContextInitializer : Root WebApplicationContext: initialization completed in 534 ms
+2026-03-02T11:00:39.155+05:30  INFO 23194 --- [           main] o.s.b.w.a.WelcomePageHandlerMapping      : Adding welcome page: class path resource [static/index.html]
+2026-03-02T11:00:39.247+05:30  WARN 23194 --- [           main] ConfigServletWebServerApplicationContext : Exception encountered during context initialization - cancelling refresh attempt: org.springframework.context.ApplicationContextException: Failed to start bean 'webServerStartStop'
+2026-03-02T11:00:39.251+05:30  INFO 23194 --- [           main] .s.b.a.l.ConditionEvaluationReportLogger : 
+
+Error starting ApplicationContext. To display the condition evaluation report re-run your application with 'debug' enabled.
+2026-03-02T11:00:39.255+05:30 ERROR 23194 --- [           main] o.s.b.d.LoggingFailureAnalysisReporter   : 
+
+***************************
+APPLICATION FAILED TO START
+***************************
+
+Description:
+
+Web server failed to start. Port 8080 was already in use.
+
+Action:
+
+Identify and stop the process that's listening on port 8080 or configure this application to listen on another port.
+

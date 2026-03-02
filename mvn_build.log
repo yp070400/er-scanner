@@ -1,0 +1,40 @@
+[INFO] Scanning for projects...
+[INFO] 
+[INFO] -----------------------< com.yogesh:er-scanner >------------------------
+[INFO] Building er-scanner 0.0.1-SNAPSHOT
+[INFO]   from pom.xml
+[INFO] --------------------------------[ jar ]---------------------------------
+[INFO] 
+[INFO] --- clean:3.5.0:clean (default-clean) @ er-scanner ---
+[INFO] Deleting /Users/yogeshchandraprasad/Development/Projects/er-scanner/target
+[INFO] 
+[INFO] --- resources:3.3.1:resources (default-resources) @ er-scanner ---
+[INFO] Copying 1 resource from src/main/resources to target/classes
+[INFO] Copying 3 resources from src/main/resources to target/classes
+[INFO] 
+[INFO] --- compiler:3.14.1:compile (default-compile) @ er-scanner ---
+[INFO] Recompiling the module because of changed source code.
+[INFO] Compiling 17 source files with javac [debug parameters release 17] to target/classes
+[INFO] 
+[INFO] --- resources:3.3.1:testResources (default-testResources) @ er-scanner ---
+[INFO] skip non existing resourceDirectory /Users/yogeshchandraprasad/Development/Projects/er-scanner/src/test/resources
+[INFO] 
+[INFO] --- compiler:3.14.1:testCompile (default-testCompile) @ er-scanner ---
+[INFO] Recompiling the module because of changed dependency.
+[INFO] Compiling 1 source file with javac [debug parameters release 17] to target/test-classes
+[INFO] 
+[INFO] --- surefire:3.5.4:test (default-test) @ er-scanner ---
+[INFO] Tests are skipped.
+[INFO] 
+[INFO] --- jar:3.4.2:jar (default-jar) @ er-scanner ---
+[INFO] Building jar: /Users/yogeshchandraprasad/Development/Projects/er-scanner/target/er-scanner-0.0.1-SNAPSHOT.jar
+[INFO] 
+[INFO] --- spring-boot:4.0.3:repackage (repackage) @ er-scanner ---
+[INFO] Replacing main artifact /Users/yogeshchandraprasad/Development/Projects/er-scanner/target/er-scanner-0.0.1-SNAPSHOT.jar with repackaged archive, adding nested dependencies in BOOT-INF/.
+[INFO] The original artifact has been renamed to /Users/yogeshchandraprasad/Development/Projects/er-scanner/target/er-scanner-0.0.1-SNAPSHOT.jar.original
+[INFO] ------------------------------------------------------------------------
+[INFO] BUILD SUCCESS
+[INFO] ------------------------------------------------------------------------
+[INFO] Total time:  1.148 s
+[INFO] Finished at: 2026-03-02T11:46:22+05:30
+[INFO] ------------------------------------------------------------------------
