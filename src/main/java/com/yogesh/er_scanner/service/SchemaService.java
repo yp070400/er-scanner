@@ -64,7 +64,27 @@ public class SchemaService {
                 mergedRelationships
         );
 
-        writeAiJson();
+        System.out.println("\n[SchemaService] Writing output files...");
+        try {
+            writeAiJson();
+        } catch (Exception e) {
+            System.err.println("ERROR writing schema-ai.json: " + e.getMessage());
+            e.printStackTrace();
+        }
+
+        try {
+            writeMermaidDiagram();
+        } catch (Exception e) {
+            System.err.println("ERROR writing mermaid diagram: " + e.getMessage());
+            e.printStackTrace();
+        }
+
+        try {
+            writeMermaidDomains();
+        } catch (Exception e) {
+            System.err.println("ERROR writing mermaid domains: " + e.getMessage());
+        }
+        System.out.println("[SchemaService] File writing complete.\n");
     }
 
     // ============================================================
@@ -76,13 +96,66 @@ public class SchemaService {
         ObjectMapper mapper = new ObjectMapper();
 
         File dir = new File("output");
-        if (!dir.exists()) dir.mkdirs();
+        if (!dir.exists()) {
+            boolean created = dir.mkdirs();
+            if (!created && !dir.exists()) {
+                throw new RuntimeException("Failed to create output directory: " + dir.getAbsolutePath());
+            }
+        }
 
         mapper.writerWithDefaultPrettyPrinter()
                 .writeValue(
                         new File("output/schema-ai.json"),
                         this.schema
                 );
+        System.out.println("✓ Written: output/schema-ai.json");
+    }
+
+    // ============================================================
+    // 3️⃣ WRITE MERMAID DIAGRAM
+    // ============================================================
+
+    public void writeMermaidDiagram() throws Exception {
+        String mermaidContent = generateMermaid();
+        File dir = new File("output");
+        if (!dir.exists()) {
+            if (!dir.mkdirs()) {
+                throw new RuntimeException("Failed to create output directory");
+            }
+        }
+        java.nio.file.Files.write(
+                java.nio.file.Paths.get("output/er_diagram-from-server.mmd"),
+                mermaidContent.getBytes()
+        );
+        System.out.println("✓ Written: output/er_diagram-from-server.mmd");
+    }
+
+    // ============================================================
+    // 3b️⃣ WRITE MERMAID DOMAINS
+    // ============================================================
+
+    public void writeMermaidDomains() {
+        ObjectMapper mapper = new ObjectMapper();
+
+        File dir = new File("output");
+        if (!dir.exists()) {
+            if (!dir.mkdirs()) {
+                throw new RuntimeException("Failed to create output directory");
+            }
+        }
+
+        try {
+            Map<String, String> domains = generateMermaidChunks(20);
+            mapper.writerWithDefaultPrettyPrinter()
+                    .writeValue(
+                            new File("output/er_domains.json"),
+                            domains
+                    );
+            System.out.println("✓ Written: output/er_domains.json");
+        } catch (Exception e) {
+            System.out.println("⚠ Warning: Could not generate domain diagrams: " + e.getMessage());
+            System.out.println("  This is okay - full mermaid diagram is still generated.");
+        }
     }
 
     // ============================================================
@@ -264,12 +337,31 @@ public class SchemaService {
         // ---- RELATIONSHIPS ----
         for (Relationship r : relationships) {
 
+            // Prepare a label that includes relationship type if not STRICT
+            String label = r.getSourceColumn();
+            if (r.getRelationshipType() != null) {
+                switch (r.getRelationshipType()) {
+                    case DATA_INFERRED:
+                        label = label + " (data-inferred)";
+                        break;
+                    case DATA_SAMPLE:
+                        label = label + " (data-sample)";
+                        break;
+                    case INFERRED:
+                        label = label + " (inferred)";
+                        break;
+                    default:
+                        // STRICT or unknown -> keep label as-is
+                        break;
+                }
+            }
+
             sb.append("    ")
                     .append(r.getSourceTable().toUpperCase())
                     .append(" ||--o{ ")
                     .append(r.getTargetTable().toUpperCase())
                     .append(" : ")
-                    .append(r.getSourceColumn())
+                    .append(label)
                     .append("\n");
         }
 
@@ -315,12 +407,29 @@ public class SchemaService {
         // RELATIONSHIPS
         for (Relationship r : relationships) {
 
+            String label = r.getSourceColumn();
+            if (r.getRelationshipType() != null) {
+                switch (r.getRelationshipType()) {
+                    case DATA_INFERRED:
+                        label = label + " (data-inferred)";
+                        break;
+                    case DATA_SAMPLE:
+                        label = label + " (data-sample)";
+                        break;
+                    case INFERRED:
+                        label = label + " (inferred)";
+                        break;
+                    default:
+                        break;
+                }
+            }
+
             sb.append("    ")
                     .append(r.getSourceTable().toUpperCase())
                     .append(" ||--o{ ")
                     .append(r.getTargetTable().toUpperCase())
                     .append(" : ")
-                    .append(r.getSourceColumn())
+                    .append(label)
                     .append("\n");
         }
 

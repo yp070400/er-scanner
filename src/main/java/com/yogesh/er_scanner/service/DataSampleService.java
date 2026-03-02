@@ -119,7 +119,21 @@ public class DataSampleService {
                                         s1.size(),
                                         s2.size());
 
-                        if (overlap >= 0.6) {
+                        // If overlap is very high, mark as DATA_INFERRED
+                        if (overlap >= 0.9) {
+
+                            relationships.add(
+                                    new Relationship(
+                                            t1,
+                                            col1,
+                                            t2,
+                                            col2,
+                                            RelationshipType.DATA_INFERRED,
+                                            overlap
+                                    )
+                            );
+
+                        } else if (overlap >= 0.6) {
 
                             relationships.add(
                                     new Relationship(
