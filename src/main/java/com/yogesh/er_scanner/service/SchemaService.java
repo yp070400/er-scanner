@@ -2,9 +2,9 @@ package com.yogesh.er_scanner.service;
 
 import com.fasterxml.jackson.core.type.TypeReference;
 import com.fasterxml.jackson.databind.ObjectMapper;
+import com.yogesh.er_scanner.config.RelationshipConfig;
 import com.yogesh.er_scanner.model.*;
 
-import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
 
 import java.io.File;
@@ -18,8 +18,17 @@ public class SchemaService {
 
     private Schema schema;
 
-    @Autowired
-    private DataSampleService dataSampleService;
+    private final DataSampleService dataSampleService;
+    private final SemanticRelationshipDetector semanticDetector;
+    private final RelationshipConfig config;
+
+    public SchemaService(DataSampleService dataSampleService,
+                         SemanticRelationshipDetector semanticDetector,
+                         RelationshipConfig config) {
+        this.dataSampleService = dataSampleService;
+        this.semanticDetector = semanticDetector;
+        this.config = config;
+    }
 
     // ============================================================
     // 1️⃣ SET / GET SCHEMA
@@ -51,9 +60,15 @@ public class SchemaService {
                 .collect(Collectors.toList());
 
         List<Relationship> sampleRelationships =
-                dataSampleService.detectSampleRelationships(tableNames, 10);
+                dataSampleService.detectSampleRelationships(tableNames, config.getSampleSize());
+
+        List<Relationship> semanticRelationships =
+                semanticDetector.detect(metadataSchema.getTables());
 
         mergedRelationships.addAll(sampleRelationships);
+        mergedRelationships.addAll(semanticRelationships);
+
+        mergedRelationships = deduplicate(mergedRelationships);
 
         this.schema = new Schema(
                 metadataSchema.getTables(),
@@ -118,13 +133,15 @@ public class SchemaService {
         Map<String, String> tableBlocks = extractTableBlocks(fullMermaid);
         List<String> relationships = extractRelationshipLines(fullMermaid);
 
-        // 🔥 Read AI domain mapping
+        File domainsFile = new File("output/domains.json");
+        if (!domainsFile.exists()) {
+            System.out.println("[SchemaService] domains.json not found — skipping domain chunk split.");
+            return;
+        }
+
         ObjectMapper mapper = new ObjectMapper();
         Map<String, List<String>> domainMap =
-                mapper.readValue(
-                        new File("output/domains.json"),
-                        new TypeReference<>() {}
-                );
+                mapper.readValue(domainsFile, new TypeReference<>() {});
 
         File domainDir = new File("output/mermaid-domains");
         if (!domainDir.exists()) domainDir.mkdirs();
@@ -188,7 +205,49 @@ public class SchemaService {
     }
 
     // ============================================================
-    // 6️⃣ FULL MERMAID BUILDER
+    // 6️⃣ DEDUPLICATION
+    // ============================================================
+
+    private List<Relationship> deduplicate(List<Relationship> relationships) {
+
+        // Priority: STRICT > DATA_INFERRED > INFERRED > DATA_SAMPLE
+        Map<RelationshipType, Integer> priority = new EnumMap<>(RelationshipType.class);
+        priority.put(RelationshipType.STRICT, 4);
+        priority.put(RelationshipType.DATA_INFERRED, 3);
+        priority.put(RelationshipType.INFERRED, 2);
+        priority.put(RelationshipType.DATA_SAMPLE, 1);
+
+        // Canonical key: sorted pair so (A→B) and (B→A) are same
+        Map<String, Relationship> best = new LinkedHashMap<>();
+
+        for (Relationship r : relationships) {
+            String key = canonicalKey(r);
+            Relationship existing = best.get(key);
+
+            if (existing == null) {
+                best.put(key, r);
+            } else {
+                int newPri = priority.getOrDefault(r.getRelationshipType(), 0);
+                int exPri = priority.getOrDefault(existing.getRelationshipType(), 0);
+
+                if (newPri > exPri
+                        || (newPri == exPri && r.getConfidence() > existing.getConfidence())) {
+                    best.put(key, r);
+                }
+            }
+        }
+
+        return new ArrayList<>(best.values());
+    }
+
+    private String canonicalKey(Relationship r) {
+        String a = r.getSourceTable().toLowerCase() + "." + r.getSourceColumn().toLowerCase();
+        String b = r.getTargetTable().toLowerCase() + "." + r.getTargetColumn().toLowerCase();
+        return a.compareTo(b) <= 0 ? a + "|" + b : b + "|" + a;
+    }
+
+    // ============================================================
+    // 7️⃣ FULL MERMAID BUILDER
     // ============================================================
 
     public String generateMermaid() {
@@ -242,7 +301,7 @@ public class SchemaService {
     }
 
     // ============================================================
-    // 7️⃣ HELPERS
+    // 8️⃣ HELPERS
     // ============================================================
 
     private Map<String, String> extractTableBlocks(String content) {

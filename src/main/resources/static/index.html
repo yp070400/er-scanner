@@ -1,210 +1,541 @@
 <!DOCTYPE html>
-<html>
+<html lang="en">
 <head>
-    <meta charset="UTF-8">
-    <title>ER Scanner – Domain View</title>
+  <meta charset="UTF-8" />
+  <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+  <title>ER Schema Explorer</title>
+  <script src="https://cdnjs.cloudflare.com/ajax/libs/cytoscape/3.28.1/cytoscape.min.js"></script>
+  <script src="https://cdnjs.cloudflare.com/ajax/libs/dagre/0.8.5/dagre.min.js"></script>
+  <script src="https://cdn.jsdelivr.net/npm/cytoscape-dagre@2.5.0/cytoscape-dagre.min.js"></script>
+  <style>
+    * { box-sizing: border-box; margin: 0; padding: 0; }
 
-    <script src="https://cdn.jsdelivr.net/npm/mermaid@10/dist/mermaid.min.js"></script>
+    body {
+      font-family: -apple-system, BlinkMacSystemFont, "Segoe UI", Roboto, sans-serif;
+      background: #1a1a2e;
+      color: #e0e0e0;
+      display: flex;
+      flex-direction: column;
+      height: 100vh;
+      overflow: hidden;
+    }
 
-    <style>
-        body {
-            margin:0;
-            font-family:Segoe UI, Arial, sans-serif;
-            background:#f4f6f9;
-        }
+    header {
+      display: flex;
+      align-items: center;
+      justify-content: space-between;
+      padding: 10px 18px;
+      background: #16213e;
+      border-bottom: 1px solid #0f3460;
+      flex-shrink: 0;
+    }
+    header h1 { font-size: 1.1rem; font-weight: 600; color: #e94560; letter-spacing: 0.5px; }
+    header .actions { display: flex; gap: 8px; align-items: center; }
+    button {
+      padding: 7px 14px;
+      border: none;
+      border-radius: 5px;
+      cursor: pointer;
+      font-size: 0.82rem;
+      font-weight: 500;
+      transition: opacity .15s;
+    }
+    button:hover { opacity: 0.85; }
+    #btn-scan   { background: #e94560; color: #fff; }
+    #btn-export { background: #0f3460; color: #e0e0e0; border: 1px solid #e94560; }
+    #scan-status { font-size: 0.78rem; color: #aaa; }
 
-        header {
-            padding:18px 30px;
-            background:#1f2937;
-            color:white;
-            font-size:20px;
-            font-weight:600;
-        }
+    .main { display: flex; flex: 1; overflow: hidden; }
 
-        #controls {
-            padding:15px 30px;
-            background:white;
-            border-bottom:1px solid #ddd;
-            display:flex;
-            gap:12px;
-            align-items:center;
-        }
+    aside {
+      width: 220px;
+      min-width: 200px;
+      background: #16213e;
+      border-right: 1px solid #0f3460;
+      padding: 14px 12px;
+      overflow-y: auto;
+      flex-shrink: 0;
+      display: flex;
+      flex-direction: column;
+      gap: 18px;
+    }
+    aside h2 {
+      font-size: 0.7rem;
+      text-transform: uppercase;
+      letter-spacing: 1px;
+      color: #e94560;
+      border-bottom: 1px solid #0f3460;
+      padding-bottom: 4px;
+    }
+    .filter-group { display: flex; flex-direction: column; gap: 6px; }
+    .filter-group label {
+      display: flex;
+      align-items: center;
+      gap: 7px;
+      font-size: 0.8rem;
+      cursor: pointer;
+      color: #ccc;
+      user-select: none;
+    }
+    .filter-group label:hover { color: #fff; }
+    .filter-group input[type=checkbox] { accent-color: #e94560; }
+    .domain-dot { width: 10px; height: 10px; border-radius: 50%; flex-shrink: 0; }
 
-        button, select {
-            padding:8px 14px;
-            border-radius:4px;
-            border:1px solid #ccc;
-            font-size:14px;
-        }
+    .slider-row { display: flex; align-items: center; gap: 8px; font-size: 0.8rem; }
+    input[type=range] { flex: 1; accent-color: #e94560; }
+    #conf-val { width: 30px; text-align: right; }
 
-        button {
-            background:#2563eb;
-            color:white;
-            border:none;
-            cursor:pointer;
-        }
+    #search {
+      width: 100%;
+      padding: 6px 8px;
+      border-radius: 4px;
+      border: 1px solid #0f3460;
+      background: #1a1a2e;
+      color: #e0e0e0;
+      font-size: 0.8rem;
+    }
+    #search:focus { outline: none; border-color: #e94560; }
 
-        button:hover {
-            background:#1e40af;
-        }
+    .layout-group { display: flex; flex-direction: column; gap: 5px; }
+    .layout-group label { font-size: 0.8rem; cursor: pointer; color: #ccc; display: flex; align-items: center; gap: 6px; }
+    .layout-group label:hover { color: #fff; }
+    .layout-group input[type=radio] { accent-color: #e94560; }
 
-        #diagramContainer {
-            padding:30px;
-            overflow:auto;
-        }
+    #stats { font-size: 0.75rem; color: #888; line-height: 1.8; }
 
-        #diagram {
-            background:white;
-            padding:25px;
-            border-radius:8px;
-            box-shadow:0 2px 8px rgba(0,0,0,0.08);
-            min-height:300px;
-        }
+    #cy-wrapper { flex: 1; display: flex; flex-direction: column; overflow: hidden; }
+    #cy { flex: 1; background: #0d1117; }
 
-        .info {
-            color:#555;
-            font-size:14px;
-        }
-    </style>
+    #info-panel {
+      height: 150px;
+      background: #16213e;
+      border-top: 1px solid #0f3460;
+      padding: 12px 16px;
+      overflow-y: auto;
+      flex-shrink: 0;
+    }
+    #info-panel h3 { font-size: 0.85rem; color: #e94560; margin-bottom: 6px; }
+    #info-content { font-size: 0.78rem; color: #ccc; line-height: 1.6; }
+    .col-list { display: flex; flex-wrap: wrap; gap: 4px; margin-top: 6px; }
+    .col-chip {
+      background: #0f3460;
+      border-radius: 3px;
+      padding: 2px 7px;
+      font-size: 0.72rem;
+    }
+
+    #tooltip {
+      position: fixed;
+      display: none;
+      background: #16213e;
+      border: 1px solid #e94560;
+      border-radius: 5px;
+      padding: 8px 12px;
+      font-size: 0.78rem;
+      pointer-events: none;
+      z-index: 9999;
+      max-width: 280px;
+      color: #e0e0e0;
+      line-height: 1.5;
+    }
+
+    .legend { display: flex; flex-direction: column; gap: 6px; }
+    .legend-item { display: flex; align-items: center; gap: 7px; font-size: 0.74rem; color: #aaa; }
+    .legend-line { width: 28px; height: 2px; flex-shrink: 0; }
+  </style>
 </head>
 <body>
 
 <header>
-    ER Scanner – Domain Based Visualization
+  <h1>ER Schema Explorer</h1>
+  <div class="actions">
+    <span id="scan-status"></span>
+    <button id="btn-scan">Scan DB</button>
+    <button id="btn-export">Export GraphML</button>
+  </div>
 </header>
 
-<div id="controls">
-    <button onclick="scanDatabase()">Scan Database</button>
+<div class="main">
+  <aside>
 
-    <select id="domainSelect" onchange="renderSelectedDomain()">
-        <option value="">Select Domain</option>
-    </select>
-
-    <span id="metaInfo" class="info"></span>
-</div>
-
-<div id="diagramContainer">
-    <div id="diagram">
-        Click "Scan Database" to generate domain-based ER diagrams.
+    <div>
+      <h2>Stats</h2>
+      <div id="stats">Loading&hellip;</div>
     </div>
+
+    <div>
+      <h2>Domains</h2>
+      <div class="filter-group" id="domain-filters"></div>
+    </div>
+
+    <div>
+      <h2>Relationship Types</h2>
+      <div class="filter-group">
+        <label><input type="checkbox" class="rel-filter" value="STRICT" checked> STRICT</label>
+        <label><input type="checkbox" class="rel-filter" value="DATA_INFERRED" checked> DATA_INFERRED</label>
+        <label><input type="checkbox" class="rel-filter" value="INFERRED" checked> INFERRED</label>
+        <label><input type="checkbox" class="rel-filter" value="DATA_SAMPLE" checked> DATA_SAMPLE</label>
+      </div>
+    </div>
+
+    <div>
+      <h2>Min Confidence</h2>
+      <div class="slider-row">
+        <input type="range" id="conf-slider" min="0" max="100" value="0" step="5">
+        <span id="conf-val">0.0</span>
+      </div>
+    </div>
+
+    <div>
+      <h2>Search Table</h2>
+      <input type="text" id="search" placeholder="type to search&hellip;">
+    </div>
+
+    <div>
+      <h2>Layout</h2>
+      <div class="layout-group">
+        <label><input type="radio" name="layout" value="dagre" checked> Dagre (hierarchy)</label>
+        <label><input type="radio" name="layout" value="cose"> Force-directed</label>
+        <label><input type="radio" name="layout" value="grid"> Grid</label>
+      </div>
+    </div>
+
+    <div>
+      <h2>Legend</h2>
+      <div class="legend">
+        <div class="legend-item">
+          <div class="legend-line" style="background:#e2e8f0;height:3px"></div> STRICT
+        </div>
+        <div class="legend-item">
+          <div class="legend-line" style="background:#3b82f6;height:2px"></div> DATA_INFERRED
+        </div>
+        <div class="legend-item">
+          <div class="legend-line" style="border-top:2px dashed #22c55e"></div> INFERRED
+        </div>
+        <div class="legend-item">
+          <div class="legend-line" style="border-top:2px dotted #6b7280"></div> DATA_SAMPLE
+        </div>
+      </div>
+    </div>
+
+  </aside>
+
+  <div id="cy-wrapper">
+    <div id="cy"></div>
+    <div id="info-panel">
+      <h3>Table Info</h3>
+      <div id="info-content">Click a node to inspect it.</div>
+    </div>
+  </div>
 </div>
+
+<div id="tooltip"></div>
 
 <script>
+const DOMAIN_COLORS = [
+  '#e94560','#3b82f6','#22c55e','#f59e0b',
+  '#a855f7','#06b6d4','#f97316','#ec4899',
+  '#14b8a6','#8b5cf6'
+];
 
-    mermaid.initialize({
-        startOnLoad:false,
-        theme:"default",
-        securityLevel:"loose"
-    });
+const REL_STYLES = {
+  STRICT:        { lineColor: '#e2e8f0', lineStyle: 'solid',  width: 3 },
+  DATA_INFERRED: { lineColor: '#3b82f6', lineStyle: 'solid',  width: 2 },
+  INFERRED:      { lineColor: '#22c55e', lineStyle: 'dashed', width: 2 },
+  DATA_SAMPLE:   { lineColor: '#6b7280', lineStyle: 'dotted', width: 1.5 },
+};
 
-    let domainChunks = {};
+let cy = null;
+let graphData = null;
+let domainColorMap = {};
+let activeDomains = new Set();
+let activeRelTypes = new Set(['STRICT','DATA_INFERRED','INFERRED','DATA_SAMPLE']);
+let minConfidence = 0;
+let currentLayout = 'dagre';
 
-    // ======================
-    // Scan Database
-    // ======================
-    async function scanDatabase() {
+async function loadGraph() {
+  try {
+    const res = await fetch('/schema/graph');
+    if (!res.ok) throw new Error('HTTP ' + res.status + '. Run POST /schema/scan first.');
+    graphData = await res.json();
+    bootstrapFilters();
+    renderGraph();
+  } catch (e) {
+    document.getElementById('stats').textContent = 'Load failed: ' + e.message;
+  }
+}
 
-        const diagram = document.getElementById("diagram");
-        diagram.innerHTML = "Scanning database... Please wait.";
+function bootstrapFilters() {
+  const domains = [...new Set(graphData.nodes.map(n => n.data.domain))].sort();
+  domains.forEach((d, i) => {
+    domainColorMap[d] = DOMAIN_COLORS[i % DOMAIN_COLORS.length];
+    activeDomains.add(d);
+  });
 
-        document.getElementById("metaInfo").innerText = "";
+  const container = document.getElementById('domain-filters');
+  container.innerHTML = '';
+  domains.forEach(d => {
+    const lbl = document.createElement('label');
+    const cb = document.createElement('input');
+    cb.type = 'checkbox';
+    cb.className = 'domain-filter';
+    cb.value = d;
+    cb.checked = true;
+    cb.addEventListener('change', onFilterChange);
 
-        try {
+    const dot = document.createElement('span');
+    dot.className = 'domain-dot';
+    dot.style.background = domainColorMap[d];
 
-            await fetch('/schema/scan', { method:'POST' });
+    lbl.appendChild(cb);
+    lbl.appendChild(dot);
+    lbl.appendChild(document.createTextNode(' ' + d));
+    container.appendChild(lbl);
+  });
 
-            const response = await fetch('/schema/er-mermaid-domains');
-            domainChunks = await response.json();
+  document.getElementById('stats').innerHTML =
+    'Nodes: <b>' + graphData.nodes.length + '</b><br>' +
+    'Edges: <b>' + graphData.edges.length + '</b><br>' +
+    'Domains: <b>' + domains.length + '</b>';
+}
 
-            populateDropdown();
+function buildElements() {
+  const visibleTables = new Set();
+  const elements = [];
 
-        } catch (error) {
-            diagram.innerHTML = "Error scanning database.";
-            console.error(error);
-        }
+  graphData.nodes.forEach(n => {
+    if (activeDomains.has(n.data.domain)) {
+      visibleTables.add(n.data.id);
+      elements.push({ data: Object.assign({}, n.data) });
     }
+  });
 
-    // ======================
-    // Populate Dropdown
-    // ======================
-    function populateDropdown() {
+  graphData.edges.forEach(e => {
+    const d = e.data;
+    if (!visibleTables.has(d.source) || !visibleTables.has(d.target)) return;
+    if (!activeRelTypes.has(d.relationshipType)) return;
+    if ((d.confidence || 0) < minConfidence) return;
+    elements.push({ data: Object.assign({}, d) });
+  });
 
-        const select = document.getElementById("domainSelect");
-        select.innerHTML = "";
+  return elements;
+}
 
-        const keys = Object.keys(domainChunks);
+function renderGraph() {
+  const elements = buildElements();
+  if (cy) { cy.destroy(); cy = null; }
 
-        if (keys.length === 0) {
-            select.innerHTML = "<option>No domains found</option>";
-            return;
-        }
-
-        keys.sort();
-
-        keys.forEach(domainName => {
-
-            const diagramText = domainChunks[domainName];
-
-            // Count tables in diagram
-            const tableCount = (diagramText.match(/{/g) || []).length;
-
-            const option = document.createElement("option");
-            option.value = domainName;
-            option.text = `${domainName} (${tableCount} tables)`;
-
-            select.appendChild(option);
-        });
-
-        select.selectedIndex = 0;
-        renderSelectedDomain();
+  // degree for node sizing
+  const degree = {};
+  elements.forEach(el => {
+    if (el.data.source) {
+      degree[el.data.source] = (degree[el.data.source] || 0) + 1;
+      degree[el.data.target] = (degree[el.data.target] || 0) + 1;
     }
+  });
 
-    // ======================
-    // Render Domain
-    // ======================
-    async function renderSelectedDomain() {
-
-        const select = document.getElementById("domainSelect");
-        const selectedDomain = select.value;
-
-        if (!selectedDomain) return;
-
-        const diagramText = domainChunks[selectedDomain];
-
-        const container = document.getElementById("diagram");
-        container.innerHTML = "";
-
-        if (!diagramText || !diagramText.startsWith("erDiagram")) {
-
-            container.innerHTML =
-                "<span style='color:red'>Invalid Mermaid content received.</span>";
-
-            console.error("Invalid Mermaid:", diagramText);
-            return;
+  cy = cytoscape({
+    container: document.getElementById('cy'),
+    elements,
+    style: [
+      {
+        selector: 'node',
+        style: {
+          'label': 'data(label)',
+          'shape': 'rectangle',
+          'background-color': function(ele) {
+            return domainColorMap[ele.data('domain')] || '#555';
+          },
+          'width': function(ele) {
+            return 60 + Math.min((degree[ele.id()] || 0) * 5, 90);
+          },
+          'height': 32,
+          'font-size': 9,
+          'font-weight': 600,
+          'color': '#fff',
+          'text-valign': 'center',
+          'text-halign': 'center',
+          'border-width': 1,
+          'border-color': '#0d1117',
+          'text-wrap': 'wrap',
+          'text-max-width': 120,
         }
-
-        try {
-
-            const { svg } = await mermaid.render(
-                "diagram_" + Date.now(),
-                diagramText
-            );
-
-            container.innerHTML = svg;
-
-            document.getElementById("metaInfo").innerText =
-                "Rendered: " + selectedDomain;
-
-        } catch (error) {
-
-            container.innerHTML =
-                "<span style='color:red'>Error rendering diagram.</span>";
-
-            console.error(error);
+      },
+      {
+        selector: 'node.highlighted',
+        style: { 'border-width': 3, 'border-color': '#fff', 'opacity': 1 }
+      },
+      {
+        selector: 'node.dimmed',
+        style: { 'opacity': 0.2 }
+      },
+      {
+        selector: 'edge',
+        style: {
+          'line-color': function(ele) {
+            return (REL_STYLES[ele.data('relationshipType')] || REL_STYLES.DATA_SAMPLE).lineColor;
+          },
+          'line-style': function(ele) {
+            return (REL_STYLES[ele.data('relationshipType')] || REL_STYLES.DATA_SAMPLE).lineStyle;
+          },
+          'width': function(ele) {
+            const base = (REL_STYLES[ele.data('relationshipType')] || REL_STYLES.DATA_SAMPLE).width;
+            const conf = ele.data('confidence') || 0.5;
+            return Math.max(1, base + (conf - 0.6) * 3);
+          },
+          'target-arrow-color': function(ele) {
+            return (REL_STYLES[ele.data('relationshipType')] || REL_STYLES.DATA_SAMPLE).lineColor;
+          },
+          'target-arrow-shape': 'triangle',
+          'curve-style': 'bezier',
+          'opacity': 0.85,
         }
+      },
+      {
+        selector: 'edge.dimmed',
+        style: { 'opacity': 0.06 }
+      }
+    ],
+    layout: getLayoutConfig(),
+    minZoom: 0.04,
+    maxZoom: 5,
+    wheelSensitivity: 0.35,
+  });
+
+  bindCyEvents();
+}
+
+function getLayoutConfig() {
+  if (currentLayout === 'dagre') {
+    return { name: 'dagre', rankDir: 'LR', nodeSep: 50, rankSep: 130, animate: false };
+  }
+  if (currentLayout === 'cose') {
+    return { name: 'cose', animate: true, randomize: true, nodeRepulsion: 9000, idealEdgeLength: 100 };
+  }
+  return { name: 'grid', animate: false };
+}
+
+function bindCyEvents() {
+  cy.on('tap', 'node', function(evt) {
+    const node = evt.target;
+    const neighbourhood = node.neighborhood().add(node);
+    cy.elements().addClass('dimmed').removeClass('highlighted');
+    neighbourhood.removeClass('dimmed').addClass('highlighted');
+    showNodeInfo(node);
+  });
+
+  cy.on('dblclick', 'node', function(evt) {
+    cy.fit(evt.target.neighborhood().add(evt.target), 80);
+  });
+
+  cy.on('tap', function(evt) {
+    if (evt.target === cy) {
+      cy.elements().removeClass('dimmed highlighted');
+      document.getElementById('info-content').textContent = 'Click a node to inspect it.';
     }
+  });
 
+  cy.on('mouseover', 'edge', function(evt) {
+    const d = evt.target.data();
+    const tip = document.getElementById('tooltip');
+    tip.innerHTML =
+      '<b>' + (d.sourceColumn || '?') + '</b> &rarr; <b>' + (d.targetColumn || '?') + '</b><br>' +
+      'Type: ' + d.relationshipType + '<br>' +
+      'Confidence: ' + ((d.confidence || 0) * 100).toFixed(0) + '%';
+    tip.style.display = 'block';
+  });
+
+  cy.on('mouseout', 'edge', function() {
+    document.getElementById('tooltip').style.display = 'none';
+  });
+
+  document.getElementById('cy').addEventListener('mousemove', function(e) {
+    const tip = document.getElementById('tooltip');
+    if (tip.style.display === 'block') {
+      tip.style.left = (e.clientX + 14) + 'px';
+      tip.style.top  = (e.clientY + 14) + 'px';
+    }
+  });
+}
+
+function showNodeInfo(node) {
+  const d = node.data();
+  const edges = node.connectedEdges();
+  const connected = new Set();
+  edges.forEach(e => {
+    connected.add(e.data('source') === d.id ? e.data('target') : e.data('source'));
+  });
+
+  const colsHtml = (d.columns || []).map(c =>
+    '<span class="col-chip">' + c + '</span>'
+  ).join('');
+
+  document.getElementById('info-content').innerHTML =
+    '<b>' + d.label + '</b> &nbsp;&middot;&nbsp; Domain: <em>' + d.domain + '</em><br>' +
+    'Connections: ' + edges.length + ' edges to ' + connected.size + ' tables' +
+    '<div class="col-list">' + colsHtml + '</div>';
+}
+
+function onFilterChange() {
+  activeDomains.clear();
+  document.querySelectorAll('.domain-filter:checked').forEach(function(cb) {
+    activeDomains.add(cb.value);
+  });
+  activeRelTypes.clear();
+  document.querySelectorAll('.rel-filter:checked').forEach(function(cb) {
+    activeRelTypes.add(cb.value);
+  });
+  renderGraph();
+}
+
+document.querySelectorAll('.rel-filter').forEach(function(cb) {
+  cb.addEventListener('change', onFilterChange);
+});
+
+document.getElementById('conf-slider').addEventListener('input', function() {
+  minConfidence = this.value / 100;
+  document.getElementById('conf-val').textContent = minConfidence.toFixed(1);
+  onFilterChange();
+});
+
+document.getElementById('search').addEventListener('input', function() {
+  var term = this.value.toLowerCase();
+  if (!cy) return;
+  if (!term) {
+    cy.elements().removeClass('dimmed highlighted');
+    return;
+  }
+  cy.elements().addClass('dimmed').removeClass('highlighted');
+  cy.nodes().filter(function(n) {
+    return n.data('id').toLowerCase().indexOf(term) >= 0;
+  }).removeClass('dimmed').addClass('highlighted').neighborhood().removeClass('dimmed');
+});
+
+document.querySelectorAll('input[name=layout]').forEach(function(radio) {
+  radio.addEventListener('change', function() {
+    currentLayout = this.value;
+    if (cy) cy.layout(getLayoutConfig()).run();
+  });
+});
+
+document.getElementById('btn-scan').addEventListener('click', async function() {
+  var status = document.getElementById('scan-status');
+  status.textContent = 'Scanning\u2026';
+  try {
+    var res = await fetch('/schema/scan', { method: 'POST' });
+    var msg = await res.text();
+    status.textContent = res.ok ? 'Done!' : 'Error: ' + msg;
+    if (res.ok) await loadGraph();
+  } catch(e) {
+    status.textContent = 'Failed: ' + e.message;
+  }
+});
+
+document.getElementById('btn-export').addEventListener('click', function() {
+  window.location.href = '/schema/export/graphml';
+});
+
+loadGraph();
 </script>
-
 </body>
 </html>

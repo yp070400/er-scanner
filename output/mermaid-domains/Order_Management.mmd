@@ -1,0 +1,96 @@
+erDiagram
+    direction TB
+
+    INVOICES {
+    string invoice_id PK
+    string order_id FK
+    string total_amount
+    string generated_at
+    }
+
+    ORDER_ITEMS {
+    string order_item_id PK
+    string order_id FK
+    string product_id FK
+    string quantity
+    string price
+    }
+
+    ORDERS {
+    string order_id PK
+    string customer_id
+    string amount
+    string order_id PK
+    string user_id FK
+    string tenant_id FK
+    string order_date
+    string status
+    }
+
+    PAYMENTS {
+    string payment_id PK
+    string order_id FK
+    string paid_amount
+    string payment_id PK
+    string order_id FK
+    string user_id FK
+    string amount
+    string payment_status
+    }
+
+    SHIPMENTS {
+    string shipment_id PK
+    string order_id FK
+    string tracking_number
+    string shipped_date
+    }
+
+    INVOICES ||--o{ ORDERS : order_id
+    ORDER_ITEMS ||--o{ ORDERS : order_id
+    ORDER_ITEMS ||--o{ PRODUCTS : product_id
+    ORDERS ||--o{ TENANTS : tenant_id
+    ORDERS ||--o{ USERS : user_id
+    PAYMENTS ||--o{ ORDERS : order_id
+    PAYMENTS ||--o{ USERS : user_id
+    SHIPMENTS ||--o{ ORDERS : order_id
+    AUX_TABLE_2 ||--o{ ORDERS : order_id
+    AUX_TABLE_20 ||--o{ ORDERS : order_id
+    AUX_TABLE_21 ||--o{ ORDERS : order_id
+    AUX_TABLE_22 ||--o{ ORDERS : order_id
+    AUX_TABLE_23 ||--o{ ORDERS : order_id
+    AUX_TABLE_24 ||--o{ ORDERS : order_id
+    AUX_TABLE_25 ||--o{ ORDERS : order_id
+    AUX_TABLE_26 ||--o{ ORDERS : order_id
+    AUX_TABLE_27 ||--o{ ORDERS : order_id
+    AUX_TABLE_28 ||--o{ ORDERS : order_id
+    AUX_TABLE_29 ||--o{ ORDERS : order_id
+    AUX_TABLE_3 ||--o{ ORDERS : order_id
+    AUX_TABLE_30 ||--o{ ORDERS : order_id
+    AUX_TABLE_31 ||--o{ ORDERS : order_id
+    AUX_TABLE_32 ||--o{ ORDERS : order_id
+    AUX_TABLE_33 ||--o{ ORDERS : order_id
+    AUX_TABLE_34 ||--o{ ORDERS : order_id
+    AUX_TABLE_35 ||--o{ ORDERS : order_id
+    AUX_TABLE_36 ||--o{ ORDERS : order_id
+    AUX_TABLE_37 ||--o{ ORDERS : order_id
+    AUX_TABLE_38 ||--o{ ORDERS : order_id
+    AUX_TABLE_39 ||--o{ ORDERS : order_id
+    AUX_TABLE_4 ||--o{ ORDERS : order_id
+    AUX_TABLE_40 ||--o{ ORDERS : order_id
+    AUX_TABLE_41 ||--o{ ORDERS : order_id
+    AUX_TABLE_42 ||--o{ ORDERS : order_id
+    AUX_TABLE_43 ||--o{ ORDERS : order_id
+    AUX_TABLE_44 ||--o{ ORDERS : order_id
+    AUX_TABLE_45 ||--o{ ORDERS : order_id
+    AUX_TABLE_46 ||--o{ ORDERS : order_id
+    AUX_TABLE_47 ||--o{ ORDERS : order_id
+    AUX_TABLE_48 ||--o{ ORDERS : order_id
+    AUX_TABLE_49 ||--o{ ORDERS : order_id
+    AUX_TABLE_5 ||--o{ ORDERS : order_id
+    AUX_TABLE_50 ||--o{ ORDERS : order_id
+    AUX_TABLE_6 ||--o{ ORDERS : order_id
+    AUX_TABLE_7 ||--o{ ORDERS : order_id
+    AUX_TABLE_8 ||--o{ ORDERS : order_id
+    AUX_TABLE_9 ||--o{ ORDERS : order_id
+    ORDERS ||--o{ USER_ROLES : user_id
+    PAYMENTS ||--o{ USER_ROLES : user_id

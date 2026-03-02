@@ -475,129 +475,176 @@ erDiagram
     USER_ROLES ||--o{ ROLES : role_id
     USER_ROLES ||--o{ USERS : user_id
     USERS ||--o{ TENANTS : tenant_id
-    ORDER_ITEMS ||--o{ USERS : order_item_id (data-inferred)
-    ORDER_ITEMS ||--o{ USERS : order_item_id (data-inferred)
-    ORDER_ITEMS ||--o{ USERS : quantity (data-inferred)
-    ORDER_ITEMS ||--o{ USERS : quantity (data-inferred)
-    ORDER_ITEMS ||--o{ USERS : product_id (data-inferred)
-    ORDER_ITEMS ||--o{ USERS : product_id (data-inferred)
-    ORDER_ITEMS ||--o{ USERS : order_id (data-inferred)
-    ORDER_ITEMS ||--o{ USERS : order_id (data-inferred)
-    ORDER_ITEMS ||--o{ ORDERS : order_item_id (data-inferred)
-    ORDER_ITEMS ||--o{ ORDERS : order_item_id (data-inferred)
-    ORDER_ITEMS ||--o{ ORDERS : order_item_id (data-inferred)
-    ORDER_ITEMS ||--o{ ORDERS : quantity (data-inferred)
-    ORDER_ITEMS ||--o{ ORDERS : quantity (data-inferred)
-    ORDER_ITEMS ||--o{ ORDERS : quantity (data-inferred)
-    ORDER_ITEMS ||--o{ ORDERS : product_id (data-inferred)
-    ORDER_ITEMS ||--o{ ORDERS : product_id (data-inferred)
-    ORDER_ITEMS ||--o{ ORDERS : product_id (data-inferred)
-    ORDER_ITEMS ||--o{ ORDERS : order_id (data-inferred)
-    ORDER_ITEMS ||--o{ ORDERS : order_id (data-inferred)
-    ORDER_ITEMS ||--o{ ORDERS : order_id (data-inferred)
-    ORDER_ITEMS ||--o{ PAYMENTS : order_item_id (data-inferred)
-    ORDER_ITEMS ||--o{ PAYMENTS : order_item_id (data-inferred)
-    ORDER_ITEMS ||--o{ PAYMENTS : order_item_id (data-inferred)
-    ORDER_ITEMS ||--o{ PAYMENTS : quantity (data-inferred)
-    ORDER_ITEMS ||--o{ PAYMENTS : quantity (data-inferred)
-    ORDER_ITEMS ||--o{ PAYMENTS : quantity (data-inferred)
-    ORDER_ITEMS ||--o{ PAYMENTS : price (data-inferred)
-    ORDER_ITEMS ||--o{ PAYMENTS : product_id (data-inferred)
-    ORDER_ITEMS ||--o{ PAYMENTS : product_id (data-inferred)
-    ORDER_ITEMS ||--o{ PAYMENTS : product_id (data-inferred)
-    ORDER_ITEMS ||--o{ PAYMENTS : order_id (data-inferred)
-    ORDER_ITEMS ||--o{ PAYMENTS : order_id (data-inferred)
-    ORDER_ITEMS ||--o{ PAYMENTS : order_id (data-inferred)
-    ORDER_ITEMS ||--o{ ROLES : order_item_id (data-inferred)
-    ORDER_ITEMS ||--o{ ROLES : quantity (data-inferred)
-    ORDER_ITEMS ||--o{ ROLES : product_id (data-inferred)
-    ORDER_ITEMS ||--o{ ROLES : order_id (data-inferred)
-    ORDER_ITEMS ||--o{ PRODUCTS : order_item_id (data-inferred)
-    ORDER_ITEMS ||--o{ PRODUCTS : order_item_id (data-inferred)
-    ORDER_ITEMS ||--o{ PRODUCTS : quantity (data-inferred)
-    ORDER_ITEMS ||--o{ PRODUCTS : quantity (data-inferred)
-    ORDER_ITEMS ||--o{ PRODUCTS : price (data-inferred)
-    ORDER_ITEMS ||--o{ PRODUCTS : product_id (data-inferred)
-    ORDER_ITEMS ||--o{ PRODUCTS : product_id (data-inferred)
-    ORDER_ITEMS ||--o{ PRODUCTS : order_id (data-inferred)
-    ORDER_ITEMS ||--o{ PRODUCTS : order_id (data-inferred)
-    ORDER_ITEMS ||--o{ CATEGORIES : order_item_id (data-inferred)
-    ORDER_ITEMS ||--o{ CATEGORIES : quantity (data-inferred)
-    ORDER_ITEMS ||--o{ CATEGORIES : product_id (data-inferred)
-    ORDER_ITEMS ||--o{ CATEGORIES : order_id (data-inferred)
-    ORDER_ITEMS ||--o{ TENANTS : order_item_id (data-inferred)
-    ORDER_ITEMS ||--o{ TENANTS : quantity (data-inferred)
-    ORDER_ITEMS ||--o{ TENANTS : product_id (data-inferred)
-    ORDER_ITEMS ||--o{ TENANTS : order_id (data-inferred)
-    USERS ||--o{ ORDERS : tenant_id (data-inferred)
-    USERS ||--o{ ORDERS : tenant_id (data-inferred)
-    USERS ||--o{ ORDERS : tenant_id (data-inferred)
-    USERS ||--o{ ORDERS : user_id (data-inferred)
-    USERS ||--o{ ORDERS : user_id (data-inferred)
-    USERS ||--o{ ORDERS : user_id (data-inferred)
-    USERS ||--o{ PAYMENTS : tenant_id (data-inferred)
-    USERS ||--o{ PAYMENTS : tenant_id (data-inferred)
-    USERS ||--o{ PAYMENTS : tenant_id (data-inferred)
-    USERS ||--o{ PAYMENTS : user_id (data-inferred)
-    USERS ||--o{ PAYMENTS : user_id (data-inferred)
-    USERS ||--o{ PAYMENTS : user_id (data-inferred)
-    USERS ||--o{ ROLES : tenant_id (data-inferred)
-    USERS ||--o{ ROLES : user_id (data-inferred)
-    USERS ||--o{ PRODUCTS : tenant_id (data-inferred)
-    USERS ||--o{ PRODUCTS : tenant_id (data-inferred)
-    USERS ||--o{ PRODUCTS : user_id (data-inferred)
-    USERS ||--o{ PRODUCTS : user_id (data-inferred)
-    USERS ||--o{ CATEGORIES : tenant_id (data-inferred)
-    USERS ||--o{ CATEGORIES : user_id (data-inferred)
-    USERS ||--o{ TENANTS : tenant_id (data-inferred)
-    USERS ||--o{ TENANTS : user_id (data-inferred)
-    USERS ||--o{ TENANTS : created_at (data-inferred)
-    ORDERS ||--o{ PAYMENTS : tenant_id (data-inferred)
-    ORDERS ||--o{ PAYMENTS : tenant_id (data-inferred)
-    ORDERS ||--o{ PAYMENTS : tenant_id (data-inferred)
-    ORDERS ||--o{ PAYMENTS : user_id (data-inferred)
-    ORDERS ||--o{ PAYMENTS : user_id (data-inferred)
-    ORDERS ||--o{ PAYMENTS : user_id (data-inferred)
-    ORDERS ||--o{ PAYMENTS : order_id (data-inferred)
-    ORDERS ||--o{ PAYMENTS : order_id (data-inferred)
-    ORDERS ||--o{ PAYMENTS : order_id (data-inferred)
-    ORDERS ||--o{ ROLES : tenant_id (data-inferred)
-    ORDERS ||--o{ ROLES : user_id (data-inferred)
-    ORDERS ||--o{ ROLES : order_id (data-inferred)
-    ORDERS ||--o{ PRODUCTS : tenant_id (data-inferred)
-    ORDERS ||--o{ PRODUCTS : tenant_id (data-inferred)
-    ORDERS ||--o{ PRODUCTS : user_id (data-inferred)
-    ORDERS ||--o{ PRODUCTS : user_id (data-inferred)
-    ORDERS ||--o{ PRODUCTS : order_id (data-inferred)
-    ORDERS ||--o{ PRODUCTS : order_id (data-inferred)
-    ORDERS ||--o{ CATEGORIES : tenant_id (data-inferred)
-    ORDERS ||--o{ CATEGORIES : user_id (data-inferred)
-    ORDERS ||--o{ CATEGORIES : order_id (data-inferred)
-    ORDERS ||--o{ TENANTS : tenant_id (data-inferred)
-    ORDERS ||--o{ TENANTS : user_id (data-inferred)
-    ORDERS ||--o{ TENANTS : order_id (data-inferred)
-    PAYMENTS ||--o{ ROLES : user_id (data-inferred)
-    PAYMENTS ||--o{ ROLES : payment_id (data-inferred)
-    PAYMENTS ||--o{ ROLES : order_id (data-inferred)
-    PAYMENTS ||--o{ PRODUCTS : amount (data-inferred)
-    PAYMENTS ||--o{ PRODUCTS : user_id (data-inferred)
-    PAYMENTS ||--o{ PRODUCTS : user_id (data-inferred)
-    PAYMENTS ||--o{ PRODUCTS : payment_id (data-inferred)
-    PAYMENTS ||--o{ PRODUCTS : payment_id (data-inferred)
-    PAYMENTS ||--o{ PRODUCTS : order_id (data-inferred)
-    PAYMENTS ||--o{ PRODUCTS : order_id (data-inferred)
-    PAYMENTS ||--o{ CATEGORIES : user_id (data-inferred)
-    PAYMENTS ||--o{ CATEGORIES : payment_id (data-inferred)
-    PAYMENTS ||--o{ CATEGORIES : order_id (data-inferred)
-    PAYMENTS ||--o{ TENANTS : user_id (data-inferred)
-    PAYMENTS ||--o{ TENANTS : payment_id (data-inferred)
-    PAYMENTS ||--o{ TENANTS : order_id (data-inferred)
-    ROLES ||--o{ PRODUCTS : role_id (data-inferred)
-    ROLES ||--o{ PRODUCTS : role_id (data-inferred)
-    ROLES ||--o{ CATEGORIES : role_id (data-inferred)
-    ROLES ||--o{ TENANTS : role_id (data-inferred)
-    PRODUCTS ||--o{ CATEGORIES : category_id (data-inferred)
-    PRODUCTS ||--o{ CATEGORIES : product_id (data-inferred)
-    PRODUCTS ||--o{ TENANTS : category_id (data-inferred)
-    PRODUCTS ||--o{ TENANTS : product_id (data-inferred)
-    CATEGORIES ||--o{ TENANTS : category_id (data-inferred)
+    USERS ||--o{ ROLES : user_id
+    USERS ||--o{ PRODUCTS : user_id
+    USERS ||--o{ PRODUCTS : user_id
+    USERS ||--o{ CATEGORIES : user_id
+    USERS ||--o{ TENANTS : user_id
+    ROLES ||--o{ PRODUCTS : role_id
+    ROLES ||--o{ PRODUCTS : role_id
+    ROLES ||--o{ CATEGORIES : role_id
+    ROLES ||--o{ TENANTS : role_id
+    PRODUCTS ||--o{ CATEGORIES : product_id
+    PRODUCTS ||--o{ TENANTS : category_id
+    PRODUCTS ||--o{ TENANTS : product_id
+    CATEGORIES ||--o{ TENANTS : category_id
+    AUDIT_LOGS ||--o{ USER_ROLES : user_id
+    AUX_TABLE_2 ||--o{ TENANTS : tenant_id
+    AUX_TABLE_2 ||--o{ USER_ROLES : user_id
+    AUX_TABLE_2 ||--o{ USERS : user_id
+    AUX_TABLE_2 ||--o{ ORDERS : order_id
+    AUX_TABLE_20 ||--o{ TENANTS : tenant_id
+    AUX_TABLE_20 ||--o{ USER_ROLES : user_id
+    AUX_TABLE_20 ||--o{ USERS : user_id
+    AUX_TABLE_20 ||--o{ ORDERS : order_id
+    AUX_TABLE_21 ||--o{ TENANTS : tenant_id
+    AUX_TABLE_21 ||--o{ USER_ROLES : user_id
+    AUX_TABLE_21 ||--o{ USERS : user_id
+    AUX_TABLE_21 ||--o{ ORDERS : order_id
+    AUX_TABLE_22 ||--o{ TENANTS : tenant_id
+    AUX_TABLE_22 ||--o{ USER_ROLES : user_id
+    AUX_TABLE_22 ||--o{ USERS : user_id
+    AUX_TABLE_22 ||--o{ ORDERS : order_id
+    AUX_TABLE_23 ||--o{ TENANTS : tenant_id
+    AUX_TABLE_23 ||--o{ USER_ROLES : user_id
+    AUX_TABLE_23 ||--o{ USERS : user_id
+    AUX_TABLE_23 ||--o{ ORDERS : order_id
+    AUX_TABLE_24 ||--o{ TENANTS : tenant_id
+    AUX_TABLE_24 ||--o{ USER_ROLES : user_id
+    AUX_TABLE_24 ||--o{ USERS : user_id
+    AUX_TABLE_24 ||--o{ ORDERS : order_id
+    AUX_TABLE_25 ||--o{ TENANTS : tenant_id
+    AUX_TABLE_25 ||--o{ USER_ROLES : user_id
+    AUX_TABLE_25 ||--o{ USERS : user_id
+    AUX_TABLE_25 ||--o{ ORDERS : order_id
+    AUX_TABLE_26 ||--o{ TENANTS : tenant_id
+    AUX_TABLE_26 ||--o{ USER_ROLES : user_id
+    AUX_TABLE_26 ||--o{ USERS : user_id
+    AUX_TABLE_26 ||--o{ ORDERS : order_id
+    AUX_TABLE_27 ||--o{ TENANTS : tenant_id
+    AUX_TABLE_27 ||--o{ USER_ROLES : user_id
+    AUX_TABLE_27 ||--o{ USERS : user_id
+    AUX_TABLE_27 ||--o{ ORDERS : order_id
+    AUX_TABLE_28 ||--o{ TENANTS : tenant_id
+    AUX_TABLE_28 ||--o{ USER_ROLES : user_id
+    AUX_TABLE_28 ||--o{ USERS : user_id
+    AUX_TABLE_28 ||--o{ ORDERS : order_id
+    AUX_TABLE_29 ||--o{ TENANTS : tenant_id
+    AUX_TABLE_29 ||--o{ USER_ROLES : user_id
+    AUX_TABLE_29 ||--o{ USERS : user_id
+    AUX_TABLE_29 ||--o{ ORDERS : order_id
+    AUX_TABLE_3 ||--o{ TENANTS : tenant_id
+    AUX_TABLE_3 ||--o{ USER_ROLES : user_id
+    AUX_TABLE_3 ||--o{ USERS : user_id
+    AUX_TABLE_3 ||--o{ ORDERS : order_id
+    AUX_TABLE_30 ||--o{ TENANTS : tenant_id
+    AUX_TABLE_30 ||--o{ USER_ROLES : user_id
+    AUX_TABLE_30 ||--o{ USERS : user_id
+    AUX_TABLE_30 ||--o{ ORDERS : order_id
+    AUX_TABLE_31 ||--o{ TENANTS : tenant_id
+    AUX_TABLE_31 ||--o{ USER_ROLES : user_id
+    AUX_TABLE_31 ||--o{ USERS : user_id
+    AUX_TABLE_31 ||--o{ ORDERS : order_id
+    AUX_TABLE_32 ||--o{ TENANTS : tenant_id
+    AUX_TABLE_32 ||--o{ USER_ROLES : user_id
+    AUX_TABLE_32 ||--o{ USERS : user_id
+    AUX_TABLE_32 ||--o{ ORDERS : order_id
+    AUX_TABLE_33 ||--o{ TENANTS : tenant_id
+    AUX_TABLE_33 ||--o{ USER_ROLES : user_id
+    AUX_TABLE_33 ||--o{ USERS : user_id
+    AUX_TABLE_33 ||--o{ ORDERS : order_id
+    AUX_TABLE_34 ||--o{ TENANTS : tenant_id
+    AUX_TABLE_34 ||--o{ USER_ROLES : user_id
+    AUX_TABLE_34 ||--o{ USERS : user_id
+    AUX_TABLE_34 ||--o{ ORDERS : order_id
+    AUX_TABLE_35 ||--o{ TENANTS : tenant_id
+    AUX_TABLE_35 ||--o{ USER_ROLES : user_id
+    AUX_TABLE_35 ||--o{ USERS : user_id
+    AUX_TABLE_35 ||--o{ ORDERS : order_id
+    AUX_TABLE_36 ||--o{ TENANTS : tenant_id
+    AUX_TABLE_36 ||--o{ USER_ROLES : user_id
+    AUX_TABLE_36 ||--o{ USERS : user_id
+    AUX_TABLE_36 ||--o{ ORDERS : order_id
+    AUX_TABLE_37 ||--o{ TENANTS : tenant_id
+    AUX_TABLE_37 ||--o{ USER_ROLES : user_id
+    AUX_TABLE_37 ||--o{ USERS : user_id
+    AUX_TABLE_37 ||--o{ ORDERS : order_id
+    AUX_TABLE_38 ||--o{ TENANTS : tenant_id
+    AUX_TABLE_38 ||--o{ USER_ROLES : user_id
+    AUX_TABLE_38 ||--o{ USERS : user_id
+    AUX_TABLE_38 ||--o{ ORDERS : order_id
+    AUX_TABLE_39 ||--o{ TENANTS : tenant_id
+    AUX_TABLE_39 ||--o{ USER_ROLES : user_id
+    AUX_TABLE_39 ||--o{ USERS : user_id
+    AUX_TABLE_39 ||--o{ ORDERS : order_id
+    AUX_TABLE_4 ||--o{ TENANTS : tenant_id
+    AUX_TABLE_4 ||--o{ USER_ROLES : user_id
+    AUX_TABLE_4 ||--o{ USERS : user_id
+    AUX_TABLE_4 ||--o{ ORDERS : order_id
+    AUX_TABLE_40 ||--o{ TENANTS : tenant_id
+    AUX_TABLE_40 ||--o{ USER_ROLES : user_id
+    AUX_TABLE_40 ||--o{ USERS : user_id
+    AUX_TABLE_40 ||--o{ ORDERS : order_id
+    AUX_TABLE_41 ||--o{ TENANTS : tenant_id
+    AUX_TABLE_41 ||--o{ USER_ROLES : user_id
+    AUX_TABLE_41 ||--o{ USERS : user_id
+    AUX_TABLE_41 ||--o{ ORDERS : order_id
+    AUX_TABLE_42 ||--o{ TENANTS : tenant_id
+    AUX_TABLE_42 ||--o{ USER_ROLES : user_id
+    AUX_TABLE_42 ||--o{ USERS : user_id
+    AUX_TABLE_42 ||--o{ ORDERS : order_id
+    AUX_TABLE_43 ||--o{ TENANTS : tenant_id
+    AUX_TABLE_43 ||--o{ USER_ROLES : user_id
+    AUX_TABLE_43 ||--o{ USERS : user_id
+    AUX_TABLE_43 ||--o{ ORDERS : order_id
+    AUX_TABLE_44 ||--o{ TENANTS : tenant_id
+    AUX_TABLE_44 ||--o{ USER_ROLES : user_id
+    AUX_TABLE_44 ||--o{ USERS : user_id
+    AUX_TABLE_44 ||--o{ ORDERS : order_id
+    AUX_TABLE_45 ||--o{ TENANTS : tenant_id
+    AUX_TABLE_45 ||--o{ USER_ROLES : user_id
+    AUX_TABLE_45 ||--o{ USERS : user_id
+    AUX_TABLE_45 ||--o{ ORDERS : order_id
+    AUX_TABLE_46 ||--o{ TENANTS : tenant_id
+    AUX_TABLE_46 ||--o{ USER_ROLES : user_id
+    AUX_TABLE_46 ||--o{ USERS : user_id
+    AUX_TABLE_46 ||--o{ ORDERS : order_id
+    AUX_TABLE_47 ||--o{ TENANTS : tenant_id
+    AUX_TABLE_47 ||--o{ USER_ROLES : user_id
+    AUX_TABLE_47 ||--o{ USERS : user_id
+    AUX_TABLE_47 ||--o{ ORDERS : order_id
+    AUX_TABLE_48 ||--o{ TENANTS : tenant_id
+    AUX_TABLE_48 ||--o{ USER_ROLES : user_id
+    AUX_TABLE_48 ||--o{ USERS : user_id
+    AUX_TABLE_48 ||--o{ ORDERS : order_id
+    AUX_TABLE_49 ||--o{ TENANTS : tenant_id
+    AUX_TABLE_49 ||--o{ USER_ROLES : user_id
+    AUX_TABLE_49 ||--o{ USERS : user_id
+    AUX_TABLE_49 ||--o{ ORDERS : order_id
+    AUX_TABLE_5 ||--o{ TENANTS : tenant_id
+    AUX_TABLE_5 ||--o{ USER_ROLES : user_id
+    AUX_TABLE_5 ||--o{ USERS : user_id
+    AUX_TABLE_5 ||--o{ ORDERS : order_id
+    AUX_TABLE_50 ||--o{ TENANTS : tenant_id
+    AUX_TABLE_50 ||--o{ USER_ROLES : user_id
+    AUX_TABLE_50 ||--o{ USERS : user_id
+    AUX_TABLE_50 ||--o{ ORDERS : order_id
+    AUX_TABLE_6 ||--o{ TENANTS : tenant_id
+    AUX_TABLE_6 ||--o{ USER_ROLES : user_id
+    AUX_TABLE_6 ||--o{ USERS : user_id
+    AUX_TABLE_6 ||--o{ ORDERS : order_id
+    AUX_TABLE_7 ||--o{ TENANTS : tenant_id
+    AUX_TABLE_7 ||--o{ USER_ROLES : user_id
+    AUX_TABLE_7 ||--o{ USERS : user_id
+    AUX_TABLE_7 ||--o{ ORDERS : order_id
+    AUX_TABLE_8 ||--o{ TENANTS : tenant_id
+    AUX_TABLE_8 ||--o{ USER_ROLES : user_id
+    AUX_TABLE_8 ||--o{ USERS : user_id
+    AUX_TABLE_8 ||--o{ ORDERS : order_id
+    AUX_TABLE_9 ||--o{ TENANTS : tenant_id
+    AUX_TABLE_9 ||--o{ USER_ROLES : user_id
+    AUX_TABLE_9 ||--o{ USERS : user_id
+    AUX_TABLE_9 ||--o{ ORDERS : order_id
+    NOTIFICATIONS ||--o{ USER_ROLES : user_id
+    ORDERS ||--o{ USER_ROLES : user_id
+    PAYMENTS ||--o{ USER_ROLES : user_id

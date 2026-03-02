@@ -1,9 +1,12 @@
 package com.yogesh.er_scanner.controller;
 
 import com.yogesh.er_scanner.model.Schema;
+import com.yogesh.er_scanner.service.GraphExportService;
 import com.yogesh.er_scanner.service.SchemaScanner;
 import com.yogesh.er_scanner.service.SchemaService;
 
+import org.springframework.http.HttpHeaders;
+import org.springframework.http.MediaType;
 import org.springframework.http.ResponseEntity;
 import org.springframework.web.bind.annotation.*;
 
@@ -16,11 +19,14 @@ public class SchemaController {
 
     private final SchemaScanner schemaScanner;
     private final SchemaService schemaService;
+    private final GraphExportService graphExportService;
 
     public SchemaController(SchemaScanner schemaScanner,
-                            SchemaService schemaService) {
+                            SchemaService schemaService,
+                            GraphExportService graphExportService) {
         this.schemaScanner = schemaScanner;
         this.schemaService = schemaService;
+        this.graphExportService = graphExportService;
     }
 
     // =====================================================
@@ -91,5 +97,44 @@ public class SchemaController {
                 .toList();
 
         return ResponseEntity.ok(files);
+    }
+
+    // =====================================================
+    // 5️⃣ Get Cytoscape Graph JSON
+    // =====================================================
+
+    @GetMapping("/graph")
+    public ResponseEntity<Map<String, Object>> getCytoscapeGraph() {
+        try {
+            return ResponseEntity.ok(graphExportService.getCytoscapeGraph());
+        } catch (Exception e) {
+            e.printStackTrace();
+            return ResponseEntity.internalServerError().build();
+        }
+    }
+
+    // =====================================================
+    // 6️⃣ Export GraphML
+    // =====================================================
+
+    @GetMapping("/export/graphml")
+    public ResponseEntity<String> exportGraphMl() {
+        try {
+            String graphml = graphExportService.getGraphMl();
+
+            HttpHeaders headers = new HttpHeaders();
+            headers.setContentType(MediaType.APPLICATION_XML);
+            headers.set(HttpHeaders.CONTENT_DISPOSITION,
+                    "attachment; filename=\"er-schema.graphml\"");
+
+            return ResponseEntity.ok()
+                    .headers(headers)
+                    .body(graphml);
+
+        } catch (Exception e) {
+            e.printStackTrace();
+            return ResponseEntity.internalServerError()
+                    .body("GraphML export failed: " + e.getMessage());
+        }
     }
 }

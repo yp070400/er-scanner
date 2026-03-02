@@ -1,0 +1,35 @@
+erDiagram
+    direction TB
+
+    CATEGORIES {
+    string category_id PK
+    string category_name
+    }
+
+    INVENTORY {
+    string inventory_id PK
+    string product_id FK
+    string quantity
+    string warehouse_code
+    }
+
+    PRODUCTS {
+    string product_id PK
+    string category_id FK
+    string product_name
+    string price
+    }
+
+    INVENTORY ||--o{ PRODUCTS : product_id
+    ORDER_ITEMS ||--o{ PRODUCTS : product_id
+    PRODUCTS ||--o{ CATEGORIES : category_id
+    USERS ||--o{ PRODUCTS : user_id
+    USERS ||--o{ PRODUCTS : user_id
+    USERS ||--o{ CATEGORIES : user_id
+    ROLES ||--o{ PRODUCTS : role_id
+    ROLES ||--o{ PRODUCTS : role_id
+    ROLES ||--o{ CATEGORIES : role_id
+    PRODUCTS ||--o{ CATEGORIES : product_id
+    PRODUCTS ||--o{ TENANTS : category_id
+    PRODUCTS ||--o{ TENANTS : product_id
+    CATEGORIES ||--o{ TENANTS : category_id
