@@ -7,7 +7,8 @@ import com.yogesh.er_scanner.service.SchemaService;
 import org.springframework.http.ResponseEntity;
 import org.springframework.web.bind.annotation.*;
 
-import java.util.Map;
+import java.io.File;
+import java.util.*;
 
 @RestController
 @RequestMapping("/schema")
@@ -75,10 +76,20 @@ public class SchemaController {
     // =====================================================
 
     @GetMapping("/er-mermaid-domains")
-    public ResponseEntity<Map<String, String>> getMermaidDomains() {
+    public ResponseEntity<List<String>> listDomainFiles() {
 
-        return ResponseEntity.ok(
-                schemaService.generateMermaidChunks(20)
-        );
+        File dir = new File("output/mermaid-domains");
+
+        if (!dir.exists()) {
+            return ResponseEntity.ok(Collections.emptyList());
+        }
+
+        List<String> files = Arrays.stream(Objects.requireNonNull(dir.listFiles()))
+                .filter(f -> f.getName().endsWith(".mmd"))
+                .map(File::getName)
+                .sorted()
+                .toList();
+
+        return ResponseEntity.ok(files);
     }
 }
